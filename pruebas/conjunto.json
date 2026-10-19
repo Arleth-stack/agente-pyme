@@ -1,0 +1,134 @@
+{
+  "_nota": "Conjunto de prueba P1 (Plan de pruebas v2). Las 'otras formas' se escribieron el 19 oct 2026 ANTES de programar la búsqueda y no se cambian para acomodarlas al resultado. 'ticket' indica desde qué ticket aplica el caso.",
+  "consultorio-dental-sonrisa-clara": [
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuál es su horario?", "espera": { "respuesta_de": "¿Cuál es su horario?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cómo agendo una cita?", "espera": { "respuesta_de": "¿Cómo agendo una cita?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuesta la consulta?", "espera": { "respuesta_de": "¿Cuánto cuesta la consulta?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuesta una limpieza dental?", "espera": { "respuesta_de": "¿Cuánto cuesta una limpieza dental?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuesta un blanqueamiento?", "espera": { "respuesta_de": "¿Cuánto cuesta un blanqueamiento?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Hacen ortodoncia o brackets?", "espera": { "respuesta_de": "¿Hacen ortodoncia o brackets?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Atienden niños?", "espera": { "respuesta_de": "¿Atienden niños?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Hacen resinas o curaciones?", "espera": { "respuesta_de": "¿Hacen resinas o curaciones?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Atienden urgencias?", "espera": { "respuesta_de": "¿Atienden urgencias?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Aceptan tarjeta?", "espera": { "respuesta_de": "¿Aceptan tarjeta?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Aceptan seguro dental?", "espera": { "respuesta_de": "¿Aceptan seguro dental?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Dónde están?", "espera": { "respuesta_de": "¿Dónde están?" } },
+
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "q horario manejan?", "espera": { "respuesta_de": "¿Cuál es su horario?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "como le hago para sacar cita", "espera": { "respuesta_de": "¿Cómo agendo una cita?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanto cobran la consulta", "espera": { "respuesta_de": "¿Cuánto cuesta la consulta?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "precio de limpieza de dientes", "espera": { "respuesta_de": "¿Cuánto cuesta una limpieza dental?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanto sale blanquearme los dientes", "espera": { "respuesta_de": "¿Cuánto cuesta un blanqueamiento?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanto cuestan los brackets", "espera": { "respuesta_de": "¿Hacen ortodoncia o brackets?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "atienden a niños pequeños?", "espera": { "respuesta_de": "¿Atienden niños?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "me pueden tapar una caries?", "espera": { "respuesta_de": "¿Hacen resinas o curaciones?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "atienden emergencias?", "espera": { "respuesta_de": "¿Atienden urgencias?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "puedo pagar con tarjeta?", "espera": { "respuesta_de": "¿Aceptan tarjeta?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "trabajan con aseguradoras?", "espera": { "respuesta_de": "¿Aceptan seguro dental?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "donde se encuentran ubicados", "espera": { "respuesta_de": "¿Dónde están?" } },
+
+    { "ticket": "T02", "tipo": "saludo", "texto": "hola", "espera": { "saludo": true } },
+    { "ticket": "T02", "tipo": "saludo", "texto": "muchas gracias", "espera": { "saludo": true } },
+
+    { "ticket": "T03", "tipo": "no_la_sabe", "texto": "¿Hacen implantes?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "no_la_sabe", "texto": "¿Cuánto cuesta una endodoncia?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "no_la_sabe", "texto": "¿Tienen rayos X?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "de_otro_negocio", "texto": "¿Cuánto cuesta un corte de cabello?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "de_otro_negocio", "texto": "¿Cuánto cuesta el cambio de aceite?", "espera": { "aviso": "no_la_sabe" } },
+
+    { "ticket": "T04", "tipo": "persona", "texto": "Quiero hablar con el doctor", "espera": { "aviso": "pidio_persona" } },
+    { "ticket": "T04", "tipo": "cita", "texto": "Quiero una cita el viernes a las 5", "espera": { "aviso": "pide_cita" } },
+    { "ticket": "T04", "tipo": "queja", "texto": "Me duele mucho una muela, ¿me pueden ver hoy?", "espera": { "aviso": "queja_o_urgencia" } },
+
+    { "ticket": "T05", "tipo": "abierto", "texto": "¿están abiertos?", "hora": "2026-10-21T10:00:00-06:00", "espera": { "abierto": true } },
+    { "ticket": "T05", "tipo": "abierto", "texto": "¿están abiertos?", "hora": "2026-10-21T23:00:00-06:00", "espera": { "abierto": false } }
+  ],
+
+  "salon-bella": [
+    { "ticket": "T02", "tipo": "faq", "texto": "¿A qué hora abren?", "espera": { "respuesta_de": "¿A qué hora abren?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Necesito cita?", "espera": { "respuesta_de": "¿Necesito cita?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuesta un corte?", "espera": { "respuesta_de": "¿Cuánto cuesta un corte?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuesta un tinte?", "espera": { "respuesta_de": "¿Cuánto cuesta un tinte?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuestan las mechas o el balayage?", "espera": { "respuesta_de": "¿Cuánto cuestan las mechas o el balayage?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuesta el manicure?", "espera": { "respuesta_de": "¿Cuánto cuesta el manicure?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Hacen peinado y maquillaje para eventos?", "espera": { "respuesta_de": "¿Hacen peinado y maquillaje para eventos?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Hacen keratina o alaciado?", "espera": { "respuesta_de": "¿Hacen keratina o alaciado?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Atienden caballeros?", "espera": { "respuesta_de": "¿Atienden caballeros?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Qué pasa si llego tarde?", "espera": { "respuesta_de": "¿Qué pasa si llego tarde?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Tienen promociones?", "espera": { "respuesta_de": "¿Tienen promociones?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Dónde están?", "espera": { "respuesta_de": "¿Dónde están?" } },
+
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "a que hora cierran", "espera": { "respuesta_de": "¿A qué hora abren?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "se necesita cita o puedo llegar?", "espera": { "respuesta_de": "¿Necesito cita?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanto el corte de dama", "espera": { "respuesta_de": "¿Cuánto cuesta un corte?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "precio del tinte para cabello largo", "espera": { "respuesta_de": "¿Cuánto cuesta un tinte?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanto cuestan unas luces", "espera": { "respuesta_de": "¿Cuánto cuestan las mechas o el balayage?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanto sale el pedicure", "espera": { "respuesta_de": "¿Cuánto cuesta el manicure?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "maquillaje para una boda cuanto", "espera": { "respuesta_de": "¿Hacen peinado y maquillaje para eventos?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "hacen alaciado permanente?", "espera": { "respuesta_de": "¿Hacen keratina o alaciado?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cortan cabello de hombre?", "espera": { "respuesta_de": "¿Atienden caballeros?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanta tolerancia tienen si llego tarde", "espera": { "respuesta_de": "¿Qué pasa si llego tarde?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "hay descuentos esta semana?", "espera": { "respuesta_de": "¿Tienen promociones?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cual es su direccion", "espera": { "respuesta_de": "¿Dónde están?" } },
+
+    { "ticket": "T02", "tipo": "saludo", "texto": "buenas tardes", "espera": { "saludo": true } },
+    { "ticket": "T02", "tipo": "saludo", "texto": "gracias!", "espera": { "saludo": true } },
+
+    { "ticket": "T03", "tipo": "no_la_sabe", "texto": "¿Hacen extensiones de pestañas?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "no_la_sabe", "texto": "¿Venden productos para el cabello?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "no_la_sabe", "texto": "¿Hacen depilación láser?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "de_otro_negocio", "texto": "¿Cuánto cuesta el cambio de aceite?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "de_otro_negocio", "texto": "¿Cuánto cuesta una limpieza dental?", "espera": { "aviso": "no_la_sabe" } },
+
+    { "ticket": "T04", "tipo": "persona", "texto": "Quiero hablar con alguien", "espera": { "aviso": "pidio_persona" } },
+    { "ticket": "T04", "tipo": "cita", "texto": "Quiero cita el viernes para corte y tinte", "espera": { "aviso": "pide_cita" } },
+    { "ticket": "T04", "tipo": "queja", "texto": "Me dejaron mal el tinte, estoy muy molesta", "espera": { "aviso": "queja_o_urgencia" } },
+
+    { "ticket": "T05", "tipo": "abierto", "texto": "¿están abiertos?", "hora": "2026-10-21T10:00:00-06:00", "espera": { "abierto": true } },
+    { "ticket": "T05", "tipo": "abierto", "texto": "¿están abiertos?", "hora": "2026-10-21T23:00:00-06:00", "espera": { "abierto": false } }
+  ],
+
+  "taller-rapido": [
+    { "ticket": "T02", "tipo": "faq", "texto": "¿A qué hora abren?", "espera": { "respuesta_de": "¿A qué hora abren?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuesta el cambio de aceite?", "espera": { "respuesta_de": "¿Cuánto cuesta el cambio de aceite?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuesta una afinación?", "espera": { "respuesta_de": "¿Cuánto cuesta una afinación?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuesta el diagnóstico?", "espera": { "respuesta_de": "¿Cuánto cuesta el diagnóstico?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto cuestan los frenos?", "espera": { "respuesta_de": "¿Cuánto cuestan los frenos?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cargan el aire acondicionado?", "espera": { "respuesta_de": "¿Cargan el aire acondicionado?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Cuánto tarda un cambio de aceite?", "espera": { "respuesta_de": "¿Cuánto tarda un cambio de aceite?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Necesito cita?", "espera": { "respuesta_de": "¿Necesito cita?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Reparan transmisiones?", "espera": { "respuesta_de": "¿Reparan transmisiones?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Dan garantía?", "espera": { "respuesta_de": "¿Dan garantía?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Aceptan tarjeta?", "espera": { "respuesta_de": "¿Aceptan tarjeta?" } },
+    { "ticket": "T02", "tipo": "faq", "texto": "¿Dónde están?", "espera": { "respuesta_de": "¿Dónde están?" } },
+
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "abren los sabados?", "espera": { "respuesta_de": "¿A qué hora abren?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanto me cobran por cambio de aceite sintetico", "espera": { "respuesta_de": "¿Cuánto cuesta el cambio de aceite?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "precio de afinacion", "espera": { "respuesta_de": "¿Cuánto cuesta una afinación?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanto cuesta que me revisen el carro con escaner", "espera": { "respuesta_de": "¿Cuánto cuesta el diagnóstico?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanto por cambiar balatas", "espera": { "respuesta_de": "¿Cuánto cuestan los frenos?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cargan gas al clima?", "espera": { "respuesta_de": "¿Cargan el aire acondicionado?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "cuanto tiempo tarda el cambio de aceite", "espera": { "respuesta_de": "¿Cuánto tarda un cambio de aceite?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "tengo que agendar cita?", "espera": { "respuesta_de": "¿Necesito cita?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "arreglan transmision automatica?", "espera": { "respuesta_de": "¿Reparan transmisiones?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "tienen garantia las reparaciones?", "espera": { "respuesta_de": "¿Dan garantía?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "aceptan transferencia?", "espera": { "respuesta_de": "¿Aceptan tarjeta?" } },
+    { "ticket": "T02", "tipo": "otra_forma", "texto": "donde queda el taller", "espera": { "respuesta_de": "¿Dónde están?" } },
+
+    { "ticket": "T02", "tipo": "saludo", "texto": "buenos dias", "espera": { "saludo": true } },
+    { "ticket": "T02", "tipo": "saludo", "texto": "ok gracias", "espera": { "saludo": true } },
+
+    { "ticket": "T03", "tipo": "no_la_sabe", "texto": "¿Pueden recoger mi carro en mi casa?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "no_la_sabe", "texto": "¿Cuánto cuesta reparar un motor completo?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "no_la_sabe", "texto": "¿Tienen grúa?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "de_otro_negocio", "texto": "¿Cuánto cuesta un tinte?", "espera": { "aviso": "no_la_sabe" } },
+    { "ticket": "T03", "tipo": "de_otro_negocio", "texto": "¿Cuánto cuesta un blanqueamiento?", "espera": { "aviso": "no_la_sabe" } },
+
+    { "ticket": "T04", "tipo": "persona", "texto": "Quiero hablar con el encargado", "espera": { "aviso": "pidio_persona" } },
+    { "ticket": "T04", "tipo": "cita", "texto": "Quiero llevar mi carro el lunes para frenos", "espera": { "aviso": "pide_cita" } },
+    { "ticket": "T04", "tipo": "queja", "texto": "Me cobraron de más y el ruido sigue", "espera": { "aviso": "queja_o_urgencia" } },
+
+    { "ticket": "T05", "tipo": "abierto", "texto": "¿están abiertos?", "hora": "2026-10-21T10:00:00-06:00", "espera": { "abierto": true } },
+    { "ticket": "T05", "tipo": "abierto", "texto": "¿están abiertos?", "hora": "2026-10-21T23:00:00-06:00", "espera": { "abierto": false } }
+  ]
+}
