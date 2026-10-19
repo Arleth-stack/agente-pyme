@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi panel</title>
+    <link rel="stylesheet" href="/src/estilos.css" />
+  </head>
+  <body class="pantalla-panel">
+    <header class="panel-encabezado">
+      <div>
+        <h1 id="nombre-negocio"></h1>
+        <a id="ver-chat" class="enlace-suave" target="_blank" rel="noopener" hidden></a>
+      </div>
+      <button id="salir" class="boton-secundario" hidden></button>
+    </header>
+    <main id="contenido" class="panel-contenido">
+      <p id="mensaje" class="suave"></p>
+    </main>
+    <script type="module" src="/src/panel.js"></script>
+  </body>
+</html>

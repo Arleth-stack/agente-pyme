@@ -144,3 +144,72 @@ body {
   transition: border-color 0.15s;
 }
 .lista-negocios a:hover { border-color: var(--verde); }
+
+/* Panel y entrar ------------------------------------------------------- */
+
+:root {
+  --acento: #1d4ed8;
+  --acento-oscuro: #1e3a8a;
+  --borde: #e3e6e8;
+}
+
+.suave { color: var(--texto-suave); }
+
+.pantalla-entrar {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 16px;
+}
+.tarjeta-entrar {
+  width: 100%;
+  max-width: 380px;
+  padding: 28px 24px;
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+}
+.tarjeta-entrar h1 { margin: 0 0 6px; font-size: 24px; }
+.tarjeta-entrar p { margin: 0 0 20px; }
+.tarjeta-entrar form { display: grid; gap: 8px; }
+.tarjeta-entrar label { font-weight: 600; font-size: 15px; margin-top: 8px; }
+.tarjeta-entrar input {
+  min-height: 44px;
+  padding: 0 12px;
+  font: inherit;
+  border: 1px solid #c9ced3;
+  border-radius: 8px;
+}
+.tarjeta-entrar input:focus { outline: 2px solid var(--acento); border-color: transparent; }
+
+.mensaje-error { margin: 8px 0 0; color: var(--rojo); font-size: 15px; }
+
+.boton-principal, .boton-secundario {
+  min-height: 44px;
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.boton-principal { margin-top: 16px; border: none; background: var(--acento); color: #fff; }
+.boton-principal:hover:not(:disabled) { background: var(--acento-oscuro); }
+.boton-principal:active:not(:disabled) { transform: scale(0.98); }
+.boton-principal:disabled { opacity: 0.6; cursor: default; }
+.boton-secundario { border: 1px solid var(--borde); background: #fff; color: var(--texto); }
+.boton-secundario:hover { border-color: var(--texto-suave); }
+
+.pantalla-panel { min-height: 100dvh; }
+.panel-encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  background: #fff;
+  border-bottom: 1px solid var(--borde);
+}
+.panel-encabezado h1 { margin: 0; font-size: 20px; }
+.enlace-suave { font-size: 14px; color: var(--acento); }
+.panel-contenido { max-width: 960px; margin: 0 auto; padding: 16px; }

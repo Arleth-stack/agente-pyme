@@ -21,4 +21,25 @@ export const textos = {
     hoy: 'Hoy',
     escribiendo: 'escribiendo…',
   },
+
+  entrar: {
+    titulo: 'Entra a tu panel',
+    texto: 'Aquí ves a tus clientes y los que te necesitan.',
+    correo: 'Correo',
+    contrasena: 'Contraseña',
+    boton: 'Entrar',
+    entrando: 'Entrando…',
+    faltanDatos: 'Escribe tu correo y tu contraseña.',
+    incorrectos: 'Correo o contraseña incorrectos.',
+    sinConexion: 'No hay conexión. Revisa tu internet.',
+    crear: '¿Todavía no tienes tu negocio? Créalo aquí',
+  },
+
+  panel: {
+    cargando: 'Cargando tu panel…',
+    salir: 'Salir',
+    verChat: 'Ver mi chat',
+    sinNegocio: 'Tu cuenta todavía no tiene un negocio.',
+    sinConexion: 'No pudimos cargar tu panel. Revisa tu internet e inténtalo de nuevo.',
+  },
 };

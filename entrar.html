@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Entrar</title>
+    <link rel="stylesheet" href="/src/estilos.css" />
+  </head>
+  <body class="pantalla-entrar">
+    <main class="tarjeta-entrar">
+      <h1 id="titulo"></h1>
+      <p id="texto" class="suave"></p>
+      <form id="formulario" novalidate>
+        <label for="correo" id="etiqueta-correo"></label>
+        <input id="correo" type="email" autocomplete="email" maxlength="120" />
+        <label for="contrasena" id="etiqueta-contrasena"></label>
+        <input id="contrasena" type="password" autocomplete="current-password" maxlength="72" />
+        <p id="error" class="mensaje-error" role="alert" hidden></p>
+        <button id="boton" type="submit" class="boton-principal"></button>
+      </form>
+    </main>
+    <script type="module" src="/src/entrar.js"></script>
+  </body>
+</html>
