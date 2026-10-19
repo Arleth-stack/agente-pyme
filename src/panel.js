@@ -1,5 +1,6 @@
 import { supabase } from './supabase.js';
 import { textos } from './textos.js';
+import { crearEditorHorario } from './horario.js';
 
 const t = textos.panel;
 const $mensaje = document.getElementById('mensaje');
@@ -424,6 +425,70 @@ function iniciarPreguntas() {
   cargarPreguntas();
 }
 
+// T10 · Mi negocio ---------------------------------------------------------
+
+const tn = t.negocio;
+const $nForm = document.getElementById('negocio-form');
+const $nfNombre = document.getElementById('nf-nombre');
+const $nfTelefono = document.getElementById('nf-telefono');
+const $nfDireccion = document.getElementById('nf-direccion');
+const $nfError = document.getElementById('nf-error');
+const $nfOk = document.getElementById('nf-ok');
+const $nfGuardar = document.getElementById('nf-guardar');
+let editorHorario = null;
+
+function avisoNegocio($p, texto) {
+  $p.textContent = texto;
+  $p.hidden = !texto;
+}
+
+async function iniciarNegocio() {
+  document.getElementById('negocio-ayuda').textContent = tn.ayuda;
+  document.getElementById('nf-nombre-etiqueta').textContent = tn.nombre;
+  document.getElementById('nf-telefono-etiqueta').textContent = tn.telefono;
+  document.getElementById('nf-direccion-etiqueta').textContent = tn.direccion;
+  document.getElementById('nf-horario-titulo').textContent = tn.horario;
+  $nfGuardar.textContent = tn.guardar;
+
+  const { data, error } = await supabase.from('negocios')
+    .select('nombre, telefono, direccion, horario').eq('id', negocioActual.id).single();
+  if (error) return avisoNegocio($nfError, t.sinConexion);
+  $nfNombre.value = data.nombre;
+  $nfTelefono.value = data.telefono;
+  $nfDireccion.value = data.direccion ?? '';
+  editorHorario = crearEditorHorario(document.getElementById('nf-horario'), data.horario);
+}
+
+$nForm.addEventListener('input', () => avisoNegocio($nfOk, ''));
+
+$nForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  avisoNegocio($nfOk, '');
+  const nombre = $nfNombre.value.trim();
+  const telefono = $nfTelefono.value.replace(/\D/g, '');
+  if (nombre.length < 2) return avisoNegocio($nfError, tn.faltaNombre);
+  if (telefono.length !== 10) return avisoNegocio($nfError, tn.telefonoMal);
+  const { horario, error: errorHorario } = editorHorario.leer();
+  if (errorHorario) return avisoNegocio($nfError, errorHorario);
+  avisoNegocio($nfError, '');
+
+  $nfGuardar.disabled = true;
+  $nfGuardar.textContent = tn.guardando;
+  const { data, error } = await supabase.from('negocios')
+    .update({ nombre, telefono, direccion: $nfDireccion.value.trim() || null, horario })
+    .eq('id', negocioActual.id)
+    .select('nombre');
+  $nfGuardar.disabled = false;
+  $nfGuardar.textContent = tn.guardar;
+
+  // Solo se dice "guardado" si la base regresó la fila cambiada.
+  if (error || !data?.length) return avisoNegocio($nfError, tn.noSeGuardo);
+  negocioActual.nombre = data[0].nombre;
+  document.getElementById('nombre-negocio').textContent = data[0].nombre;
+  document.title = data[0].nombre;
+  avisoNegocio($nfOk, tn.guardado);
+});
+
 // Arranque (al final, cuando todo lo de arriba ya está declarado) -----------
 
 async function arrancar() {
@@ -458,6 +523,7 @@ async function arrancar() {
     iniciarPestanas();
     iniciarConversaciones();
     iniciarPreguntas();
+    iniciarNegocio();
   }
 }
 

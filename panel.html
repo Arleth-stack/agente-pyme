@@ -18,6 +18,7 @@
     <nav class="panel-pestanas" id="pestanas" hidden>
       <button data-seccion="conversaciones" class="pestana activa"></button>
       <button data-seccion="preguntas" class="pestana"></button>
+      <button data-seccion="negocio" class="pestana"></button>
     </nav>
 
     <main class="panel-contenido">
@@ -73,6 +74,25 @@
           </div>
         </form>
         <div id="lista-preguntas"></div>
+      </section>
+
+      <section id="seccion-negocio" hidden>
+        <form id="negocio-form" class="tarjeta-form" novalidate>
+          <p id="negocio-ayuda" class="suave"></p>
+          <label for="nf-nombre" id="nf-nombre-etiqueta"></label>
+          <input id="nf-nombre" maxlength="60" autocomplete="organization" />
+          <label for="nf-telefono" id="nf-telefono-etiqueta"></label>
+          <input id="nf-telefono" inputmode="numeric" maxlength="14" autocomplete="tel" />
+          <label for="nf-direccion" id="nf-direccion-etiqueta"></label>
+          <input id="nf-direccion" maxlength="120" autocomplete="street-address" />
+          <h3 id="nf-horario-titulo"></h3>
+          <div id="nf-horario"></div>
+          <p id="nf-error" class="mensaje-error" role="alert" hidden></p>
+          <p id="nf-ok" class="mensaje-ok" role="status" hidden></p>
+          <div class="detalle-botones">
+            <button id="nf-guardar" type="submit" class="boton-principal"></button>
+          </div>
+        </form>
       </section>
     </main>
 

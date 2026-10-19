@@ -35,13 +35,35 @@ export const textos = {
     crear: '¿Todavía no tienes tu negocio? Créalo aquí',
   },
 
+  horario: {
+    dias: { lun: 'Lunes', mar: 'Martes', mie: 'Miércoles', jue: 'Jueves', vie: 'Viernes', sab: 'Sábado', dom: 'Domingo' },
+    abre: 'abre', cierra: 'cierra', a: 'a', cerrado: 'Cerrado',
+    copiar: 'Usar el horario del lunes de martes a viernes',
+    faltaHora: (dia) => `Escribe la hora de abrir y de cerrar del ${dia.toLowerCase()}.`,
+    cierreAntes: (dia) => `El ${dia.toLowerCase()}, la hora de cierre debe ser después de la de apertura.`,
+    ningunDia: 'Marca al menos un día en que abras.',
+  },
+
   panel: {
     cargando: 'Cargando tu panel…',
     salir: 'Salir',
     verChat: 'Ver mi chat',
     sinNegocio: 'Tu cuenta todavía no tiene un negocio.',
     sinConexion: 'No pudimos cargar tu panel. Revisa tu internet e inténtalo de nuevo.',
-    pestanas: { conversaciones: 'Conversaciones', preguntas: 'Preguntas frecuentes' },
+    pestanas: { conversaciones: 'Conversaciones', preguntas: 'Preguntas frecuentes', negocio: 'Mi negocio' },
+    negocio: {
+      ayuda: 'Así te ven tus clientes. Si alguien escribe fuera de horario, le decimos cuándo le contestas.',
+      nombre: 'Nombre del negocio',
+      telefono: 'WhatsApp del negocio (10 dígitos)',
+      direccion: 'Dirección (opcional)',
+      horario: 'Horario',
+      guardar: 'Guardar cambios',
+      guardando: 'Guardando…',
+      guardado: 'Listo, guardamos tus cambios.',
+      faltaNombre: 'Escribe el nombre de tu negocio.',
+      telefonoMal: 'El número debe tener 10 dígitos.',
+      noSeGuardo: 'No pudimos guardar. Revisa tu internet e inténtalo de nuevo.',
+    },
     temas: {
       horarios: 'Horarios', precios: 'Precios', servicios: 'Servicios', citas: 'Citas',
       pagos: 'Pagos', ubicacion: 'Ubicación', otros: 'Otros',
