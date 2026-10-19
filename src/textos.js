@@ -19,5 +19,6 @@ export const textos = {
     sinConexion: 'No pudimos cargar el chat. Revisa tu internet e inténtalo de nuevo.',
     noSeEnvio: 'No se envió · Toca para reintentar',
     hoy: 'Hoy',
+    escribiendo: 'escribiendo…',
   },
 };

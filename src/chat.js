@@ -62,6 +62,12 @@ function mostrarAviso(texto) {
   $mensajes.append($p);
 }
 
+const $estado = document.getElementById('estado-negocio');
+
+function escribiendo(si) {
+  $estado.textContent = si ? t.escribiendo : '';
+}
+
 async function enviar(texto, $pendiente) {
   $pendiente.classList.remove('burbuja-fallida');
   $pendiente.classList.add('burbuja-enviando');
@@ -73,12 +79,15 @@ async function enviar(texto, $pendiente) {
       token = data;
       guardarToken(token);
     }
+    escribiendo(true);
     const { data, error } = await supabase.rpc('chat_enviar', { p_token: token, p_texto: texto });
+    escribiendo(false);
     if (error) throw error;
     // La burbuja temporal se cambia por lo que la base confirmó que guardó.
     $pendiente.remove();
     mostrarMensajes(data);
   } catch {
+    escribiendo(false);
     $pendiente.classList.remove('burbuja-enviando');
     $pendiente.classList.add('burbuja-fallida');
     const $nota = document.createElement('span');
