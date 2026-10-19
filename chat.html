@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#008069" />
+    <title>Chat</title>
+    <link rel="stylesheet" href="/src/estilos.css" />
+  </head>
+  <body class="pantalla-chat">
+    <header class="chat-encabezado">
+      <div class="chat-avatar" id="avatar" aria-hidden="true"></div>
+      <div class="chat-titulo">
+        <h1 id="nombre-negocio">&nbsp;</h1>
+        <p id="estado-negocio"></p>
+      </div>
+    </header>
+
+    <main class="chat-mensajes" id="mensajes" aria-live="polite"></main>
+
+    <form class="chat-caja" id="formulario" autocomplete="off">
+      <input id="entrada" name="texto" maxlength="1000" required disabled />
+      <button id="boton-enviar" type="submit" disabled>
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M2 21 23 12 2 3v7l15 2-15 2z"/></svg>
+      </button>
+    </form>
+
+    <script type="module" src="/src/chat.js"></script>
+  </body>
+</html>
