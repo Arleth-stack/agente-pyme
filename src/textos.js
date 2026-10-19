@@ -60,6 +60,18 @@ export const textos = {
       queja_o_urgencia: 'Queja o urgencia',
     },
     clienteSinNombre: 'Cliente',
+    volver: '← Volver',
+    autores: { cliente: 'Cliente', asistente: 'Respondió tu WhatsApp', dueno: 'Tú' },
+    intereses: { precio: 'precios', cita: 'una cita', servicio: 'servicios', ubicacion: 'la ubicación', queja: 'una queja', otro: 'otra cosa' },
+    datosCliente: (tel, interes) => [tel && `Tel. ${tel.replace(/(\d{2})(\d{4})(\d{4})/, '$1 $2 $3')}`, interes && `Preguntó por ${interes}`].filter(Boolean).join(' · '),
+    avisoDetalle: (motivo) => `Te necesita: ${motivo.toLowerCase()}. Contéstale aquí y tu respuesta le llega en su chat.`,
+    atiendesTu: 'La atiendes tú: tu WhatsApp no contesta en esta conversación hasta que la marques como resuelta.',
+    escribeRespuesta: 'Escribe tu respuesta',
+    enviar: 'Enviar',
+    enviando: 'Enviando…',
+    resolver: 'Marcar como resuelta',
+    noSeEnvio: 'No se envió tu respuesta. Revisa tu internet e inténtalo de nuevo.',
+    noSeResolvio: 'No pudimos marcarla como resuelta. Inténtalo de nuevo.',
     sinConversaciones: 'Todavía no hay conversaciones aquí.',
     hace: (fecha) => {
       const min = Math.round((Date.now() - new Date(fecha)) / 60000);

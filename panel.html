@@ -22,10 +22,32 @@
     <main class="panel-contenido">
       <p id="mensaje" class="suave"></p>
 
-      <section id="seccion-conversaciones" hidden>
-        <div class="filtros" id="filtros" role="tablist"></div>
-        <ul class="lista-conversaciones" id="lista-conversaciones"></ul>
-        <p id="sin-conversaciones" class="suave" hidden></p>
+      <section id="seccion-conversaciones" class="conversaciones" hidden>
+        <div class="columna-lista">
+          <div class="filtros" id="filtros" role="tablist"></div>
+          <ul class="lista-conversaciones" id="lista-conversaciones"></ul>
+          <p id="sin-conversaciones" class="suave" hidden></p>
+        </div>
+
+        <article class="detalle" id="detalle" hidden>
+          <header class="detalle-encabezado">
+            <button id="volver" class="boton-icono" type="button"></button>
+            <div>
+              <h2 id="detalle-nombre"></h2>
+              <p id="detalle-datos" class="suave"></p>
+            </div>
+          </header>
+          <p id="detalle-aviso" class="detalle-aviso" hidden></p>
+          <div id="detalle-mensajes" class="detalle-mensajes"></div>
+          <form id="detalle-form" class="detalle-form" autocomplete="off">
+            <textarea id="detalle-texto" rows="2" maxlength="1000"></textarea>
+            <p id="detalle-error" class="mensaje-error" role="alert" hidden></p>
+            <div class="detalle-botones">
+              <button id="detalle-resolver" type="button" class="boton-secundario"></button>
+              <button id="detalle-enviar" type="submit" class="boton-principal"></button>
+            </div>
+          </form>
+        </article>
       </section>
     </main>
 

@@ -279,3 +279,40 @@ body {
 .etiqueta-la_atiendes_tu { background: #dbeafe; color: var(--acento-oscuro); }
 .etiqueta-al_dia { background: #dcfce7; color: #166534; }
 .etiqueta-motivo { background: #fff; border: 1px solid #f59e0b; color: #92400e; }
+
+/* Detalle de una conversación (T08) */
+.conversacion.abierta { outline: 2px solid var(--acento); }
+.conversaciones.con-detalle .columna-lista { display: none; }
+@media (min-width: 900px) {
+  .conversaciones.con-detalle { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 16px; align-items: start; }
+  .conversaciones.con-detalle .columna-lista { display: block; }
+  .conversaciones.con-detalle #volver { display: none; }
+}
+.detalle {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  min-height: 60dvh;
+  max-height: calc(100dvh - 160px);
+}
+.detalle-encabezado { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--borde); }
+.detalle-encabezado h2 { margin: 0; font-size: 18px; }
+.detalle-encabezado p { margin: 2px 0 0; font-size: 14px; }
+.boton-icono { min-height: 44px; padding: 0 10px; border: none; background: none; font: inherit; color: var(--acento); cursor: pointer; }
+.detalle-aviso { margin: 0; padding: 10px 16px; font-size: 15px; }
+.aviso-te_necesita { background: #fef3c7; color: #92400e; }
+.aviso-la_atiendes_tu { background: #dbeafe; color: var(--acento-oscuro); }
+.detalle-mensajes { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: #f8fafc; }
+.globo { max-width: 85%; padding: 8px 12px; border-radius: 10px; background: #fff; border: 1px solid var(--borde); }
+.globo p { margin: 2px 0 0; white-space: pre-wrap; }
+.globo-autor { font-size: 12px; color: var(--texto-suave); }
+.globo-cliente { align-self: flex-start; }
+.globo-asistente { align-self: flex-end; background: #f0fdf4; border-color: #bbf7d0; }
+.globo-dueno { align-self: flex-end; background: #eff6ff; border-color: #bfdbfe; }
+.detalle-form { padding: 12px 16px; border-top: 1px solid var(--borde); display: grid; gap: 8px; }
+.detalle-form textarea { width: 100%; padding: 10px 12px; font: inherit; border: 1px solid #c9ced3; border-radius: 8px; resize: vertical; }
+.detalle-form textarea:focus { outline: 2px solid var(--acento); border-color: transparent; }
+.detalle-botones { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.detalle-botones .boton-principal { margin-top: 0; }

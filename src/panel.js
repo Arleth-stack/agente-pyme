@@ -7,37 +7,6 @@ const $salir = document.getElementById('salir');
 const $verChat = document.getElementById('ver-chat');
 const $pestanas = document.getElementById('pestanas');
 
-$mensaje.textContent = t.cargando;
-
-const { data: { session } } = await supabase.auth.getSession();
-if (!session) location.replace('/entrar');
-
-$salir.textContent = t.salir;
-$salir.hidden = false;
-$salir.addEventListener('click', async () => {
-  await supabase.auth.signOut();
-  location.replace('/entrar');
-});
-
-// Las reglas por fila solo dejan ver los negocios donde esta cuenta es miembro.
-const { data: negocios, error } = await supabase.from('negocios').select('id, slug, nombre').limit(1);
-const negocio = negocios?.[0];
-
-if (error) {
-  $mensaje.textContent = t.sinConexion;
-} else if (!negocio) {
-  $mensaje.textContent = t.sinNegocio;
-} else {
-  document.title = negocio.nombre;
-  document.getElementById('nombre-negocio').textContent = negocio.nombre;
-  $verChat.textContent = t.verChat;
-  $verChat.href = `/chat/${negocio.slug}`;
-  $verChat.hidden = false;
-  $mensaje.textContent = '';
-  iniciarPestanas();
-  iniciarConversaciones();
-}
-
 function iniciarPestanas() {
   for (const $b of $pestanas.querySelectorAll('[data-seccion]')) {
     $b.textContent = t.pestanas[$b.dataset.seccion];
@@ -114,7 +83,7 @@ function pintarLista() {
     const ultimo = c.mensajes[0];
     const aviso = c.avisos.find((a) => a.estado === 'pendiente');
     const $li = document.createElement('li');
-    $li.className = `conversacion estado-${c.estado}`;
+    $li.className = `conversacion estado-${c.estado}${c.id === abierta ? ' abierta' : ''}`;
     $li.dataset.id = c.id;
 
     const $arriba = document.createElement('div');
@@ -149,8 +118,177 @@ function pintarLista() {
   }));
 }
 
+// T08 · Atender a un cliente ----------------------------------------------
+
+const $seccion = document.getElementById('seccion-conversaciones');
+const $detalle = document.getElementById('detalle');
+const $detMensajes = document.getElementById('detalle-mensajes');
+const $detAviso = document.getElementById('detalle-aviso');
+const $detForm = document.getElementById('detalle-form');
+const $detTexto = document.getElementById('detalle-texto');
+const $detError = document.getElementById('detalle-error');
+const $detEnviar = document.getElementById('detalle-enviar');
+const $detResolver = document.getElementById('detalle-resolver');
+let abierta = null;
+let ultimoMensaje = 0;
+
+$lista.addEventListener('click', (e) => {
+  const $li = e.target.closest('[data-id]');
+  if ($li) abrirConversacion($li.dataset.id);
+});
+
+document.getElementById('volver').addEventListener('click', cerrarConversacion);
+
+function cerrarConversacion() {
+  abierta = null;
+  $detalle.hidden = true;
+  $seccion.classList.remove('con-detalle');
+  pintarLista();
+}
+
+function horaCorta(fecha) {
+  return new Date(fecha).toLocaleTimeString('es-MX', { hour: 'numeric', minute: '2-digit' });
+}
+
+function pintarMensaje(m) {
+  const $m = document.createElement('div');
+  $m.className = `globo globo-${m.autor}`;
+  const $autor = document.createElement('span');
+  $autor.className = 'globo-autor';
+  $autor.textContent = `${t.autores[m.autor]} · ${horaCorta(m.creado_en)}`;
+  const $texto = document.createElement('p');
+  $texto.textContent = m.texto;
+  $m.append($autor, $texto);
+  $detMensajes.append($m);
+  ultimoMensaje = Math.max(ultimoMensaje, m.id);
+}
+
+function pintarEncabezado(c) {
+  document.getElementById('detalle-nombre').textContent = c.cliente_nombre || t.clienteSinNombre;
+  document.getElementById('detalle-datos').textContent = t.datosCliente(c.cliente_telefono, t.intereses[c.interes]);
+  const aviso = c.avisos.find((a) => a.estado === 'pendiente');
+  if (c.estado === 'te_necesita' && aviso) {
+    $detAviso.textContent = t.avisoDetalle(t.motivos[aviso.motivo]);
+    $detAviso.className = 'detalle-aviso aviso-te_necesita';
+    $detAviso.hidden = false;
+  } else if (c.estado === 'la_atiendes_tu') {
+    $detAviso.textContent = t.atiendesTu;
+    $detAviso.className = 'detalle-aviso aviso-la_atiendes_tu';
+    $detAviso.hidden = false;
+  } else {
+    $detAviso.hidden = true;
+  }
+  $detResolver.hidden = c.estado === 'al_dia';
+}
+
+async function cargarDetalle(primeraVez) {
+  if (!abierta) return;
+  const id = abierta;
+  const [{ data: conv }, { data: mensajes }] = await Promise.all([
+    supabase.from('conversaciones')
+      .select('id, estado, cliente_nombre, cliente_telefono, interes, avisos(motivo, estado)')
+      .eq('id', id).single(),
+    supabase.from('mensajes').select('id, autor, texto, creado_en')
+      .eq('conversacion_id', id).gt('id', primeraVez ? 0 : ultimoMensaje).order('id'),
+  ]);
+  if (abierta !== id || !conv) return;
+  pintarEncabezado(conv);
+  const abajo = $detMensajes.scrollTop + $detMensajes.clientHeight >= $detMensajes.scrollHeight - 40;
+  (mensajes ?? []).forEach(pintarMensaje);
+  if (primeraVez || abajo) $detMensajes.scrollTop = $detMensajes.scrollHeight;
+}
+
+async function abrirConversacion(id) {
+  abierta = id;
+  ultimoMensaje = 0;
+  $detMensajes.replaceChildren();
+  $detError.hidden = true;
+  $detTexto.value = '';
+  $detalle.hidden = false;
+  $seccion.classList.add('con-detalle');
+  pintarLista();
+  await cargarDetalle(true);
+  $detTexto.focus();
+}
+
+$detForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const texto = $detTexto.value.trim();
+  if (!texto || !abierta) return;
+  $detError.hidden = true;
+  $detEnviar.disabled = true;
+  $detEnviar.textContent = t.enviando;
+  const { error } = await supabase.rpc('responder', { p_conversacion: abierta, p_texto: texto });
+  $detEnviar.disabled = false;
+  $detEnviar.textContent = t.enviar;
+  if (error) {
+    // El texto se queda en la caja para reintentar.
+    $detError.textContent = t.noSeEnvio;
+    $detError.hidden = false;
+    return;
+  }
+  $detTexto.value = '';
+  await Promise.all([cargarDetalle(false), cargarConversaciones()]);
+  $detMensajes.scrollTop = $detMensajes.scrollHeight;
+});
+
+$detResolver.addEventListener('click', async () => {
+  if (!abierta) return;
+  $detResolver.disabled = true;
+  const { error } = await supabase.rpc('resolver', { p_conversacion: abierta });
+  $detResolver.disabled = false;
+  if (error) {
+    $detError.textContent = t.noSeResolvio;
+    $detError.hidden = false;
+    return;
+  }
+  await Promise.all([cargarDetalle(false), cargarConversaciones()]);
+});
+
 function iniciarConversaciones() {
+  document.getElementById('volver').textContent = t.volver;
+  $detTexto.placeholder = t.escribeRespuesta;
+  $detEnviar.textContent = t.enviar;
+  $detResolver.textContent = t.resolver;
+  setInterval(() => cargarDetalle(false), 4000);
   cargarConversaciones();
   // Así aparecen solos los mensajes y avisos nuevos (RF-PAN-09: ≤ 10 s).
   setInterval(cargarConversaciones, 5000);
 }
+
+// Arranque (al final, cuando todo lo de arriba ya está declarado) -----------
+
+async function arrancar() {
+  $mensaje.textContent = t.cargando;
+
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return location.replace('/entrar');
+
+  $salir.textContent = t.salir;
+  $salir.hidden = false;
+  $salir.addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    location.replace('/entrar');
+  });
+
+  // Las reglas por fila solo dejan ver los negocios donde esta cuenta es miembro.
+  const { data: negocios, error } = await supabase.from('negocios').select('id, slug, nombre').limit(1);
+  const negocio = negocios?.[0];
+
+  if (error) {
+    $mensaje.textContent = t.sinConexion;
+  } else if (!negocio) {
+    $mensaje.textContent = t.sinNegocio;
+  } else {
+    document.title = negocio.nombre;
+    document.getElementById('nombre-negocio').textContent = negocio.nombre;
+    $verChat.textContent = t.verChat;
+    $verChat.href = `/chat/${negocio.slug}`;
+    $verChat.hidden = false;
+    $mensaje.textContent = '';
+    iniciarPestanas();
+    iniciarConversaciones();
+  }
+}
+
+arrancar();
