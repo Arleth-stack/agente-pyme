@@ -213,3 +213,69 @@ body {
 .panel-encabezado h1 { margin: 0; font-size: 20px; }
 .enlace-suave { font-size: 14px; color: var(--acento); }
 .panel-contenido { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+.panel-pestanas {
+  display: flex;
+  gap: 4px;
+  padding: 0 16px;
+  background: #fff;
+  border-bottom: 1px solid var(--borde);
+  overflow-x: auto;
+}
+.pestana {
+  min-height: 44px;
+  padding: 0 14px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  font: inherit;
+  color: var(--texto-suave);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.pestana:hover { color: var(--texto); }
+.pestana.activa { color: var(--acento); border-bottom-color: var(--acento); font-weight: 600; }
+
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.filtro {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  background: #fff;
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.filtro:hover { border-color: var(--texto-suave); }
+.filtro.activo { background: var(--acento); border-color: var(--acento); color: #fff; }
+.filtro.urgente:not(.activo) { border-color: #f59e0b; color: #92400e; }
+
+.lista-conversaciones { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.conversacion {
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-left: 4px solid var(--borde);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.conversacion:hover { box-shadow: 0 1px 4px rgb(0 0 0 / 8%); }
+.conversacion.estado-te_necesita { border-left-color: #f59e0b; background: #fffbeb; }
+.conversacion.estado-la_atiendes_tu { border-left-color: var(--acento); }
+.conversacion-arriba { display: flex; justify-content: space-between; gap: 8px; font-size: 15px; }
+.conversacion-ultimo {
+  margin: 4px 0 8px;
+  color: var(--texto-suave);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.conversacion-etiquetas { display: flex; flex-wrap: wrap; gap: 6px; }
+.etiqueta { padding: 2px 8px; border-radius: 10px; font-size: 13px; background: #eef1f4; color: var(--texto-suave); }
+.etiqueta-te_necesita { background: #fef3c7; color: #92400e; }
+.etiqueta-la_atiendes_tu { background: #dbeafe; color: var(--acento-oscuro); }
+.etiqueta-al_dia { background: #dcfce7; color: #166534; }
+.etiqueta-motivo { background: #fff; border: 1px solid #f59e0b; color: #92400e; }

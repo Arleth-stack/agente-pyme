@@ -100,7 +100,16 @@ async function enviar(texto, $pendiente) {
       guardarToken(token);
     }
     escribiendo(true);
-    const { data, error } = await supabase.rpc('chat_enviar', { p_token: token, p_texto: texto, p_hora: horaSimulada });
+    let { data, error } = await supabase.rpc('chat_enviar', { p_token: token, p_texto: texto, p_hora: horaSimulada });
+    if (error?.message === 'conversacion_no_existe') {
+      // La conversación guardada ya no existe (por ejemplo, se reinició la demo): se abre otra.
+      const nueva = await supabase.rpc('chat_iniciar', { p_slug: slug });
+      if (nueva.error) throw nueva.error;
+      token = nueva.data;
+      guardarToken(token);
+      ultimoId = 0;
+      ({ data, error } = await supabase.rpc('chat_enviar', { p_token: token, p_texto: texto, p_hora: horaSimulada }));
+    }
     escribiendo(false);
     if (error) throw error;
     // La burbuja temporal se cambia por lo que la base confirmó que guardó.

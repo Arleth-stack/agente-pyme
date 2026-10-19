@@ -41,5 +41,34 @@ export const textos = {
     verChat: 'Ver mi chat',
     sinNegocio: 'Tu cuenta todavía no tiene un negocio.',
     sinConexion: 'No pudimos cargar tu panel. Revisa tu internet e inténtalo de nuevo.',
+    pestanas: { conversaciones: 'Conversaciones' },
+    filtros: {
+      todas: 'Todas',
+      te_necesita: 'Te necesitan',
+      la_atiendes_tu: 'Las atiendes tú',
+      al_dia: 'Al día',
+    },
+    estados: {
+      te_necesita: 'Te necesita',
+      la_atiendes_tu: 'La atiendes tú',
+      al_dia: 'Al día',
+    },
+    motivos: {
+      no_la_sabe: 'No la sabe',
+      pidio_persona: 'Pidió una persona',
+      pide_cita: 'Pide una cita',
+      queja_o_urgencia: 'Queja o urgencia',
+    },
+    clienteSinNombre: 'Cliente',
+    sinConversaciones: 'Todavía no hay conversaciones aquí.',
+    hace: (fecha) => {
+      const min = Math.round((Date.now() - new Date(fecha)) / 60000);
+      if (min < 1) return 'ahorita';
+      if (min < 60) return `hace ${min} min`;
+      const h = Math.round(min / 60);
+      if (h < 24) return `hace ${h} h`;
+      if (h < 48) return 'ayer';
+      return new Date(fecha).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' });
+    },
   },
 };
