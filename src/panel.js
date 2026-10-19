@@ -6,6 +6,7 @@ const $mensaje = document.getElementById('mensaje');
 const $salir = document.getElementById('salir');
 const $verChat = document.getElementById('ver-chat');
 const $pestanas = document.getElementById('pestanas');
+let negocioActual = null;
 
 function iniciarPestanas() {
   for (const $b of $pestanas.querySelectorAll('[data-seccion]')) {
@@ -256,6 +257,173 @@ function iniciarConversaciones() {
   setInterval(cargarConversaciones, 5000);
 }
 
+// T09 · Mis preguntas frecuentes -----------------------------------------
+
+const tp = t.preguntas;
+const $pForm = document.getElementById('pregunta-form');
+const $pfTema = document.getElementById('pf-tema');
+const $pfPregunta = document.getElementById('pf-pregunta');
+const $pfOtras = document.getElementById('pf-otras');
+const $pfRespuesta = document.getElementById('pf-respuesta');
+const $pfError = document.getElementById('pf-error');
+const $pfGuardar = document.getElementById('pf-guardar');
+const $listaPreguntas = document.getElementById('lista-preguntas');
+let preguntas = [];
+let editando = null;
+
+function errorPregunta(texto) {
+  $pfError.textContent = texto;
+  $pfError.hidden = !texto;
+}
+
+function abrirFormulario(p) {
+  editando = p?.id ?? null;
+  document.getElementById('pregunta-form-titulo').textContent = p ? tp.tituloEditar : tp.tituloNueva;
+  $pfTema.value = p?.tema ?? 'precios';
+  $pfPregunta.value = p?.pregunta ?? '';
+  $pfOtras.value = p?.otras_formas ?? '';
+  $pfRespuesta.value = p?.respuesta ?? '';
+  errorPregunta('');
+  $pForm.hidden = false;
+  $pForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $pfPregunta.focus();
+}
+
+function cerrarFormulario() {
+  editando = null;
+  $pForm.hidden = true;
+}
+
+async function cargarPreguntas() {
+  const { data, error } = await supabase.from('preguntas')
+    .select('id, tema, pregunta, otras_formas, respuesta, activa, orden')
+    .order('orden').order('pregunta');
+  if (error) return;
+  preguntas = data;
+  pintarPreguntas();
+}
+
+function boton(texto, clase, accion) {
+  const $b = document.createElement('button');
+  $b.type = 'button';
+  $b.className = clase;
+  $b.textContent = texto;
+  $b.addEventListener('click', accion);
+  return $b;
+}
+
+function pintarPreguntas() {
+  if (!preguntas.length) {
+    const $p = document.createElement('p');
+    $p.className = 'suave';
+    $p.textContent = tp.vacio;
+    return $listaPreguntas.replaceChildren($p);
+  }
+  const grupos = Object.keys(t.temas)
+    .map((tema) => [tema, preguntas.filter((p) => p.tema === tema)])
+    .filter(([, lista]) => lista.length);
+
+  $listaPreguntas.replaceChildren(...grupos.map(([tema, lista]) => {
+    const $grupo = document.createElement('section');
+    $grupo.className = 'grupo-preguntas';
+    const $h = document.createElement('h3');
+    $h.textContent = t.temas[tema];
+    $grupo.append($h, ...lista.map((p) => {
+      const $c = document.createElement('article');
+      $c.className = `pregunta${p.activa ? '' : ' pausada'}`;
+      const $q = document.createElement('strong');
+      $q.textContent = p.pregunta;
+      const $r = document.createElement('p');
+      $r.textContent = p.respuesta;
+      $c.append($q, $r);
+      if (p.otras_formas) {
+        const $o = document.createElement('p');
+        $o.className = 'suave pregunta-otras';
+        $o.textContent = tp.otrasFormas + p.otras_formas;
+        $c.append($o);
+      }
+      if (!p.activa) {
+        const $e = document.createElement('span');
+        $e.className = 'etiqueta';
+        $e.textContent = tp.pausada;
+        $c.append($e);
+      }
+      const $acciones = document.createElement('div');
+      $acciones.className = 'pregunta-acciones';
+      $acciones.append(
+        boton(tp.editar, 'boton-chico', () => abrirFormulario(p)),
+        boton(p.activa ? tp.pausar : tp.activar, 'boton-chico', () => cambiarActiva(p)),
+        boton(tp.quitar, 'boton-chico boton-peligro', () => quitar(p)),
+      );
+      $c.append($acciones);
+      return $c;
+    }));
+    return $grupo;
+  }));
+}
+
+async function cambiarActiva(p) {
+  const { error } = await supabase.from('preguntas')
+    .update({ activa: !p.activa, actualizado_en: new Date().toISOString() }).eq('id', p.id);
+  if (!error) cargarPreguntas();
+}
+
+async function quitar(p) {
+  if (!confirm(tp.confirmarQuitar(p.pregunta))) return;
+  const { error } = await supabase.from('preguntas').delete().eq('id', p.id);
+  if (!error) {
+    if (editando === p.id) cerrarFormulario();
+    cargarPreguntas();
+  }
+}
+
+$pForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const datos = {
+    tema: $pfTema.value,
+    pregunta: $pfPregunta.value.trim(),
+    otras_formas: $pfOtras.value.trim() || null,
+    respuesta: $pfRespuesta.value.trim(),
+  };
+  if (datos.pregunta.length < 3) return errorPregunta(tp.faltaPregunta);
+  if (!datos.respuesta) return errorPregunta(tp.faltaRespuesta);
+  errorPregunta('');
+  $pfGuardar.disabled = true;
+  $pfGuardar.textContent = tp.guardando;
+
+  const consulta = editando
+    ? supabase.from('preguntas').update({ ...datos, actualizado_en: new Date().toISOString() }).eq('id', editando)
+    : supabase.from('preguntas').insert({
+        ...datos,
+        negocio_id: negocioActual.id,
+        orden: Math.max(0, ...preguntas.map((p) => p.orden)) + 1,
+      });
+  const { error } = await consulta;
+
+  $pfGuardar.disabled = false;
+  $pfGuardar.textContent = tp.guardar;
+  if (error) return errorPregunta(error.code === '23505' ? tp.repetida : tp.noSeGuardo);
+  cerrarFormulario();
+  cargarPreguntas();
+});
+
+function iniciarPreguntas() {
+  document.getElementById('preguntas-ayuda').textContent = tp.ayuda;
+  const $agregar = document.getElementById('preguntas-agregar');
+  $agregar.textContent = tp.agregar;
+  $agregar.addEventListener('click', () => abrirFormulario(null));
+  document.getElementById('pf-tema-etiqueta').textContent = tp.tema;
+  document.getElementById('pf-pregunta-etiqueta').textContent = tp.pregunta;
+  document.getElementById('pf-otras-etiqueta').textContent = tp.otras;
+  document.getElementById('pf-respuesta-etiqueta').textContent = tp.respuesta;
+  $pfGuardar.textContent = tp.guardar;
+  const $cancelar = document.getElementById('pf-cancelar');
+  $cancelar.textContent = tp.cancelar;
+  $cancelar.addEventListener('click', cerrarFormulario);
+  $pfTema.replaceChildren(...Object.entries(t.temas).map(([valor, etiqueta]) => new Option(etiqueta, valor)));
+  cargarPreguntas();
+}
+
 // Arranque (al final, cuando todo lo de arriba ya está declarado) -----------
 
 async function arrancar() {
@@ -286,8 +454,10 @@ async function arrancar() {
     $verChat.href = `/chat/${negocio.slug}`;
     $verChat.hidden = false;
     $mensaje.textContent = '';
+    negocioActual = negocio;
     iniciarPestanas();
     iniciarConversaciones();
+    iniciarPreguntas();
   }
 }
 

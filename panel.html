@@ -17,6 +17,7 @@
 
     <nav class="panel-pestanas" id="pestanas" hidden>
       <button data-seccion="conversaciones" class="pestana activa"></button>
+      <button data-seccion="preguntas" class="pestana"></button>
     </nav>
 
     <main class="panel-contenido">
@@ -48,6 +49,30 @@
             </div>
           </form>
         </article>
+      </section>
+
+      <section id="seccion-preguntas" hidden>
+        <div class="seccion-encabezado">
+          <p id="preguntas-ayuda" class="suave"></p>
+          <button id="preguntas-agregar" class="boton-principal" type="button"></button>
+        </div>
+        <form id="pregunta-form" class="tarjeta-form" novalidate hidden>
+          <h2 id="pregunta-form-titulo"></h2>
+          <label for="pf-tema" id="pf-tema-etiqueta"></label>
+          <select id="pf-tema"></select>
+          <label for="pf-pregunta" id="pf-pregunta-etiqueta"></label>
+          <input id="pf-pregunta" maxlength="150" />
+          <label for="pf-otras" id="pf-otras-etiqueta"></label>
+          <input id="pf-otras" maxlength="300" />
+          <label for="pf-respuesta" id="pf-respuesta-etiqueta"></label>
+          <textarea id="pf-respuesta" rows="3" maxlength="500"></textarea>
+          <p id="pf-error" class="mensaje-error" role="alert" hidden></p>
+          <div class="detalle-botones">
+            <button id="pf-cancelar" type="button" class="boton-secundario"></button>
+            <button id="pf-guardar" type="submit" class="boton-principal"></button>
+          </div>
+        </form>
+        <div id="lista-preguntas"></div>
       </section>
     </main>
 

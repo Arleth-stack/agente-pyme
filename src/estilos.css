@@ -316,3 +316,56 @@ body {
 .detalle-form textarea:focus { outline: 2px solid var(--acento); border-color: transparent; }
 .detalle-botones { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
 .detalle-botones .boton-principal { margin-top: 0; }
+
+/* Preguntas frecuentes (T09) */
+.seccion-encabezado { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.seccion-encabezado p { margin: 0; max-width: 560px; }
+.seccion-encabezado .boton-principal { margin-top: 0; }
+.tarjeta-form {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--acento);
+  border-radius: 12px;
+}
+.tarjeta-form h2 { margin: 0 0 4px; font-size: 18px; }
+.tarjeta-form label { font-weight: 600; font-size: 15px; margin-top: 8px; }
+.tarjeta-form input, .tarjeta-form select, .tarjeta-form textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  font: inherit;
+  border: 1px solid #c9ced3;
+  border-radius: 8px;
+  background: #fff;
+}
+.tarjeta-form :is(input, select, textarea):focus { outline: 2px solid var(--acento); border-color: transparent; }
+.grupo-preguntas { margin-bottom: 20px; }
+.grupo-preguntas h3 { margin: 0 0 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--texto-suave); }
+.pregunta {
+  margin-bottom: 8px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+}
+.pregunta p { margin: 4px 0 0; white-space: pre-wrap; }
+.pregunta-otras { font-size: 14px; }
+.pregunta.pausada { opacity: 0.65; background: #f8fafc; }
+.pregunta .etiqueta { display: inline-block; margin-top: 8px; }
+.pregunta-acciones { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.boton-chico {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.boton-chico:hover { border-color: var(--texto-suave); }
+.boton-peligro { color: var(--rojo); }
+.boton-peligro:hover { border-color: var(--rojo); }
