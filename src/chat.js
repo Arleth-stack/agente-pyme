@@ -12,6 +12,15 @@ const slug =
   location.pathname.match(/^\/chat\/([a-z0-9-]+)\/?$/)?.[1] ??
   new URLSearchParams(location.search).get('n');
 
+// Hora simulada para la demo (?hora=23:00). La base solo la acepta en los
+// negocios demo; los 3 de la demo están en la zona de Ciudad de México.
+const horaSimulada = (() => {
+  const h = new URLSearchParams(location.search).get('hora');
+  if (!/^\d{2}:\d{2}$/.test(h ?? '')) return undefined;
+  const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Mexico_City' });
+  return `${hoy}T${h}:00-06:00`;
+})();
+
 const claveToken = `conversacion:${slug}`;
 let token = leerToken();
 let ultimoId = 0;
@@ -63,9 +72,20 @@ function mostrarAviso(texto) {
 }
 
 const $estado = document.getElementById('estado-negocio');
+let estadoNegocio = '';
 
 function escribiendo(si) {
-  $estado.textContent = si ? t.escribiendo : '';
+  $estado.textContent = si ? t.escribiendo : estadoNegocio;
+}
+
+async function actualizarEstado() {
+  const { data, error } = await supabase.rpc('chat_negocio', { p_slug: slug, p_hora: horaSimulada });
+  if (error) throw error;
+  if (data) {
+    estadoNegocio = data.estado;
+    if ($estado.textContent !== t.escribiendo) $estado.textContent = estadoNegocio;
+  }
+  return data;
 }
 
 async function enviar(texto, $pendiente) {
@@ -80,7 +100,7 @@ async function enviar(texto, $pendiente) {
       guardarToken(token);
     }
     escribiendo(true);
-    const { data, error } = await supabase.rpc('chat_enviar', { p_token: token, p_texto: texto });
+    const { data, error } = await supabase.rpc('chat_enviar', { p_token: token, p_texto: texto, p_hora: horaSimulada });
     escribiendo(false);
     if (error) throw error;
     // La burbuja temporal se cambia por lo que la base confirmó que guardó.
@@ -116,8 +136,12 @@ async function revisarNuevos() {
 async function arrancar() {
   if (!slug) return mostrarAviso(t.noEncontrado);
 
-  const { data: negocio, error } = await supabase.rpc('chat_negocio', { p_slug: slug });
-  if (error) return mostrarAviso(t.sinConexion);
+  let negocio;
+  try {
+    negocio = await actualizarEstado();
+  } catch {
+    return mostrarAviso(t.sinConexion);
+  }
   if (!negocio) return mostrarAviso(t.noEncontrado);
 
   document.title = negocio.nombre;
@@ -139,6 +163,7 @@ async function arrancar() {
 
   // Así llegan las respuestas que el dueño escriba desde su panel.
   setInterval(revisarNuevos, 4000);
+  setInterval(() => actualizarEstado().catch(() => {}), 60000);
 }
 
 arrancar();
