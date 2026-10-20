@@ -160,6 +160,23 @@ export const textos = {
     ],
   },
 
+  demo: {
+    titulo: 'Demo',
+    negocio: 'Negocio',
+    hora: 'Hora',
+    horas: { real: 'Hora real', '10:00': '10:00 a. m. (abierto)', '23:00': '11:00 p. m. (cerrado)' },
+    reiniciar: 'Reiniciar demo',
+    reiniciando: 'Reiniciando…',
+    confirmar: '¿Reiniciar la demo? Las conversaciones de los 3 negocios de ejemplo vuelven a como estaban al inicio.',
+    reiniciado: 'Listo: conversaciones de ejemplo restauradas.',
+    noSeReinicio: 'No pudimos reiniciar la demo. Revisa tu internet.',
+    cliente: 'Cliente',
+    dueno: 'Dueño',
+    tituloCliente: 'Lo que ve el cliente en su WhatsApp',
+    tituloDueno: 'Panel del dueño',
+    otraSesion: (actual, elegido) => `El panel muestra ${actual}. Para ver el de ${elegido}, sal del panel y entra con la cuenta de ese negocio.`,
+  },
+
   horario: {
     dias: { lun: 'Lunes', mar: 'Martes', mie: 'Miércoles', jue: 'Jueves', vie: 'Viernes', sab: 'Sábado', dom: 'Domingo' },
     abre: 'abre', cierra: 'cierra', a: 'a', cerrado: 'Cerrado',

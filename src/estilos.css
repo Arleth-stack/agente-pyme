@@ -440,3 +440,26 @@ body {
 .tabla-aislamiento th { font-size: 13px; color: var(--texto-suave); font-weight: 600; }
 .tabla-aislamiento td:not(:first-child), .tabla-aislamiento th:not(:first-child) { text-align: center; }
 .tabla-aislamiento .fila-propia td { font-weight: 600; background: #eff6ff; }
+
+/* Demo (T16) */
+.pantalla-demo { min-height: 100dvh; display: flex; flex-direction: column; }
+.demo-barra {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+  padding: 12px 16px; background: #fff; border-bottom: 1px solid var(--borde);
+}
+.demo-barra label { font-weight: 600; font-size: 15px; }
+.demo-barra select { min-height: 40px; padding: 0 10px; font: inherit; border: 1px solid #c9ced3; border-radius: 8px; background: #fff; }
+.demo-barra .boton-secundario { min-height: 40px; }
+.demo-vistas { display: flex; gap: 4px; padding: 0 16px; background: #fff; border-bottom: 1px solid var(--borde); }
+.demo-lado-a-lado { flex: 1; display: grid; gap: 16px; padding: 16px; }
+.demo-columna { display: flex; flex-direction: column; min-height: 0; }
+.demo-columna h2 { margin: 0 0 8px; font-size: 15px; color: var(--texto-suave); font-weight: 600; }
+.demo-columna iframe { flex: 1; width: 100%; min-height: 70dvh; border: 1px solid var(--borde); border-radius: 12px; background: #fff; }
+.demo-aviso { margin: 0 0 8px; padding: 8px 12px; background: #fef3c7; color: #92400e; border-radius: 8px; font-size: 14px; }
+.demo-lado-a-lado[data-vista="cliente"] [data-columna="dueno"],
+.demo-lado-a-lado[data-vista="dueno"] [data-columna="cliente"] { display: none; }
+@media (min-width: 900px) {
+  .demo-vistas { display: none; }
+  .demo-lado-a-lado { grid-template-columns: minmax(340px, 420px) 1fr; }
+  .demo-lado-a-lado [data-columna] { display: flex !important; }
+}

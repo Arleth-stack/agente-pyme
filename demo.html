@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo</title>
+    <link rel="stylesheet" href="/src/estilos.css" />
+  </head>
+  <body class="pantalla-demo">
+    <header class="demo-barra">
+      <label for="demo-negocio" id="demo-negocio-etiqueta"></label>
+      <select id="demo-negocio"></select>
+      <label for="demo-hora" id="demo-hora-etiqueta"></label>
+      <select id="demo-hora"></select>
+      <button id="demo-reiniciar" type="button" class="boton-secundario"></button>
+      <span id="demo-estado" class="suave" role="status"></span>
+    </header>
+
+    <nav class="demo-vistas" id="demo-vistas">
+      <button data-vista="cliente" class="pestana activa"></button>
+      <button data-vista="dueno" class="pestana"></button>
+    </nav>
+
+    <main class="demo-lado-a-lado" id="demo-lados" data-vista="cliente">
+      <section class="demo-columna" data-columna="cliente">
+        <h2 id="demo-titulo-cliente"></h2>
+        <iframe id="demo-chat" title="Chat del cliente"></iframe>
+      </section>
+      <section class="demo-columna" data-columna="dueno">
+        <h2 id="demo-titulo-dueno"></h2>
+        <p id="demo-aviso-panel" class="demo-aviso" hidden></p>
+        <iframe id="demo-panel" title="Panel del dueño" src="/panel"></iframe>
+      </section>
+    </main>
+    <script type="module" src="/src/demo.js"></script>
+  </body>
+</html>
