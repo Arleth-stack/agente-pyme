@@ -425,3 +425,11 @@ body {
 .crear-pregunta label { margin-top: 4px; }
 .crear-pregunta .boton-chico { justify-self: end; margin-top: 6px; }
 .crear fieldset > .boton-chico { justify-self: start; }
+.listo h2 { margin: 0; font-size: 22px; }
+.listo-enlace { display: flex; gap: 8px; margin: 8px 0; }
+.listo-enlace input { flex: 1; min-width: 0; }
+.boton-enlace { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.listo .crear-botones { flex-wrap: wrap; }
+.inicio-botones { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 32px; }
+.inicio-botones .boton-principal { margin-top: 0; }
+.entrar-crear { margin: 16px 0 0; text-align: center; font-size: 15px; }

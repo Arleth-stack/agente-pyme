@@ -1,3 +1,4 @@
+import { supabase } from './supabase.js';
 import { textos } from './textos.js';
 import { crearEditorHorario, describirHorario } from './horario.js';
 
@@ -43,6 +44,11 @@ function pintarTextos() {
   texto('p3-titulo', t.p3.titulo);
   texto('p3-ayuda', t.p3.ayuda);
   texto('agregar-pregunta', t.p3.agregar);
+  texto('p4-titulo', t.p4.titulo);
+  texto('p4-ayuda', t.p4.ayuda);
+  texto('correo-etiqueta', t.p4.correo);
+  texto('contrasena-etiqueta', t.p4.contrasena);
+  texto('contrasena2-etiqueta', t.p4.contrasena2);
   $atras.textContent = t.atras;
   $giro.replaceChildren(new Option(t.p1.eligeGiro, ''), ...Object.entries(t.giros).map(([v, e]) => new Option(e, v)));
 }
@@ -66,7 +72,7 @@ function irA(n) {
   }));
   $pasos.setAttribute('aria-label', t.pasoDe(paso));
   $atras.hidden = paso === 1;
-  $siguiente.textContent = t.siguiente;
+  $siguiente.textContent = paso === 4 ? t.p4.crear : t.siguiente;
   mostrarError('');
   $form.querySelector(`fieldset[data-paso="${paso}"] input, fieldset[data-paso="${paso}"] select`)?.focus();
 }
@@ -195,12 +201,116 @@ validar[3] = () => {
   return '';
 };
 
-$form.addEventListener('submit', (e) => {
+// T13 · Paso 4: cuenta, guardado y ¡Listo! ---------------------------------
+
+const $correo = document.getElementById('correo');
+const $contrasena = document.getElementById('contrasena');
+const $contrasena2 = document.getElementById('contrasena2');
+const inicio = Date.now();
+let creando = false;
+
+validar[4] = () => {
+  datos.correo = $correo.value.trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(datos.correo)) return t.p4.correoMal;
+  if ($contrasena.value.length < 8) return t.p4.contrasenaCorta;
+  if ($contrasena.value !== $contrasena2.value) return t.p4.noCoinciden;
+  return '';
+};
+
+// Deja la sesión de esta cuenta lista: la crea, o entra si ya existía con la misma contraseña.
+async function asegurarSesion() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session?.user?.email === datos.correo) return '';
+
+  const alta = await supabase.auth.signUp({ email: datos.correo, password: $contrasena.value });
+  if (!alta.error && alta.data.session) return '';
+  if (alta.error && !alta.error.status) return t.p4.noSeGuardo;
+
+  const entrada = await supabase.auth.signInWithPassword({ email: datos.correo, password: $contrasena.value });
+  if (!entrada.error) return '';
+  return entrada.error.status ? t.p4.correoUsado : t.p4.noSeGuardo;
+}
+
+async function crearNegocio() {
+  const errorSesion = await asegurarSesion();
+  if (errorSesion) return { error: errorSesion };
+
+  const { data, error } = await supabase.rpc('crear_negocio', {
+    p_datos: {
+      nombre: datos.nombre,
+      giro: datos.giro,
+      telefono: datos.telefono,
+      direccion: datos.direccion,
+      horario: datos.horario,
+      preguntas: datos.preguntas,
+    },
+  });
+  if (error) return { error: error.message === 'preguntas_repetidas' ? t.p4.repetidas : t.p4.noSeGuardo };
+  // Si la cuenta ya tenía OTRO negocio, no se presume éxito.
+  if (data.ya_existia && data.nombre !== datos.nombre) return { error: t.p4.yaTieneNegocio(data.nombre) };
+  return { negocio: data };
+}
+
+function mostrarListo(negocio) {
+  const tl = t.listo;
+  const url = `${location.origin}/chat/${negocio.slug}`;
+  const segundos = Math.round((Date.now() - inicio) / 1000);
+  texto('listo-titulo', tl.titulo);
+  texto('listo-texto', tl.texto);
+  texto('listo-tiempo', tl.tiempo(Math.floor(segundos / 60), segundos % 60));
+  document.getElementById('listo-url').value = url;
+  const $copiar = document.getElementById('listo-copiar');
+  $copiar.textContent = tl.copiar;
+  $copiar.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      $copiar.textContent = tl.copiado;
+    } catch {
+      document.getElementById('listo-url').select();
+    }
+  });
+  const $chat = document.getElementById('listo-chat');
+  $chat.textContent = tl.probar;
+  $chat.href = `/chat/${negocio.slug}`;
+  texto('listo-panel', tl.panel);
+  $form.hidden = true;
+  $pasos.hidden = true;
+  document.getElementById('subtitulo').hidden = true;
+  document.getElementById('listo').hidden = false;
+  document.getElementById('listo-titulo').focus?.();
+}
+
+$form.addEventListener('submit', async (e) => {
   e.preventDefault();
+  if (creando) return;
   const mensaje = validar[paso]?.() ?? '';
   if (mensaje) return mostrarError(mensaje);
-  if (paso < 3) irA(paso + 1);
-  if (paso === 3) prepararPreguntas();
+  if (paso < 4) {
+    irA(paso + 1);
+    if (paso === 3) prepararPreguntas();
+    return;
+  }
+
+  // Paso 4: un solo intento a la vez; el botón no se puede volver a tocar.
+  creando = true;
+  mostrarError('');
+  $siguiente.disabled = true;
+  $atras.disabled = true;
+  $siguiente.textContent = t.p4.creando;
+  let resultado;
+  try {
+    resultado = await crearNegocio();
+  } catch {
+    resultado = { error: t.p4.noSeGuardo };
+  }
+  creando = false;
+  $siguiente.disabled = false;
+  $atras.disabled = false;
+  $siguiente.textContent = t.p4.crear;
+
+  // "¡Listo!" solo aparece si la base confirmó que guardó.
+  if (resultado.error) return mostrarError(resultado.error);
+  mostrarListo(resultado.negocio);
 });
 
 $atras.addEventListener('click', () => irA(paso - 1));

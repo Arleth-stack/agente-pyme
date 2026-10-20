@@ -44,12 +44,38 @@
           <button id="agregar-pregunta" type="button" class="boton-chico"></button>
         </fieldset>
 
+        <!-- Paso 4 · Tu cuenta -->
+        <fieldset data-paso="4" hidden>
+          <legend id="p4-titulo"></legend>
+          <p id="p4-ayuda" class="suave"></p>
+          <label for="correo" id="correo-etiqueta"></label>
+          <input id="correo" type="email" autocomplete="email" maxlength="120" />
+          <label for="contrasena" id="contrasena-etiqueta"></label>
+          <input id="contrasena" type="password" autocomplete="new-password" maxlength="72" />
+          <label for="contrasena2" id="contrasena2-etiqueta"></label>
+          <input id="contrasena2" type="password" autocomplete="new-password" maxlength="72" />
+        </fieldset>
+
         <p id="error" class="mensaje-error" role="alert" hidden></p>
         <div class="crear-botones">
           <button id="atras" type="button" class="boton-secundario" hidden></button>
           <button id="siguiente" type="submit" class="boton-principal"></button>
         </div>
       </form>
+
+      <section id="listo" class="tarjeta-form listo" hidden>
+        <h2 id="listo-titulo"></h2>
+        <p id="listo-texto" class="suave"></p>
+        <div class="listo-enlace">
+          <input id="listo-url" readonly />
+          <button id="listo-copiar" type="button" class="boton-chico"></button>
+        </div>
+        <p id="listo-tiempo" class="suave"></p>
+        <div class="crear-botones">
+          <a id="listo-chat" class="boton-secundario boton-enlace" target="_blank" rel="noopener"></a>
+          <a id="listo-panel" class="boton-principal boton-enlace" href="/panel"></a>
+        </div>
+      </section>
     </main>
     <script type="module" src="/src/crear.js"></script>
   </body>

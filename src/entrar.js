@@ -14,6 +14,7 @@ document.getElementById('texto').textContent = t.texto;
 document.getElementById('etiqueta-correo').textContent = t.correo;
 document.getElementById('etiqueta-contrasena').textContent = t.contrasena;
 $boton.textContent = t.boton;
+document.getElementById('enlace-crear').textContent = t.crear;
 
 // Si ya hay sesión, directo al panel.
 const { data: { session } } = await supabase.auth.getSession();
