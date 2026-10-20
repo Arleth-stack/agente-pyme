@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crea tu negocio</title>
+    <link rel="stylesheet" href="/src/estilos.css" />
+  </head>
+  <body class="pantalla-crear">
+    <main class="crear">
+      <a href="/" class="enlace-suave" id="volver-inicio"></a>
+      <h1 id="titulo"></h1>
+      <p id="subtitulo" class="suave"></p>
+
+      <ol class="pasos" id="pasos"></ol>
+
+      <form id="formulario" class="tarjeta-form" novalidate>
+        <!-- Paso 1 · Tu negocio -->
+        <fieldset data-paso="1">
+          <legend id="p1-titulo"></legend>
+          <p id="p1-ayuda" class="suave"></p>
+          <label for="nombre" id="nombre-etiqueta"></label>
+          <input id="nombre" maxlength="60" autocomplete="organization" />
+          <label for="giro" id="giro-etiqueta"></label>
+          <select id="giro"></select>
+          <label for="telefono" id="telefono-etiqueta"></label>
+          <input id="telefono" inputmode="numeric" maxlength="14" autocomplete="tel" />
+          <label for="direccion" id="direccion-etiqueta"></label>
+          <input id="direccion" maxlength="120" autocomplete="street-address" />
+        </fieldset>
+
+        <!-- Paso 2 · Horario -->
+        <fieldset data-paso="2" hidden>
+          <legend id="p2-titulo"></legend>
+          <p id="p2-ayuda" class="suave"></p>
+          <div id="horario"></div>
+        </fieldset>
+
+        <p id="error" class="mensaje-error" role="alert" hidden></p>
+        <div class="crear-botones">
+          <button id="atras" type="button" class="boton-secundario" hidden></button>
+          <button id="siguiente" type="submit" class="boton-principal"></button>
+        </div>
+      </form>
+    </main>
+    <script type="module" src="/src/crear.js"></script>
+  </body>
+</html>

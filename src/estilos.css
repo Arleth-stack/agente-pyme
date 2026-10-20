@@ -12,6 +12,9 @@
 
 * { box-sizing: border-box; }
 
+/* Lo oculto siempre se oculta, aunque su clase le dé otro display. */
+[hidden] { display: none !important; }
+
 html, body { margin: 0; height: 100%; }
 
 body {
@@ -395,3 +398,25 @@ body {
   .hora-cierra { grid-column: 3; grid-row: 2; }
   .horario-cerrado { grid-row: 1; grid-column: 3; text-align: right; }
 }
+
+/* Crear mi negocio (T11–T13) */
+.pantalla-crear { min-height: 100dvh; }
+.crear { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
+.crear h1 { margin: 12px 0 4px; font-size: 26px; }
+.crear > p { margin: 0 0 16px; }
+.pasos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; list-style: none; margin: 0 0 16px; padding: 0; counter-reset: paso; }
+.pasos li {
+  counter-increment: paso;
+  padding-top: 8px;
+  border-top: 4px solid var(--borde);
+  font-size: 13px;
+  color: var(--texto-suave);
+}
+.pasos li::before { content: counter(paso) ". "; }
+.pasos li.hecho { border-top-color: var(--verde); }
+.pasos li.actual { border-top-color: var(--acento); color: var(--texto); font-weight: 600; }
+.crear fieldset { border: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.crear legend { font-size: 20px; font-weight: 700; padding: 0; }
+.crear fieldset > p { margin: 2px 0 8px; }
+.crear-botones { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; }
+.crear-botones .boton-principal { margin-top: 0; margin-left: auto; }

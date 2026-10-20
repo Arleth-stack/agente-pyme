@@ -35,6 +35,40 @@ export const textos = {
     crear: '¿Todavía no tienes tu negocio? Créalo aquí',
   },
 
+  crear: {
+    volver: '‹ Inicio',
+    titulo: 'Crea tu negocio',
+    subtitulo: 'En 4 pasos tu WhatsApp contesta solo a tus clientes.',
+    pasos: ['Tu negocio', 'Horario', 'Preguntas', 'Tu cuenta'],
+    pasoDe: (n) => `Paso ${n} de 4`,
+    siguiente: 'Siguiente',
+    atras: 'Atrás',
+    p1: {
+      titulo: 'Tu negocio',
+      ayuda: 'Así te verán tus clientes.',
+      nombre: 'Nombre del negocio',
+      giro: 'Giro',
+      eligeGiro: 'Elige uno',
+      telefono: 'WhatsApp del negocio (10 dígitos)',
+      direccion: 'Dirección (opcional)',
+    },
+    giros: {
+      consultorio: 'Consultorio o clínica',
+      salon: 'Salón o barbería',
+      gimnasio: 'Gimnasio o estudio',
+      inmobiliaria: 'Inmobiliaria',
+      taller: 'Taller',
+      otro: 'Otro',
+    },
+    p2: {
+      titulo: 'Horario',
+      ayuda: 'Si alguien escribe fuera de horario, le diremos cuándo le contestas.',
+    },
+    faltaNombre: 'Escribe el nombre de tu negocio.',
+    faltaGiro: 'Elige el giro de tu negocio.',
+    telefonoMal: 'El número debe tener 10 dígitos.',
+  },
+
   horario: {
     dias: { lun: 'Lunes', mar: 'Martes', mie: 'Miércoles', jue: 'Jueves', vie: 'Viernes', sab: 'Sábado', dom: 'Domingo' },
     abre: 'abre', cierra: 'cierra', a: 'a', cerrado: 'Cerrado',
