@@ -489,6 +489,62 @@ $nForm.addEventListener('submit', async (e) => {
   avisoNegocio($nfOk, tn.guardado);
 });
 
+// T15 · Prueba de aislamiento ----------------------------------------------
+
+const ta = t.aislamiento;
+const $aisFilas = document.getElementById('ais-filas');
+const $aisConclusion = document.getElementById('ais-conclusion');
+const $aisRepetir = document.getElementById('ais-repetir');
+
+// Cuenta lo que la sesión del dueño alcanza a ver de un negocio, buscándolo
+// por su enlace. Las reglas por fila deciden: de otros negocios regresa 0.
+async function contarVisibles(slug) {
+  const contar = (tabla) => supabase.from(tabla)
+    .select('id, negocios!inner(slug)', { count: 'exact', head: true })
+    .eq('negocios.slug', slug);
+  const [c, p] = await Promise.all([contar('conversaciones'), contar('preguntas')]);
+  return { conversaciones: c.count ?? 0, preguntas: p.count ?? 0 };
+}
+
+async function probarAislamiento() {
+  $aisRepetir.disabled = true;
+  $aisRepetir.textContent = ta.probando;
+  const { data: demo } = await supabase.rpc('negocios_demo');
+  const negocios = [{ slug: negocioActual.slug, nombre: negocioActual.nombre, propio: true },
+    ...(demo ?? []).filter((n) => n.slug !== negocioActual.slug)];
+
+  let fuga = false;
+  const filas = [];
+  for (const n of negocios) {
+    const visto = await contarVisibles(n.slug);
+    if (!n.propio && (visto.conversaciones || visto.preguntas)) fuga = true;
+    const $tr = document.createElement('tr');
+    if (n.propio) $tr.className = 'fila-propia';
+    for (const valor of [n.propio ? ta.tuyo(n.nombre) : n.nombre, visto.conversaciones, visto.preguntas]) {
+      const $td = document.createElement('td');
+      $td.textContent = valor;
+      $tr.append($td);
+    }
+    filas.push($tr);
+  }
+  $aisFilas.replaceChildren(...filas);
+  $aisConclusion.textContent = fuga ? ta.fallo : ta.conclusion(negocioActual.nombre);
+  $aisConclusion.className = fuga ? 'mensaje-error' : 'mensaje-ok';
+  $aisRepetir.disabled = false;
+  $aisRepetir.textContent = ta.repetir;
+}
+
+function iniciarAislamiento() {
+  document.getElementById('ais-titulo').textContent = ta.titulo;
+  document.getElementById('ais-ayuda').textContent = ta.ayuda;
+  document.getElementById('ais-col-negocio').textContent = ta.negocio;
+  document.getElementById('ais-col-conv').textContent = ta.conversaciones;
+  document.getElementById('ais-col-preg').textContent = ta.preguntas;
+  $aisRepetir.textContent = ta.repetir;
+  $aisRepetir.addEventListener('click', probarAislamiento);
+  document.querySelector('[data-seccion="aislamiento"]').addEventListener('click', probarAislamiento);
+}
+
 // Arranque (al final, cuando todo lo de arriba ya está declarado) -----------
 
 async function arrancar() {
@@ -524,6 +580,7 @@ async function arrancar() {
     iniciarConversaciones();
     iniciarPreguntas();
     iniciarNegocio();
+    iniciarAislamiento();
   }
 }
 

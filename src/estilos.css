@@ -433,3 +433,10 @@ body {
 .inicio-botones { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 32px; }
 .inicio-botones .boton-principal { margin-top: 0; }
 .entrar-crear { margin: 16px 0 0; text-align: center; font-size: 15px; }
+
+/* Prueba de aislamiento (T15) */
+.tabla-aislamiento { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 15px; }
+.tabla-aislamiento th, .tabla-aislamiento td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--borde); }
+.tabla-aislamiento th { font-size: 13px; color: var(--texto-suave); font-weight: 600; }
+.tabla-aislamiento td:not(:first-child), .tabla-aislamiento th:not(:first-child) { text-align: center; }
+.tabla-aislamiento .fila-propia td { font-weight: 600; background: #eff6ff; }

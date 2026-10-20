@@ -19,6 +19,7 @@
       <button data-seccion="conversaciones" class="pestana activa"></button>
       <button data-seccion="preguntas" class="pestana"></button>
       <button data-seccion="negocio" class="pestana"></button>
+      <button data-seccion="aislamiento" class="pestana"></button>
     </nav>
 
     <main class="panel-contenido">
@@ -93,6 +94,20 @@
             <button id="nf-guardar" type="submit" class="boton-principal"></button>
           </div>
         </form>
+      </section>
+      <section id="seccion-aislamiento" hidden>
+        <div class="tarjeta-form">
+          <h2 id="ais-titulo"></h2>
+          <p id="ais-ayuda" class="suave"></p>
+          <table class="tabla-aislamiento">
+            <thead><tr><th id="ais-col-negocio"></th><th id="ais-col-conv"></th><th id="ais-col-preg"></th></tr></thead>
+            <tbody id="ais-filas"></tbody>
+          </table>
+          <p id="ais-conclusion" class="mensaje-ok"></p>
+          <div class="detalle-botones">
+            <button id="ais-repetir" type="button" class="boton-secundario"></button>
+          </div>
+        </div>
       </section>
     </main>
 
