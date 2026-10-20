@@ -1,6 +1,6 @@
 # Alcance y backlog de la Fase 1 v2
 
-Proyecto 2026-544-16 · Versión 2.0 · 19 de octubre de 2026 · Formato del bootcamp de vibe coding (Día 2: Decidir)
+Proyecto 2026-544-16 · Versión 2.1 · 20 de octubre de 2026 · Formato del bootcamp de vibe coding (Día 2: Decidir)
 
 Numeración nueva de tickets: los T01 a T15 de la versión 1 quedan en el archivo y no se reutilizan.
 
@@ -89,6 +89,31 @@ Un ticket es algo que alguien puede ver funcionando. El primero es el **esquelet
 
 **Por qué este orden:** primero lo que demuestra que guarda de verdad (T01), luego el corazón del producto (contestar o avisar, T02 a T05), luego el panel que recibe esos avisos (T06 a T10), luego el formulario que crea negocios nuevos (T11 a T13) y al final lo que se necesita para presentarlo (T14 a T18). Los 3 negocios de la demo se cargan directamente en la base; el formulario se prueba creando negocios nuevos. La meta de "menos de 5 minutos" de la Asignación es una forma de decir que crear el negocio debe ser fácil y rápido: no se cronometra.
 
+### Estado al 20 de octubre de 2026
+
+Todos los tickets están terminados y comprobados en la dirección pública (https://agente-pyme-merkatics.vercel.app). Cada uno tiene su commit en GitHub (Arleth-stack/agente-pyme).
+
+| # | Estado | Commit | Fecha |
+|---|---|---|---|
+| T01 | Hecho | a75a052, c68667d | 19 oct |
+| T02 | Hecho | 0e9c15e (conjunto de prueba antes del código), 9724fda | 19 oct |
+| T03 | Hecho | 8a5ef53 | 19 oct |
+| T04 | Hecho | 1127e5b | 19 oct |
+| T05 | Hecho | e134d29 | 19 oct |
+| T06 | Hecho | 11fbb26 | 19 oct |
+| T07 | Hecho | 0319e58 | 19 oct |
+| T08 | Hecho | 46ec05c | 19 oct |
+| T09 | Hecho | 9d939dd | 19 oct |
+| T10 | Hecho | 83ff6da | 19 oct |
+| T11 | Hecho | e52a468 | 19 oct |
+| T12 | Hecho | 61244df | 19 oct |
+| T13 | Hecho | 0c16075, 5ceaebb | 19 oct |
+| T14 | Hecho | 4b876d7 | 20 oct |
+| T15 | Hecho | 03b4113 | 20 oct |
+| T16 | Hecho | e044d95 | 20 oct |
+| T17 | Hecho | 2999974 | 20 oct |
+| T18 | Hecho (falta P9: celular de otra persona) | 4e12218 | 20 oct |
+
 ## 7. Entregables que no son código
 
 | # | Entregable | Carpeta del Drive |
@@ -121,5 +146,7 @@ Si algo se rompe y no sale en 10 minutos, se regresa al último commit que funci
 | 6 | Lun 26 oct | T14, T15, T16 y T17 |
 | 7 | Mar 27 oct | T18, D3 (validación) y D4 |
 | — | Mié 28 oct | Revisión con Carlos (propuesta) |
+
+**Real:** T01 a T13 se terminaron el 19 de octubre y T14 a T18 el 20 de octubre. Quedan D3 (validación con persona real, 27 de octubre), D4 (guion de demo) y P9 (celular de otra persona).
 
 La cita para la validación con la persona real (D3) se agenda desde ya, para el 27 de octubre.

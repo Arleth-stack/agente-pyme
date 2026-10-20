@@ -1,6 +1,6 @@
 # Pantallas y flujo v2
 
-Proyecto 2026-544-16 · Versión 2.0 · 19 de octubre de 2026
+Proyecto 2026-544-16 · Versión 2.1 · 20 de octubre de 2026
 
 Todo se diseña primero para celular (desde 360 px), con texto de al menos 16 px, botones de al menos 44 px y sin palabras técnicas. Se conserva la idea de la demo anterior: chat con aspecto de WhatsApp, vistas Cliente y Dueño, estado abierto o cerrado y reinicio.
 
@@ -14,6 +14,8 @@ Todo se diseña primero para celular (desde 360 px), con texto de al menos 16 px
 | /entrar | Entrar a mi panel | Dueño | T06 |
 | /panel | Panel del dueño | Dueño | T07–T10, T15 |
 | /demo | Demo para presentar | Arleth | T16 |
+
+Dirección pública: https://agente-pyme-merkatics.vercel.app
 
 Recorrido del dueño: Inicio → Crear mi negocio → ¡Listo! → Probar mi chat o Ir a mi panel.
 Recorrido del cliente: enlace del negocio → chat.
@@ -64,7 +66,7 @@ Correo, contraseña y **Entrar**. Mensajes: "Correo o contraseña incorrectos." 
 
 ## P6 · Panel del dueño
 
-Encabezado: nombre del negocio, enlace a su chat y **Salir**. Pestañas abajo en celular y a la izquierda en escritorio.
+Encabezado: nombre del negocio, enlace a su chat y **Salir**. Pestañas arriba: Conversaciones, Preguntas frecuentes, Mi negocio y Prueba de aislamiento (en celular bajan a dos líneas).
 
 | Sección | Contenido |
 |---|---|
@@ -73,6 +75,8 @@ Encabezado: nombre del negocio, enlace a su chat y **Salir**. Pestañas abajo en
 | Preguntas frecuentes | Agrupadas por tema; Agregar, Editar, Pausar y Quitar; mismos campos que el paso 3, más "Otras formas de preguntarlo" |
 | Mi negocio | Datos y horario editables |
 | Prueba de aislamiento | Ver P7 |
+
+Si el negocio todavía no tiene conversaciones, el panel explica que comparta el enlace de su chat (estado de WhatsApp, redes, tarjeta) y tiene el botón "Copiar mi enlace".
 
 ## P7 · Prueba de aislamiento
 

@@ -2,7 +2,7 @@
 
 **Agente de WhatsApp para PyMEs — módulo de entrada multiempresa, integrable a Merkatics**
 
-Proyecto 2026-544-16 · Estructura basada en IEEE Std 830-1998 · Versión 2.0 · 19 de octubre de 2026
+Proyecto 2026-544-16 · Estructura basada en IEEE Std 830-1998 · Versión 2.1 · 20 de octubre de 2026
 
 | Campo | Valor |
 |---|---|
@@ -12,7 +12,7 @@ Proyecto 2026-544-16 · Estructura basada en IEEE Std 830-1998 · Versión 2.0 �
 | Documento fuente | Asignación de Proyecto, versión 2 (7 oct 2026) |
 | Estado | Borrador para revisión |
 
-Esta versión reemplaza a la ERS 1.0 por el reinicio del prototipo. Cambios principales: el chat contesta con funciones dentro de la base de datos y sin servicio externo de redacción; se agregan requisitos para que ninguna pantalla muestre éxito sin que la base lo confirme. Es un documento interno: la regla de lenguaje aplica a los textos del producto, no a este documento.
+Esta versión reemplaza a la ERS 1.0 por el reinicio del prototipo. Cambios principales: el chat contesta con funciones dentro de la base de datos y sin servicio externo de redacción; se agregan requisitos para que ninguna pantalla muestre éxito sin que la base lo confirme. Versión 2.1: "menos de 5 minutos" se entiende como "fácil y rápido" (no se cronometra). Es un documento interno: la regla de lenguaje aplica a los textos del producto, no a este documento.
 
 # 1. Introducción
 
@@ -90,7 +90,7 @@ Es un subproducto y el embudo de adquisición oficial de Merkatics. En la Fase 1
 
 ## 2.4 Restricciones
 
-Puerta de fases, regla de lenguaje, no inventar respuestas, WhatsApp simulado, aislamiento desde el modelo de datos, herramientas gratuitas y Fase 1 en 6 días hábiles (20 al 27 de octubre). Detalle en 3.5.
+Puerta de fases, regla de lenguaje, no inventar respuestas, WhatsApp simulado, aislamiento desde el modelo de datos, herramientas gratuitas y Fase 1 en pocos días hábiles (construida el 19 y 20 de octubre; validación el 27). Detalle en 3.5.
 
 ## 2.5 Suposiciones y dependencias
 
@@ -242,19 +242,19 @@ Seis tablas: negocios, miembros, preguntas, conversaciones, mensajes y avisos. C
 | RD-06 | WhatsApp simulado en F1; en F2, Meta, Twilio o 360dialog según decisión de Carlos |
 | RD-07 | Herramientas gratuitas; si algo cuesta, paga Merkatics. El plan gratuito de Vercel es de uso no comercial: Carlos decide |
 | RD-08 | Español de México; zona horaria por negocio |
-| RD-09 | Todos los textos visibles en un solo archivo (textos.js) |
+| RD-09 | Todos los textos visibles en un solo archivo (textos.js); las respuestas que arma el chat viven en las funciones de la base |
 
 ## 3.6 Atributos del sistema
 
 | ID | Requisito | Prioridad | Fase | Verificación |
 |---|---|---|---|---|
-| RNF-LEN-01 | Ningún texto del sistema visible para dueño o cliente dice "IA", "inteligencia artificial", "automatización", "modelo" ni "entrenar" | Esencial | F1, F2 | Búsqueda en textos.js y en las pantallas: 0 |
+| RNF-LEN-01 | Ningún texto del sistema visible para dueño o cliente dice "IA", "inteligencia artificial", "automatización", "modelo" ni "entrenar" | Esencial | F1, F2 | Búsqueda automática (P5): 0 |
 | RNF-LEN-02 | Evitar también "bot", "prompt", "token", "API", "servidor" y códigos de error | Esencial | F1, F2 | Misma revisión |
 | RNF-USA-01 | Un dueño no técnico crea su negocio de forma fácil y rápida (la meta de "menos de 5 minutos" es una forma de decirlo, no se cronometra) y sin ayuda | Esencial | F1 | Prueba con persona real: lo termina sin ayuda |
 | RNF-USA-02 | El cliente obtiene horario, precio y ubicación sin instrucciones | Esencial | F1 | Validación |
 | RNF-USA-03 | El dueño encuentra y contesta un aviso en 3 toques o menos | Condicional | F1 | Validación |
 | RNF-USA-04 | Todo se usa en celular desde 360 px y en escritorio | Esencial | F1 | Revisión en ambos |
-| RNF-SEG-01 | El aislamiento lo garantiza la base; con la sesión de A, leer datos de B da 0 y escribir es rechazado | Esencial | F1 | 6 combinaciones |
+| RNF-SEG-01 | El aislamiento lo garantiza la base; con la sesión de A, leer datos de B da 0 y escribir es rechazado | Esencial | F1 | 6 combinaciones (P2) |
 | RNF-SEG-02 | La llave de servicio no está en el código del navegador ni en GitHub | Esencial | F1 | Revisión del repositorio |
 | RNF-SEG-03 | Contraseñas gestionadas por Supabase Auth (mínimo 8 caracteres); HTTPS en todo | Esencial | F1 | Revisión de configuración |
 | RNF-SEG-04 | Lo que llega de formularios y chat se valida antes de guardar: obligatorios, formatos y largo máximo | Esencial | F1 | Casos de datos inválidos |
@@ -302,4 +302,4 @@ Seis tablas: negocios, miembros, preguntas, conversaciones, mensajes y avisos. C
 
 # Apéndice C — Decisiones pendientes
 
-Ver "Registro de decisiones v2" (01_Documentacion/05_Decisiones_de_Carlos).
+Ver "Registro de decisiones v2.1" (01_Documentacion/05_Decisiones_de_Carlos).

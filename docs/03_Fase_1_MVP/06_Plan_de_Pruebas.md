@@ -1,6 +1,6 @@
 # Plan de pruebas v2
 
-Proyecto 2026-544-16 · Versión 2.0 · 19 de octubre de 2026
+Proyecto 2026-544-16 · Versión 2.1 · 20 de octubre de 2026
 
 Regla del bootcamp: una prueba se marca como aprobada solo cuando se **observó** el resultado, en la **dirección pública** y no en la vista previa. Que la pantalla se vea bien no cuenta. Cada resultado se guarda con fecha y evidencia (captura o tabla) en esta carpeta.
 
@@ -9,7 +9,7 @@ Regla del bootcamp: una prueba se marca como aprobada solo cuando se **observó*
 | # | Prueba | Cómo se hace | Aprobada si… | Tickets |
 |---|---|---|---|---|
 | P1 | Conjunto de prueba por negocio | Se mandan al chat de cada negocio sus preguntas frecuentes en 2 formas (como la escribió el dueño y sin acentos o abreviada), sus casos de aviso y 2 preguntas de los otros negocios | ≥ 90 % de las preguntas cubiertas contestadas con la respuesta correcta, 0 respuestas inventadas, todos los avisos con su motivo correcto y las preguntas de otros negocios siempre avisan | T02–T05 |
-| P2 | Aislamiento en la base | En el editor SQL de Supabase, con la sesión de cada dueño, se intenta leer y escribir en los otros negocios; sin sesión, se intenta leer cada tabla | 6 de 6 combinaciones: leer da 0, escribir es rechazado; sin sesión no se lee nada | T06, T15 |
+| P2 | Aislamiento en la base | Prueba automática (node pruebas/aislamiento.mjs): entra como cada dueño, igual que la página, e intenta leer y escribir en los otros negocios; sin sesión, intenta leer cada tabla | 6 de 6 combinaciones: leer da 0, escribir es rechazado; sin sesión no se lee nada | T06, T15 |
 | P3 | Alta fácil y rápida | Se crea un negocio nuevo con el formulario; después, la persona real de la validación crea el suyo | Lo termina sin ayuda y sin atorarse; ¡Listo! solo con guardado confirmado | T11–T13 |
 | P4 | Recorrido del aviso | Cliente pregunta algo no cubierto → aparece el aviso en el panel → el dueño contesta → el cliente ve la respuesta → el asistente calla → el dueño resuelve → el asistente vuelve a contestar | Los 6 pasos en la dirección pública, en dos dispositivos | T03, T07, T08 |
 | P5 | Lenguaje | Búsqueda automática de las palabras prohibidas en textos.js y en el texto de cada pantalla | 0 apariciones | T18 |
