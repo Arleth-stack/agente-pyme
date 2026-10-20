@@ -25,7 +25,7 @@ Recorrido del cliente: enlace del negocio → chat.
 - Tres beneficios cortos: "Contesta de noche y en fin de semana", "Nunca inventa precios", "Te avisa cuando un cliente te necesita".
 - Botones: **Crear mi negocio** y **Entrar a mi panel**.
 
-## P2 · Crear mi negocio (4 pasos, menos de 5 minutos)
+## P2 · Crear mi negocio (4 pasos, fácil y rápido)
 
 Barra de avance "Paso 1 de 4", botones Atrás y Siguiente. Cada paso valida antes de avanzar y Atrás conserva lo escrito.
 
@@ -101,7 +101,7 @@ Una sola página para presentar:
 |---|---|---|
 | 0:00–0:20 | La frase: "Tu WhatsApp responde solo y nunca pierdes un cliente por no contestar a tiempo" | Propuesta de valor |
 | 0:20–1:00 | El problema con números (de la validación real) | Problema real |
-| 1:00–2:00 | Crear un negocio en vivo con el formulario (los 3 de ejemplo ya existen y tienen su tiempo anotado) | Producto de entrada, menos de 5 minutos |
+| 1:00–2:00 | Crear un negocio en vivo con el formulario (los 3 de ejemplo ya existen) | Producto de entrada: fácil y rápido, sin ayuda |
 | 2:00–3:00 | Chat de Salón Bella: precio de un corte (contesta); cambio de aceite (avisa a una persona); cita el viernes (aviso de cita) | Contesta solo con su información y avisa |
 | 3:00–3:40 | Panel de Salón Bella: el aviso, contestar, marcar como resuelta | Panel del dueño |
 | 3:40–4:20 | Prueba de aislamiento y panel de Taller Rápido sin nada del salón | Multiempresa demostrado |

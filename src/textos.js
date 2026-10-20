@@ -102,7 +102,6 @@ export const textos = {
       copiado: 'Copiado',
       probar: 'Probar mi chat',
       panel: 'Ir a mi panel',
-      tiempo: (min, seg) => `Lo creaste en ${min} min ${seg} s.`,
     },
     faltaNombre: 'Escribe el nombre de tu negocio.',
     faltaGiro: 'Elige el giro de tu negocio.',

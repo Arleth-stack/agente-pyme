@@ -1,6 +1,6 @@
 # Registro de decisiones v2
 
-Proyecto 2026-544-16 · Se actualiza cada vez que Carlos, la coordinación o Arleth deciden algo. Última actualización: 19 de octubre de 2026.
+Proyecto 2026-544-16 · Se actualiza cada vez que Carlos, la coordinación o Arleth deciden algo. Última actualización: 20 de octubre de 2026.
 
 ## Decisiones tomadas
 
@@ -12,6 +12,7 @@ Proyecto 2026-544-16 · Se actualiza cada vez que Carlos, la coordinación o Arl
 | 07/10/2026 | Ordenar el Drive con la estructura de carpetas 01 a 10 | Carlos (vía agente mentor) | Instrucción al grupo |
 | 19/10/2026 | Reiniciar el prototipo desde cero, con proyecto nuevo de Supabase, y documentación v2 | Arleth | Diagnóstico del agente mentor: pantallas de éxito sin guardado comprobado, chat con respuestas de ejemplo y aislamiento sin demostrar |
 | 19/10/2026 | Los documentos de la versión 1 se mueven a 99_Archivo_Version_1 (no se borran) | Arleth | Evidencia de iteración |
+| 20/10/2026 | "Menos de 5 minutos" es una forma de decir que crear el negocio debe ser fácil y rápido; no se cronometra. Los 3 negocios demo se cargan en la base y el formulario se prueba con negocios nuevos | Arleth | Aclaración del objetivo de la Asignación |
 
 ## Propuestas de Arleth en espera de visto bueno
 

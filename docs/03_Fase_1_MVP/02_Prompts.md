@@ -10,7 +10,7 @@ Solo cambia la parte de en medio. Las otras se copian igual cada vez.
 
 **Contexto (fijo):**
 
-> Somos Merkatics. Construimos un módulo multiempresa: el dueño de una PyME crea su negocio con un formulario en menos de 5 minutos y obtiene un chat con aspecto de WhatsApp que contesta solo con sus preguntas frecuentes y le avisa en su panel cuando un cliente necesita a una persona. El mismo sistema atiende a Consultorio Dental Sonrisa Clara, Salón Bella y Taller Rápido, y ninguno puede ver los datos de otro: cada tabla de Supabase lleva negocio_id y reglas por fila; el cliente del chat no lee tablas, solo llama a las funciones chat_*. Pantallas en HTML, CSS y JavaScript con Vite; todos los textos visibles en textos.js. El dueño no es técnico: en pantalla nunca aparecen "IA", "inteligencia artificial", "automatización", "modelo", "bot" ni "entrenar". Ninguna pantalla muestra éxito si la base no lo confirmó. Esta vez no: WhatsApp real, redacción con inteligencia artificial, Django, envío al CRM, cobros ni avisos por correo.
+> Somos Merkatics. Construimos un módulo multiempresa: el dueño de una PyME crea su negocio con un formulario fácil y rápido y obtiene un chat con aspecto de WhatsApp que contesta solo con sus preguntas frecuentes y le avisa en su panel cuando un cliente necesita a una persona. El mismo sistema atiende a Consultorio Dental Sonrisa Clara, Salón Bella y Taller Rápido, y ninguno puede ver los datos de otro: cada tabla de Supabase lleva negocio_id y reglas por fila; el cliente del chat no lee tablas, solo llama a las funciones chat_*. Pantallas en HTML, CSS y JavaScript con Vite; todos los textos visibles en textos.js. El dueño no es técnico: en pantalla nunca aparecen "IA", "inteligencia artificial", "automatización", "modelo", "bot" ni "entrenar". Ninguna pantalla muestra éxito si la base no lo confirmó. Esta vez no: WhatsApp real, redacción con inteligencia artificial, Django, envío al CRM, cobros ni avisos por correo.
 
 **Pedido:** un solo ticket, el de arriba de la lista. Por ejemplo:
 
@@ -26,13 +26,13 @@ Solo cambia la parte de en medio. Las otras se copian igual cada vez.
 
 ## 2. Crítica de experiencia de usuario (Día 3)
 
-> Actúa como crítico de experiencia de usuario. Evalúa esta pantalla para la dueña de un salón de belleza que la ve por primera vez en su celular. Sé específico en lo que fallaría. Revisa sobre todo que pueda crear su negocio en menos de 5 minutos sin ayuda y que ningún texto suene técnico.
+> Actúa como crítico de experiencia de usuario. Evalúa esta pantalla para la dueña de un salón de belleza que la ve por primera vez en su celular. Sé específico en lo que fallaría. Revisa sobre todo que pueda crear su negocio fácil y rápido, sin ayuda, y que ningún texto suene técnico.
 
 Se usa con capturas reales y se aplican dos cambios: uno de flujo y uno de aspecto. El resultado se guarda en 03_Fase_1_MVP/04_Diseño_UX_UI.
 
 ## 3. Autocrítica antes de cada entrega
 
-> Actúa como crítico experto en productos multiempresa. Evalúa esta versión contra los criterios de la Fase 1 de la Asignación v2: 3 negocios, formulario de menos de 5 minutos, respuestas solo con la información de cada negocio, aviso a una persona sin inventar, panel por negocio, aislamiento demostrado en la base y cero lenguaje técnico. Sé específico en lo que fallaría.
+> Actúa como crítico experto en productos multiempresa. Evalúa esta versión contra los criterios de la Fase 1 de la Asignación v2: 3 negocios, formulario fácil y rápido, respuestas solo con la información de cada negocio, aviso a una persona sin inventar, panel por negocio, aislamiento demostrado en la base y cero lenguaje técnico. Sé específico en lo que fallaría.
 
 ## 4. Revisión de seguridad (Día 2 y Día 3)
 

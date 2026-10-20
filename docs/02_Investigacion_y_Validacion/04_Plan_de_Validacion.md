@@ -12,7 +12,6 @@ Proyecto 2026-544-16 · Versión 2.0 · 19 de octubre de 2026
 - Dirección pública funcionando en un celular.
 - Demo reiniciada con los 3 negocios de ejemplo.
 - Permiso de la persona para tomar notas, capturas o grabar la pantalla.
-- Cronómetro listo para medir el alta del negocio.
 
 ## Parte 1 · Entrevista (5 minutos, antes de enseñar nada)
 
@@ -32,7 +31,7 @@ Solo se explica: "Esto es para que el WhatsApp de tu negocio conteste solo. Prim
 
 | # | Tarea | Éxito si… |
 |---|---|---|
-| 1 | Crear un negocio como el suyo con el formulario | Termina en menos de 5 minutos sin ayuda (cronometrado) |
+| 1 | Crear un negocio como el suyo con el formulario | Lo termina sin ayuda y sin atorarse (se anota si en algún paso dudó) |
 | 2 | Como cliente de su negocio, preguntar un precio y el horario | Recibe sus datos correctos |
 | 3 | Preguntar algo que no escribió | Recibe el aviso de que una persona contestará; nada inventado |
 | 4 | Pedir una cita | Aparece el aviso "Pide una cita" en su panel |
@@ -54,7 +53,7 @@ Solo se explica: "Esto es para que el WhatsApp de tu negocio conteste solo. Prim
 | Última vez que no pudo contestar a tiempo (sus palabras) | |
 | Qué ha intentado | |
 | Cuánto paga hoy por ayuda o herramientas | |
-| Tiempo para crear su negocio | |
+| ¿Le pareció fácil y rápido crear su negocio? ¿Dónde dudó? | |
 | Tareas logradas sin ayuda (1 a 6) | |
 | ¿Vio alguna palabra técnica? ¿Cuál? | |
 | Qué dijo (frases textuales) | |
@@ -67,7 +66,7 @@ Solo se explica: "Esto es para que el WhatsApp de tu negocio conteste solo. Prim
 | Punto | Resultado |
 |---|---|
 | Personas que lo probaron (y segmento) | |
-| Tiempo para crear un negocio | |
+| ¿Creó su negocio sin ayuda? | |
 | Tareas logradas sin ayuda | |
 | Problema validado (sí, no o parcial) y evidencia | |
 | Cambios hechos por la validación | |

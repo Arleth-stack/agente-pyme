@@ -2,7 +2,7 @@
 
 Proyecto 2026-544-16 · Merkatics GrowthLab · Practicante: Arleth Caballero. Responder siempre en español, sin jerga.
 
-**Qué es:** módulo multiempresa. El dueño de una PyME crea su negocio con un formulario en menos de 5 minutos y obtiene un chat con aspecto de WhatsApp que contesta solo con sus preguntas frecuentes y le avisa en su panel cuando un cliente necesita a una persona. El mismo sistema atiende a Consultorio Dental Sonrisa Clara, Salón Bella y Taller Rápido; ninguno ve los datos de otro.
+**Qué es:** módulo multiempresa. El dueño de una PyME crea su negocio con un formulario fácil y rápido y obtiene un chat con aspecto de WhatsApp que contesta solo con sus preguntas frecuentes y le avisa en su panel cuando un cliente necesita a una persona. El mismo sistema atiende a Consultorio Dental Sonrisa Clara, Salón Bella y Taller Rápido; ninguno ve los datos de otro.
 
 **Documentos que mandan:** `docs/` (copia del Drive). El orden de trabajo está en `docs/03_Fase_1_MVP/01_Alcance_y_Backlog.md` (tickets T01–T18) y las tablas, reglas y lógica del chat en `docs/03_Fase_1_MVP/05_Modelo_de_Datos.md`.
 

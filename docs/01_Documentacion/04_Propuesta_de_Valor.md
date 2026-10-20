@@ -13,7 +13,7 @@ Se vende por el beneficio, nunca por la tecnología. El dueño compra que sus cl
 | Contesta de noche y en fin de semana | El cliente no se va con la competencia |
 | Contesta solo con lo que el negocio escribió | No inventa precios ni promesas |
 | Avisa cuando un cliente necesita a una persona | El dueño solo interviene cuando vale la pena |
-| Se configura como un formulario en menos de 5 minutos | Sin técnicos ni capacitación |
+| Se configura como un formulario, fácil y rápido | Sin técnicos ni capacitación |
 
 ## Beneficio por segmento de la demo
 

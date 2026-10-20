@@ -26,7 +26,7 @@ Un **módulo** que muchas PyMEs usan a la vez para que su WhatsApp conteste solo
 
 | Requisito | Qué significa | Cómo se comprueba |
 |---|---|---|
-| Producto de entrada | Un dueño no técnico lo entiende, lo configura y lo usa sin ayuda. Se vende por el beneficio, nunca por la tecnología | Un negocio nuevo se crea con un formulario en menos de 5 minutos, sin palabras técnicas, y lo prueba una persona real |
+| Producto de entrada | Un dueño no técnico lo entiende, lo configura y lo usa sin ayuda. Se vende por el beneficio, nunca por la tecnología | Un negocio nuevo se crea con un formulario fácil y rápido (la Asignación dice "menos de 5 minutos" como forma de decirlo), sin palabras técnicas, y lo prueba una persona real |
 | Multiempresa | El mismo sistema atiende a muchos negocios y ninguno ve los datos de otro | Demo con 3 negocios de segmentos distintos, cada uno con su panel, y aislamiento demostrado en la base de datos |
 | Integrable a Merkatics | Se diseña desde ahora para conectarse al Growth OS y al CRM | Documento de integración de una página aprobado por Carlos |
 

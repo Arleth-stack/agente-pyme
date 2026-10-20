@@ -81,13 +81,13 @@ Un ticket es algo que alguien puede ver funcionando. El primero es el **esquelet
 | T11 | Crear mi negocio: datos y horario | Lleno el paso 1 (nombre, giro, teléfono, dirección) y el paso 2 (horario por día); si falta algo me dice qué en español; "Atrás" no borra lo que escribí | Pantalla, Errores |
 | T12 | Crear mi negocio: preguntas | Al elegir "Salón de belleza" aparecen sus preguntas sugeridas; solo escribo mis respuestas, quito o agrego | Pantalla, Lógica |
 | T13 | Crear mi negocio: cuenta y ¡Listo! | Escribo correo y contraseña, toco Crear, y solo si la base confirmó que guardó veo "¡Listo!" con el enlace de mi chat; si falla, veo qué pasó y no se crea nada a medias; un doble clic no crea dos negocios | Datos, Lógica, Errores |
-| T14 | Los 3 negocios de la demo | Sonrisa Clara, Salón Bella y Taller Rápido creados con el formulario, con su tiempo anotado (menos de 5 minutos cada uno) y conversaciones de ejemplo | Datos |
+| T14 | Los 3 negocios de la demo | Sonrisa Clara, Salón Bella y Taller Rápido existen con sus 12 preguntas, su horario, la cuenta de su dueño y 4 conversaciones de ejemplo cada uno | Datos |
 | T15 | Prueba de aislamiento | En el panel de Salón Bella, la pantalla "Prueba de aislamiento" intenta leer los otros dos negocios y muestra "0 conversaciones · 0 preguntas"; las pruebas en la base pasan 6 de 6 | Pantalla, Datos |
 | T16 | Página de demo | En una sola página elijo negocio, veo el chat y el panel lado a lado, cambio la hora a "cerrado" y reinicio los datos de ejemplo | Pantalla, Lógica |
 | T17 | Inicio | La página principal explica el beneficio sin palabras técnicas y lleva a "Crear mi negocio" y "Entrar a mi panel" | Pantalla |
 | T18 | Limpieza y entrega | 0 palabras prohibidas; crítica de experiencia de usuario con 2 cambios aplicados; revisión de seguridad hecha; README de 5 líneas; la dirección abre en el celular de otra persona | Todas |
 
-**Por qué este orden:** primero lo que demuestra que guarda de verdad (T01), luego el corazón del producto (contestar o avisar, T02 a T05), luego el panel que recibe esos avisos (T06 a T10), luego el formulario que crea negocios nuevos (T11 a T13) y al final lo que se necesita para presentarlo (T14 a T18). En T01 a T10 se trabaja con los 3 negocios cargados directamente en la base; en T14 se vuelven a crear con el formulario para tener la evidencia de los 5 minutos.
+**Por qué este orden:** primero lo que demuestra que guarda de verdad (T01), luego el corazón del producto (contestar o avisar, T02 a T05), luego el panel que recibe esos avisos (T06 a T10), luego el formulario que crea negocios nuevos (T11 a T13) y al final lo que se necesita para presentarlo (T14 a T18). Los 3 negocios de la demo se cargan directamente en la base; el formulario se prueba creando negocios nuevos. La meta de "menos de 5 minutos" de la Asignación es una forma de decir que crear el negocio debe ser fácil y rápido: no se cronometra.
 
 ## 7. Entregables que no son código
 

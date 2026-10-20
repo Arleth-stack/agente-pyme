@@ -206,7 +206,6 @@ validar[3] = () => {
 const $correo = document.getElementById('correo');
 const $contrasena = document.getElementById('contrasena');
 const $contrasena2 = document.getElementById('contrasena2');
-const inicio = Date.now();
 let creando = false;
 
 validar[4] = () => {
@@ -254,10 +253,8 @@ async function crearNegocio() {
 function mostrarListo(negocio) {
   const tl = t.listo;
   const url = `${location.origin}/chat/${negocio.slug}`;
-  const segundos = Math.round((Date.now() - inicio) / 1000);
   texto('listo-titulo', tl.titulo);
   texto('listo-texto', tl.texto);
-  texto('listo-tiempo', tl.tiempo(Math.floor(segundos / 60), segundos % 60));
   document.getElementById('listo-url').value = url;
   const $copiar = document.getElementById('listo-copiar');
   $copiar.textContent = tl.copiar;

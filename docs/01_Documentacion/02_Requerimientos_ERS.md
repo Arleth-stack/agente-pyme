@@ -197,7 +197,7 @@ Reglas: diseño pensado primero para celular (desde 360 px), texto de al menos 1
 | RF-MUL-01 | Atender a muchos negocios con el mismo código; cada fila lleva el identificador de su negocio | Esencial | F1 | T01 | Revisión del modelo de datos |
 | RF-MUL-02 | Leer y modificar solo datos de los negocios donde el usuario es miembro, con reglas por fila | Esencial | F1 | T06 | Prueba de aislamiento |
 | RF-MUL-03 | Impedir que el cliente final lea tablas; solo puede usar las funciones del chat con su token | Esencial | F1 | T01 | Intentar leer tablas sin sesión |
-| RF-MUL-04 | Tener 3 negocios de Prioridad 1 (dental, salón, taller) creados con el formulario | Esencial | F1 | T14 | Los 3 existen con datos distintos |
+| RF-MUL-04 | Tener 3 negocios de Prioridad 1 (dental, salón, taller) con sus preguntas y conversaciones de ejemplo | Esencial | F1 | T14 | Los 3 existen con datos distintos |
 | RF-MUL-05 | Mostrar en pantalla la prueba de aislamiento | Esencial | F1 | T15 | Pantalla con 0 de los otros negocios |
 | RF-MUL-06 | Roles por negocio (dueño y encargado) y usuario en varios negocios | Condicional | F2 | — | Pruebas por rol |
 
@@ -250,7 +250,7 @@ Seis tablas: negocios, miembros, preguntas, conversaciones, mensajes y avisos. C
 |---|---|---|---|---|
 | RNF-LEN-01 | Ningún texto del sistema visible para dueño o cliente dice "IA", "inteligencia artificial", "automatización", "modelo" ni "entrenar" | Esencial | F1, F2 | Búsqueda en textos.js y en las pantallas: 0 |
 | RNF-LEN-02 | Evitar también "bot", "prompt", "token", "API", "servidor" y códigos de error | Esencial | F1, F2 | Misma revisión |
-| RNF-USA-01 | Un dueño no técnico crea su negocio en menos de 5 minutos sin ayuda | Esencial | F1 | Prueba cronometrada con persona real |
+| RNF-USA-01 | Un dueño no técnico crea su negocio de forma fácil y rápida (la meta de "menos de 5 minutos" es una forma de decirlo, no se cronometra) y sin ayuda | Esencial | F1 | Prueba con persona real: lo termina sin ayuda |
 | RNF-USA-02 | El cliente obtiene horario, precio y ubicación sin instrucciones | Esencial | F1 | Validación |
 | RNF-USA-03 | El dueño encuentra y contesta un aviso en 3 toques o menos | Condicional | F1 | Validación |
 | RNF-USA-04 | Todo se usa en celular desde 360 px y en escritorio | Esencial | F1 | Revisión en ambos |
@@ -268,7 +268,7 @@ Seis tablas: negocios, miembros, preguntas, conversaciones, mensajes y avisos. C
 **Fase 1 — MVP (Asignación v2)**
 
 - Demo multiempresa con 3 negocios ficticios de segmentos de Prioridad 1 distintos.
-- Cada negocio creado desde el formulario en menos de 5 minutos, con sus preguntas, horario y número.
+- Crear un negocio con el formulario es fácil y rápido (preguntas sugeridas, horario y ubicación que se contestan solos), con sus preguntas, horario y número.
 - Chat tipo WhatsApp que contesta solo con la información de su negocio y avisa a una persona cuando no puede.
 - Panel del dueño por negocio con conversaciones, preguntas frecuentes y avisos.
 - Aislamiento de datos demostrado en la base y en pantalla.
@@ -290,7 +290,7 @@ Seis tablas: negocios, miembros, preguntas, conversaciones, mensajes y avisos. C
 
 | Lo que pide la Asignación v2 | Requisitos |
 |---|---|
-| Producto de entrada: formulario de menos de 5 minutos, sin jerga | RF-NEG, RNF-USA-01, RNF-LEN |
+| Producto de entrada: formulario fácil y rápido, sin jerga | RF-NEG, RNF-USA-01, RNF-LEN |
 | Multiempresa: 3 negocios, mismo código, aislamiento demostrado | RF-MUL-01 a 05, RNF-SEG-01 |
 | Integrable: organizaciones, roles y CRM | RF-INT, RD-04 |
 | Chat que contesta solo con su negocio | RF-CHAT-01 a 07, RD-05, RNF-FIA-02 |
