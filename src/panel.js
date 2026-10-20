@@ -77,10 +77,40 @@ function pintarFiltros() {
   }));
 }
 
+function pintarVacio(visibles) {
+  $vacio.hidden = visibles.length > 0;
+  if (visibles.length) return;
+  // Negocio recién creado: en lugar de un panel vacío, qué hacer para recibir clientes.
+  if (!conversaciones.length && negocioActual) {
+    const enlace = `${location.origin}/chat/${negocioActual.slug}`;
+    const $texto = document.createElement('span');
+    $texto.textContent = `${t.primerosPasos} `;
+    const $enlace = document.createElement('a');
+    $enlace.href = enlace;
+    $enlace.target = '_blank';
+    $enlace.rel = 'noopener';
+    $enlace.textContent = enlace;
+    const $copiar = document.createElement('button');
+    $copiar.type = 'button';
+    $copiar.className = 'boton-chico';
+    $copiar.textContent = t.copiarEnlace;
+    $copiar.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(enlace);
+        $copiar.textContent = t.enlaceCopiado;
+      } catch { /* el enlace queda a la vista para copiarlo a mano */ }
+    });
+    $vacio.className = 'primeros-pasos';
+    $vacio.replaceChildren($texto, $enlace, $copiar);
+    return;
+  }
+  $vacio.className = 'suave';
+  $vacio.textContent = t.sinConversaciones;
+}
+
 function pintarLista() {
   const visibles = conversaciones.filter((c) => filtro === 'todas' || c.estado === filtro);
-  $vacio.textContent = t.sinConversaciones;
-  $vacio.hidden = visibles.length > 0;
+  pintarVacio(visibles);
   $lista.replaceChildren(...visibles.map((c) => {
     const ultimo = c.mensajes[0];
     const aviso = c.avisos.find((a) => a.estado === 'pendiente');

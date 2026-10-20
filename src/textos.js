@@ -291,6 +291,9 @@ export const textos = {
     noSeEnvio: 'No se envió tu respuesta. Revisa tu internet e inténtalo de nuevo.',
     noSeResolvio: 'No pudimos marcarla como resuelta. Inténtalo de nuevo.',
     sinConversaciones: 'Todavía no hay conversaciones aquí.',
+    primerosPasos: 'Todavía no te escribe nadie. Comparte el enlace de tu chat con tus clientes (en tu estado de WhatsApp, redes o tarjeta) y aquí verás cada conversación.',
+    copiarEnlace: 'Copiar mi enlace',
+    enlaceCopiado: 'Enlace copiado',
     hace: (fecha) => {
       const min = Math.round((Date.now() - new Date(fecha)) / 60000);
       if (min < 1) return 'ahorita';

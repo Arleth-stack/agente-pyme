@@ -470,3 +470,13 @@ body {
   .demo-lado-a-lado { grid-template-columns: minmax(340px, 420px) 1fr; }
   .demo-lado-a-lado [data-columna] { display: flex !important; }
 }
+
+/* Crítica de experiencia de usuario (T18) */
+.primeros-pasos { display: grid; gap: 10px; padding: 16px; background: #fff; border: 1px dashed var(--acento); border-radius: 12px; }
+.primeros-pasos a { word-break: break-all; color: var(--acento); }
+.primeros-pasos .boton-chico { justify-self: start; }
+#volver { white-space: nowrap; }
+@media (max-width: 600px) {
+  .panel-pestanas { flex-wrap: wrap; overflow-x: visible; padding: 0 8px; }
+  .pestana { padding: 0 10px; font-size: 15px; }
+}

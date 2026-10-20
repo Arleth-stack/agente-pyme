@@ -41,4 +41,13 @@ Total: 36 casos por negocio, 108 en total. Los mensajes exactos de "otra forma" 
 
 | Fecha | Prueba | Resultado | Evidencia | Qué se ajustó |
 |---|---|---|---|---|
-| | | | | |
+| 19/10/2026 | P1 (hasta T05) | 106 de 108; 97 % de cubiertas correctas; 0 inventadas | pruebas/resultados/2026-10-19_P1_T05.md | La cita reconoce variantes ("llevarlo"); las 2 fallas avisan a una persona en lugar de contestar |
+| 19/10/2026 | P4 recorrido del aviso | 6 de 6 pasos | Comprobado en el panel y en el chat del cliente (T08) | — |
+| 19/10/2026 | P7 sin éxito falso | Aprobada | Chat (T01) y alta del negocio sin internet (T13): mensaje claro, nada guardado a medias | — |
+| 19/10/2026 | P8 datos inválidos | Aprobada | Teléfono de 9 dígitos, horario al revés, correo usado, contraseñas distintas, mensaje de 2,000 caracteres | — |
+| 20/10/2026 | P2 aislamiento | 6 de 6 combinaciones; sin sesión 0 tablas | pruebas/resultados/2026-10-20_P2_aislamiento.md | — |
+| 20/10/2026 | P3 alta fácil y rápida | Aprobada con negocio de prueba | Pasos 1 a 4 sin ayuda; ¡Listo! solo con guardado confirmado | Se quitó el cronómetro: "5 minutos" es en sentido figurado |
+| 20/10/2026 | P5 lenguaje | 0 palabras prohibidas | pruebas/resultados/2026-10-20_P5_lenguaje.md | Se excluye el contenido que escribe cada negocio |
+| 20/10/2026 | P6 celular y escritorio | Aprobada | Chat, crear, panel, demo e inicio a 375 px sin moverse de lado | Pestañas del panel en dos líneas en celular |
+| 20/10/2026 | P10 reinicio de la demo | Aprobada | Las 12 conversaciones demo se restauran; un negocio no demo no se toca | — |
+| Pendiente | P9 celular ajeno | — | Lo hace Arleth | — |

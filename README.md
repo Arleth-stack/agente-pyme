@@ -1,7 +1,7 @@
 # Tu WhatsApp contesta solo
 
-Módulo multiempresa para que el WhatsApp de una PyME conteste solo sus preguntas frecuentes y avise al dueño cuando un cliente lo necesita (Merkatics 2026-544-16, Fase 1).
-Cómo se usa: el cliente abre `/chat/{negocio}` y pregunta; el dueño entra a su panel para atender los avisos.
-Cómo correrlo: `npm install`, copiar `.env.example` como `.env.local` con los datos de Supabase y `npm run dev`.
-Quién lo mantiene: Arleth Caballero (practicante GrowthLab).
-Ojo: la base de Supabase del plan gratuito se pausa sola si nadie la usa una semana; abre la demo antes de presentarla.
+Qué es: módulo multiempresa para que el WhatsApp de una PyME conteste solo sus preguntas frecuentes y avise al dueño cuando un cliente lo necesita (Merkatics 2026-544-16, Fase 1 con canal simulado).
+Cómo se usa: el dueño crea su negocio en https://agente-pyme-merkatics.vercel.app/crear, comparte el enlace de su chat y atiende los avisos en /panel; la demo para presentar está en /demo.
+Cómo se corre: `npm install`, copiar `.env.example` como `.env.local` con los datos de Supabase y `npm run dev`; pruebas con `node pruebas/correr.mjs`, `node pruebas/aislamiento.mjs` y `node pruebas/lenguaje.mjs`.
+Quién lo mantiene: Arleth Caballero (practicante GrowthLab, Merkatics); documentación en `docs/` y en el Drive del proyecto.
+Ojo: la base gratuita de Supabase se pausa sola tras una semana sin uso (abre la demo antes de presentarla) y las cuentas de la demo viven solo en `cuentas-demo.local.txt`, fuera de GitHub.
