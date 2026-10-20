@@ -126,16 +126,23 @@ body {
 .chat-caja button:active:not(:disabled) { transform: scale(0.94); }
 .chat-caja button:disabled { opacity: 0.5; cursor: default; }
 
-/* Inicio (provisional hasta T17) ---------------------------------------- */
+/* Inicio (T17) -------------------------------------------------------- */
 
-.pantalla-inicio {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 48px 16px;
-}
-.pantalla-inicio h1 { font-size: 28px; line-height: 1.2; margin: 0 0 12px; }
-.pantalla-inicio p { color: var(--texto-suave); margin: 0 0 24px; }
+.pantalla-inicio-fondo { background: #f6f7f8; }
+.pantalla-inicio { max-width: 880px; margin: 0 auto; padding: 48px 16px 64px; }
+.inicio-portada { max-width: 640px; }
+.pantalla-inicio h1 { font-size: clamp(30px, 6vw, 44px); line-height: 1.1; margin: 0 0 16px; letter-spacing: -0.01em; }
+.inicio-texto { font-size: 18px; color: var(--texto-suave); margin: 0 0 24px; }
+.pantalla-inicio h2 { font-size: 20px; margin: 0 0 12px; }
+.inicio-beneficios { display: grid; gap: 12px; margin: 40px 0; }
+@media (min-width: 720px) { .inicio-beneficios { grid-template-columns: repeat(3, 1fr); } }
+.beneficio { padding: 18px; background: #fff; border: 1px solid #e3e6e8; border-top: 4px solid var(--verde); border-radius: 12px; }
+.beneficio h3 { margin: 0 0 6px; font-size: 17px; }
+.beneficio p { margin: 0; color: var(--texto-suave); }
+.inicio-pasos { margin: 0 0 40px; }
+.inicio-pasos ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; font-size: 17px; }
 .lista-negocios { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+@media (min-width: 720px) { .lista-negocios { grid-template-columns: repeat(3, 1fr); } }
 .lista-negocios a {
   display: block;
   padding: 14px 16px;

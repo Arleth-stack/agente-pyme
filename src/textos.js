@@ -6,10 +6,21 @@ export const textos = {
 
   inicio: {
     titulo: 'Tu WhatsApp responde solo, a cualquier hora.',
-    texto: 'Escribe las preguntas que te hacen tus clientes y te avisamos cuando alguien te necesite.',
-    ejemplos: 'Prueba cómo contesta el WhatsApp de estos negocios:',
+    texto: 'Escribe las preguntas que te hacen tus clientes y te avisamos cuando alguien te necesite. Nunca pierdes un cliente por no contestar a tiempo.',
     crear: 'Crear mi negocio',
     entrar: 'Entrar a mi panel',
+    beneficios: [
+      ['Contesta de noche y en fin de semana', 'Tus clientes reciben respuesta al momento, aunque estés atendiendo o descansando.'],
+      ['Nunca inventa precios', 'Contesta solo con lo que tú escribiste. Si no lo sabe, no adivina.'],
+      ['Te avisa cuando te necesitan', 'Si piden una cita, tienen una queja o algo que no sabe, te llega un aviso para que contestes tú.'],
+    ],
+    comoFunciona: 'Así de fácil',
+    pasos: [
+      'Llenas un formulario con tus datos, tu horario y lo que te preguntan tus clientes.',
+      'Tu WhatsApp contesta solo con tus respuestas, a cualquier hora.',
+      'Cuando un cliente te necesita, lo ves en tu panel y le contestas tú.',
+    ],
+    ejemplos: 'Pruébalo como si fueras cliente de estos negocios:',
   },
 
   chat: {

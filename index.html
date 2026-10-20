@@ -4,30 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tu WhatsApp contesta solo</title>
+    <meta name="description" content="Tu WhatsApp responde solo a las preguntas de tus clientes y te avisa cuando alguien te necesita." />
     <link rel="stylesheet" href="/src/estilos.css" />
   </head>
-  <body>
+  <body class="pantalla-inicio-fondo">
     <main class="pantalla-inicio">
-      <h1 id="titulo"></h1>
-      <p id="texto"></p>
-      <div class="inicio-botones">
-        <a href="/crear" id="boton-crear" class="boton-principal boton-enlace"></a>
-        <a href="/entrar" id="boton-entrar" class="boton-secundario boton-enlace"></a>
-      </div>
-      <p id="ejemplos"></p>
-      <ul class="lista-negocios">
-        <li><a href="/chat/consultorio-dental-sonrisa-clara">Consultorio Dental Sonrisa Clara</a></li>
-        <li><a href="/chat/salon-bella">Salón Bella</a></li>
-        <li><a href="/chat/taller-rapido">Taller Rápido</a></li>
-      </ul>
+      <section class="inicio-portada">
+        <h1 id="titulo"></h1>
+        <p id="texto" class="inicio-texto"></p>
+        <div class="inicio-botones">
+          <a href="/crear" id="boton-crear" class="boton-principal boton-enlace"></a>
+          <a href="/entrar" id="boton-entrar" class="boton-secundario boton-enlace"></a>
+        </div>
+      </section>
+
+      <section class="inicio-beneficios" id="beneficios"></section>
+
+      <section class="inicio-pasos">
+        <h2 id="como-funciona"></h2>
+        <ol id="pasos"></ol>
+      </section>
+
+      <section class="inicio-ejemplos">
+        <h2 id="ejemplos"></h2>
+        <ul class="lista-negocios" id="lista-negocios"></ul>
+      </section>
     </main>
-    <script type="module">
-      import { textos } from '/src/textos.js';
-      document.getElementById('titulo').textContent = textos.inicio.titulo;
-      document.getElementById('texto').textContent = textos.inicio.texto;
-      document.getElementById('ejemplos').textContent = textos.inicio.ejemplos;
-      document.getElementById('boton-crear').textContent = textos.inicio.crear;
-      document.getElementById('boton-entrar').textContent = textos.inicio.entrar;
-    </script>
+    <script type="module" src="/src/inicio.js"></script>
   </body>
 </html>
