@@ -420,3 +420,8 @@ body {
 .crear fieldset > p { margin: 2px 0 8px; }
 .crear-botones { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; }
 .crear-botones .boton-principal { margin-top: 0; margin-left: auto; }
+.crear-preguntas { display: grid; gap: 12px; margin-bottom: 8px; }
+.crear-pregunta { display: grid; gap: 4px; padding: 12px; border: 1px solid var(--borde); border-radius: 10px; background: #f8fafc; }
+.crear-pregunta label { margin-top: 4px; }
+.crear-pregunta .boton-chico { justify-self: end; margin-top: 6px; }
+.crear fieldset > .boton-chico { justify-self: start; }

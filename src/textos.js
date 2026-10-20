@@ -64,9 +64,74 @@ export const textos = {
       titulo: 'Horario',
       ayuda: 'Si alguien escribe fuera de horario, le diremos cuándo le contestas.',
     },
+    p3: {
+      titulo: 'Preguntas frecuentes',
+      ayuda: 'Escribe la respuesta como se la darías por WhatsApp, con precios y datos exactos. Las que dejes sin respuesta no se usan.',
+      pregunta: '¿Cómo lo preguntan tus clientes?',
+      respuesta: '¿Qué les respondes?',
+      quitar: 'Quitar',
+      agregar: '+ Agregar otra pregunta',
+      faltanRespuestas: (n) => `Contesta al menos 3 preguntas para que tu WhatsApp pueda ayudar (llevas ${n}).`,
+      preguntaCorta: 'Escribe la pregunta (al menos 3 letras) o quítala.',
+      repetidas: (p) => `La pregunta «${p}» está repetida.`,
+      horario: (texto) => `${texto}`,
+      ubicacion: (direccion) => `Estamos en ${direccion}.`,
+    },
     faltaNombre: 'Escribe el nombre de tu negocio.',
     faltaGiro: 'Elige el giro de tu negocio.',
     telefonoMal: 'El número debe tener 10 dígitos.',
+  },
+
+  // Preguntas que se sugieren en el paso 3 según el giro. [tema, pregunta, otras formas]
+  sugeridas: {
+    consultorio: [
+      ['horarios', '¿Cuál es su horario?', 'a qué hora abren, a qué hora cierran'],
+      ['precios', '¿Cuánto cuesta la consulta?', 'precio de la consulta, cuánto cobran por revisar'],
+      ['citas', '¿Cómo agendo una cita?', 'cómo hago cita, necesito cita'],
+      ['servicios', '¿Atienden urgencias?', 'emergencia'],
+      ['pagos', '¿Aceptan tarjeta?', 'formas de pago, transferencia, efectivo'],
+      ['ubicacion', '¿Dónde están?', 'dirección, cómo llego'],
+    ],
+    salon: [
+      ['horarios', '¿A qué hora abren?', 'horario, a qué hora cierran'],
+      ['precios', '¿Cuánto cuesta un corte?', 'precio del corte, corte de dama, corte de caballero'],
+      ['precios', '¿Cuánto cuesta un tinte?', 'precio de tinte, color'],
+      ['citas', '¿Necesito cita?', 'cómo agendo, atienden sin cita'],
+      ['pagos', '¿Aceptan tarjeta?', 'formas de pago, transferencia, efectivo'],
+      ['ubicacion', '¿Dónde están?', 'dirección, cómo llego'],
+    ],
+    gimnasio: [
+      ['horarios', '¿Cuál es su horario?', 'a qué hora abren, a qué hora cierran'],
+      ['precios', '¿Cuánto cuesta la mensualidad?', 'precio, inscripción, membresía'],
+      ['servicios', '¿Tienen clase de prueba?', 'clase gratis, probar'],
+      ['servicios', '¿Qué clases tienen?', 'horario de clases, actividades'],
+      ['pagos', '¿Aceptan tarjeta?', 'formas de pago, transferencia, efectivo'],
+      ['ubicacion', '¿Dónde están?', 'dirección, cómo llego'],
+    ],
+    inmobiliaria: [
+      ['horarios', '¿Cuál es su horario?', 'a qué hora abren, a qué hora cierran'],
+      ['servicios', '¿Qué propiedades tienen disponibles?', 'casas disponibles, departamentos'],
+      ['servicios', '¿Tienen casas en renta?', 'rentar, renta de departamentos'],
+      ['otros', '¿Qué requisitos piden para rentar?', 'papeles, aval, documentos'],
+      ['pagos', '¿Aceptan crédito Infonavit?', 'crédito hipotecario, Fovissste'],
+      ['ubicacion', '¿Dónde están?', 'dirección, oficina'],
+    ],
+    taller: [
+      ['horarios', '¿A qué hora abren?', 'horario, a qué hora cierran'],
+      ['precios', '¿Cuánto cuesta el cambio de aceite?', 'precio del aceite, servicio de aceite'],
+      ['precios', '¿Cuánto cuesta el diagnóstico?', 'revisión, escáner'],
+      ['citas', '¿Necesito cita?', 'cómo agendo, atienden sin cita'],
+      ['servicios', '¿Dan garantía?', 'garantía de la reparación'],
+      ['ubicacion', '¿Dónde están?', 'dirección, cómo llego'],
+    ],
+    otro: [
+      ['horarios', '¿Cuál es su horario?', 'a qué hora abren, a qué hora cierran'],
+      ['precios', '¿Cuáles son sus precios?', 'cuánto cuesta, lista de precios'],
+      ['servicios', '¿Qué servicios ofrecen?', 'qué hacen, qué venden'],
+      ['servicios', '¿Hacen entregas a domicilio?', 'envíos, llevan a casa'],
+      ['pagos', '¿Aceptan tarjeta?', 'formas de pago, transferencia, efectivo'],
+      ['ubicacion', '¿Dónde están?', 'dirección, cómo llego'],
+    ],
   },
 
   horario: {
@@ -76,6 +141,8 @@ export const textos = {
     faltaHora: (dia) => `Escribe la hora de abrir y de cerrar del ${dia.toLowerCase()}.`,
     cierreAntes: (dia) => `El ${dia.toLowerCase()}, la hora de cierre debe ser después de la de apertura.`,
     ningunDia: 'Marca al menos un día en que abras.',
+    plural: { lun: 'lunes', mar: 'martes', mie: 'miércoles', jue: 'jueves', vie: 'viernes', sab: 'sábados', dom: 'domingos' },
+    singular: { lun: 'lunes', mar: 'martes', mie: 'miércoles', jue: 'jueves', vie: 'viernes', sab: 'sábado', dom: 'domingo' },
   },
 
   panel: {

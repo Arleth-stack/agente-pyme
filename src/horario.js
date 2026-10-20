@@ -89,3 +89,36 @@ export function crearEditorHorario($contenedor, horario = {}) {
     },
   };
 }
+
+function hora(hhmm) {
+  const [h, m] = hhmm.split(':').map(Number);
+  const h12 = h % 12 || 12;
+  return `${h12}:${String(m).padStart(2, '0')} ${h < 12 ? 'a. m.' : 'p. m.'}`;
+}
+
+// { lun..vie 9–18, sab 9–14, dom null } →
+// "Abrimos de lunes a viernes de 9:00 a. m. a 6:00 p. m. y los sábados de 9:00 a. m. a 2:00 p. m. Los domingos descansamos."
+export function describirHorario(horario) {
+  const tramos = [];
+  for (const dia of DIAS) {
+    const v = horario[dia];
+    const ultimo = tramos.at(-1);
+    if (v && ultimo && ultimo.abre === v.abre && ultimo.cierra === v.cierra && ultimo.hasta === DIAS[DIAS.indexOf(dia) - 1]) {
+      ultimo.hasta = dia;
+    } else if (v) {
+      tramos.push({ desde: dia, hasta: dia, abre: v.abre, cierra: v.cierra });
+    }
+  }
+  const partes = tramos.map((r) => {
+    const dias = r.desde === r.hasta ? `los ${th.plural[r.desde]}` : `de ${th.singular[r.desde]} a ${th.singular[r.hasta]}`;
+    return `${dias} de ${hora(r.abre)} a ${hora(r.cierra)}`;
+  });
+  const cerrados = DIAS.filter((d) => !horario[d]).map((d) => th.plural[d]);
+  // Las horas ya terminan en "m.", así que no se agrega otro punto.
+  let texto = partes.length ? `Abrimos ${partes.slice(0, -1).join(', ')}${partes.length > 1 ? ' y ' : ''}${partes.at(-1)}` : '';
+  if (cerrados.length) {
+    const lista = cerrados.length > 1 ? `${cerrados.slice(0, -1).join(', ')} y ${cerrados.at(-1)}` : cerrados[0];
+    texto += ` Los ${lista} descansamos.`;
+  }
+  return texto.trim();
+}
