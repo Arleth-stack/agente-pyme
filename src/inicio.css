@@ -1,13 +1,15 @@
 /* Página de inicio · marca Merkatics (manual de identidad, 21 oct 2026).
-   Grafito de fondo, coral solo en la acción, el escenario de la portada y el cierre.
+   Modo blanco (pedido por Arleth el 21 oct): fondo blanco, tinta grafito, coral solo en la
+   acción, el escenario de la portada y el cierre.
    Dentro de los fragmentos [data-ui] mandan los colores del producto (WhatsApp, panel). */
 
 :root {
-  --fondo: #111111;
-  --superficie: #1e1e1e;
-  --superficie-2: #272727;
-  --tinta: #f1f1f1;
-  --suave: #a6a6a6;
+  --fondo: #ffffff;
+  --superficie: #f1f1f1;
+  --superficie-2: #e8e8e8;
+  --tinta: #111111;
+  --suave: #5c5c5c;
+  --coral-texto: #b3352c;
   --coral: #e95349;
   --coral-fuerte: #d64d4d;
   --sobre-coral: #111111;
@@ -27,7 +29,7 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -260,9 +262,9 @@ p { text-wrap: pretty; }
   transition: background-color var(--t-hover) ease;
 }
 .control input { accent-color: var(--coral); width: 16px; height: 16px; margin: 0; }
-.control:has(input:checked) { background: #333; }
-@media (hover: hover) and (pointer: fine) { .control:hover { background: #2f2f2f; } }
-.segmentos { display: grid; grid-template-columns: repeat(3, 1fr); background: #1a1a1a; border-radius: 8px; padding: 3px; }
+.control:has(input:checked) { background: #fff; }
+@media (hover: hover) and (pointer: fine) { .control:hover { background: #f7f7f7; } }
+.segmentos { display: grid; grid-template-columns: repeat(3, 1fr); background: #d9d9d9; border-radius: 8px; padding: 3px; }
 .segmentos label { position: relative; cursor: pointer; }
 .segmentos input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
 .segmentos span {
@@ -275,7 +277,7 @@ p { text-wrap: pretty; }
 .demo-pistas { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .demo-pistas p { color: var(--suave); font-size: 15px; }
 .pista {
-  padding: 8px 12px; border: 1px solid #444; border-radius: 8px;
+  padding: 8px 12px; border: 1px solid #b5b5b5; border-radius: 8px;
   background: transparent; text-align: left; cursor: pointer; font-size: 15px;
   transition: border-color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
 }
@@ -300,6 +302,7 @@ p { text-wrap: pretty; }
 
 .panel {
   background: #fff; color: #111;
+  border: 1px solid #dedede; /* taste-skill-ignore: fragmento [data-ui] o texto para lector de pantalla */
   border-radius: 12px; overflow: hidden;
   font-size: 14px; line-height: 1.4;
 }
@@ -353,7 +356,7 @@ p { text-wrap: pretty; }
 .llamada label { display: grid; gap: 6px; }
 .llamada input, .llamada textarea {
   width: 100%; padding: 10px 12px; resize: none;
-  border: 1px solid #3a3a3a; border-radius: 6px; background: #161616;
+  border: 1px solid #cfcfcf; border-radius: 6px; background: #fff;
   color: var(--tinta); font-size: 16px;
 }
 .llamada .wa-burbuja { justify-self: end; color: var(--wa-tinta); }
@@ -361,7 +364,7 @@ p { text-wrap: pretty; }
 .llamada-enlace span { overflow-wrap: anywhere; }
 .llamada-enlace button {
   flex: none; min-height: 40px; padding: 0 16px; border: 0; border-radius: 6px;
-  background: var(--tinta); color: #111; font-weight: 500; cursor: pointer;
+  background: var(--tinta); color: #fff; font-weight: 500; cursor: pointer;
   transition: transform var(--t-press) var(--ease-out);
 }
 .llamada-enlace button:active { transform: scale(0.96); }
@@ -384,7 +387,7 @@ p { text-wrap: pretty; }
   min-height: 38px; padding: 6px 0;
   font-size: 17px;
 }
-.grupo b { font-weight: 500; font-variant-numeric: tabular-nums; color: var(--coral); white-space: nowrap; }
+.grupo b { font-weight: 500; font-variant-numeric: tabular-nums; color: var(--coral-texto); white-space: nowrap; }
 .para-foto {
   grid-column: 7 / 13;
   position: sticky; top: 40px;
@@ -421,7 +424,7 @@ p { text-wrap: pretty; }
 }
 .preguntas-indice button::before {
   content: ''; width: 8px; height: 8px; border-radius: 50%; flex: none;
-  background: #555; transform: translateY(-2px);
+  background: #b5b5b5; transform: translateY(-2px);
   transition: background-color var(--t-hover) ease;
 }
 .preguntas-indice button[aria-expanded="true"] { color: var(--tinta); }
@@ -491,7 +494,7 @@ p { text-wrap: pretty; }
 .pie nav a { color: var(--tinta); }
 .pie > p:nth-of-type(2) { justify-self: end; }
 .pie .creditos { grid-column: 1 / -1; font-size: 13px; line-height: 1.6; max-width: 120ch; }
-.pie .creditos a { color: var(--tinta); text-decoration-line: underline; text-decoration-color: #555; }
+.pie .creditos a { color: var(--tinta); text-decoration-line: underline; text-decoration-color: #b5b5b5; }
 
 /* Movimiento ------------------------------------------------------------ */
 @media (prefers-reduced-motion: no-preference) {
