@@ -61,7 +61,12 @@ function mostrarOpciones(opciones) {
 }
 
 function burbuja({ autor, texto, creado_en, opciones }) {
+  // Al quitar los botones de la respuesta anterior, su lista vuelve a escribirse en la burbuja.
   $mensajes.querySelectorAll('.chat-opciones').forEach(($f) => $f.remove());
+  $mensajes.querySelectorAll('[data-completo]').forEach(($v) => {
+    $v.querySelector('p').textContent = $v.dataset.completo;
+    delete $v.dataset.completo;
+  });
   const $b = document.createElement('div');
   $b.className = `burbuja ${autor === 'cliente' ? 'burbuja-cliente' : 'burbuja-negocio'}`;
   const $texto = document.createElement('p');
@@ -69,6 +74,7 @@ function burbuja({ autor, texto, creado_en, opciones }) {
   $texto.textContent = opciones?.length && autor !== 'cliente'
     ? texto.split('\n').filter((l) => !/^\d{1,2}\. /.test(l) && l !== 'Escríbeme el número o tu pregunta.').join('\n').trim()
     : texto;
+  if ($texto.textContent !== texto) $b.dataset.completo = texto;
   const $hora = document.createElement('span');
   $hora.className = 'burbuja-hora';
   $hora.textContent = horaDe(creado_en ?? Date.now());

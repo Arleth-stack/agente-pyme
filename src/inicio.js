@@ -67,6 +67,11 @@ function horaVisible(fecha) {
 
 function quitarOpciones() {
   $demoMensajes.querySelectorAll('.wa-opciones').forEach(($o) => $o.remove());
+  // La lista que mostraban los botones vuelve a escribirse en su burbuja.
+  $demoMensajes.querySelectorAll('[data-completo]').forEach(($v) => {
+    $v.firstChild.nodeValue = $v.dataset.completo;
+    delete $v.dataset.completo;
+  });
 }
 
 function burbujaDemo({ autor, texto, creado_en, opciones }) {
@@ -77,6 +82,7 @@ function burbujaDemo({ autor, texto, creado_en, opciones }) {
   $b.textContent = opciones?.length
     ? texto.split('\n').filter((l) => !/^\d{1,2}\. /.test(l) && l !== 'Escríbeme el número o tu pregunta.').join('\n').trim()
     : texto;
+  if ($b.textContent !== texto) $b.dataset.completo = texto;
   const $h = document.createElement('span');
   $h.textContent = horaVisible(creado_en);
   $b.append($h);
