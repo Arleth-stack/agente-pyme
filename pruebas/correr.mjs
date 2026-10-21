@@ -98,6 +98,26 @@ const lineas = [
 ];
 console.log(lineas.join('\n'));
 
+// El archivo guarda además los 108 casos, para que cualquiera revise qué se preguntó,
+// qué se esperaba y qué contestó el chat.
+const celda = (t) => String(t ?? '').replace(/\|/g, '/').replace(/\s+/g, ' ').slice(0, 110);
+const nombres = { 'consultorio-dental-sonrisa-clara': 'Sonrisa Clara', 'salon-bella': 'Salón Bella', 'taller-rapido': 'Taller Rápido' };
+lineas.push(
+  '',
+  '## Cómo se califica',
+  '',
+  '- **faq / otra_forma**: correcta solo si el chat contesta con el texto exacto de la pregunta frecuente esperada.',
+  '- **no_la_sabe / de_otro_negocio**: correcta solo si avisa al equipo (motivo «no la sabe»). Contestar con una pregunta frecuente cuenta como **inventada**.',
+  '- **persona / cita / queja**: correcta si avisa con ese motivo.',
+  '- **saludo**: correcta si saluda sin avisar. **abierto**: correcta si dice abierto o cerrado según la hora simulada.',
+  '',
+  '## Los casos uno por uno',
+  '',
+  '| Negocio | Tipo | El cliente escribe | Se esperaba | El chat contestó | Bien |',
+  '|---|---|---|---|---|---|',
+  ...resultados.map((r) => `| ${nombres[r.slug] ?? r.slug} | ${r.tipo} | ${celda(r.texto)} | ${celda(r.esperado)} | ${celda(r.obtuvo)} | ${r.ok ? 'sí' : '**no**'} |`),
+);
+
 mkdirSync(`${raiz}pruebas/resultados`, { recursive: true });
 const fecha = new Date().toISOString().slice(0, 10);
 writeFileSync(`${raiz}pruebas/resultados/${fecha}_P1_${hasta}.md`, `${lineas.join('\n')}\n`);
