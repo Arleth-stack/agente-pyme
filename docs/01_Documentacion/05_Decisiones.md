@@ -1,6 +1,6 @@
-# Registro de decisiones v2
+# Registro de decisiones v2.2
 
-Proyecto 2026-544-16 · Se actualiza cada vez que Carlos, la coordinación o Arleth deciden algo. Última actualización: 20 de octubre de 2026.
+Proyecto 2026-544-16 · Se actualiza cada vez que Carlos, la coordinación o Arleth deciden algo. Última actualización: 21 de octubre de 2026.
 
 ## Decisiones tomadas
 
@@ -13,6 +13,10 @@ Proyecto 2026-544-16 · Se actualiza cada vez que Carlos, la coordinación o Arl
 | 19/10/2026 | Reiniciar el prototipo desde cero, con proyecto nuevo de Supabase, y documentación v2 | Arleth | Diagnóstico del agente mentor: pantallas de éxito sin guardado comprobado, chat con respuestas de ejemplo y aislamiento sin demostrar |
 | 19/10/2026 | Los documentos de la versión 1 se mueven a 99_Archivo_Version_1 (no se borran) | Arleth | Evidencia de iteración |
 | 20/10/2026 | "Menos de 5 minutos" es una forma de decir que crear el negocio debe ser fácil y rápido; no se cronometra. Los 3 negocios demo se cargan en la base y el formulario se prueba con negocios nuevos | Arleth | Aclaración del objetivo de la Asignación |
+| 21/10/2026 | Después de avisar al dueño, el chat sigue contestando lo que sabe (antes se callaba hasta que el dueño marcaba "resuelto") | Arleth | Que el cliente no se vaya por falta de atención |
+| 21/10/2026 | Cuando no sabe una respuesta, además de avisar ofrece hasta 3 preguntas relacionadas; las preguntas generales ("¿qué precios tienen?") se contestan con los textos del dueño o con un menú, sin aviso | Arleth | Menos avisos innecesarios sin inventar nada |
+| 21/10/2026 | La bienvenida del chat cambia según el giro y las preguntas de cada negocio | Arleth | Personalización por negocio |
+| 21/10/2026 | La página de inicio y los módulos usan la marca Merkatics (grafito, coral, letra Jost, logo e iconos del manual); el chat conserva el aspecto de WhatsApp | Arleth | Es la puerta de entrada a Merkatics |
 
 ## Propuestas de Arleth en espera de visto bueno
 

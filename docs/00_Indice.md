@@ -1,17 +1,17 @@
-# 00 · Índice del proyecto v2 (léeme primero)
+# 00 · Índice del proyecto v2.2 (léeme primero)
 
-Proyecto 2026-544-16 · Agente de WhatsApp para PyMEs · Documentación v2.1 · 20 de octubre de 2026
+Proyecto 2026-544-16 · Agente de WhatsApp para PyMEs · Documentación v2.2 · 21 de octubre de 2026
 
-El prototipo se reinició desde cero el 19 de octubre y la Fase 1 quedó construida el 20 de octubre (18 de 18 tickets). Estos son los documentos vigentes; los de la versión 1 están en 99_Archivo_Version_1.
+El prototipo se reinició desde cero el 19 de octubre y la Fase 1 quedó construida el 20 de octubre (18 de 18 tickets). El 21 de octubre el chat entiende más formas de preguntar y la página usa la marca Merkatics. Estos son los documentos vigentes; los de la versión 1 están en 99_Archivo_Version_1.
 
 **Demo en línea:** https://agente-pyme-merkatics.vercel.app (para presentar: /demo)
 
 ## Empieza aquí
 
-0. [Avance de la Fase 1 — 20 oct 2026 (para Carlos)](https://docs.google.com/document/d/1NGhC3j3l_PAq-QcMzwJexaMDARv30B6X4gLq4cUiPtQ/edit): qué está listo, pruebas, pendientes y preguntas.
+0. [Avance de la Fase 1 — 21 oct 2026 (para Carlos)](https://docs.google.com/document/d/1tA0JQpPk8ZMU9j-CbCCV4tK4-DnhTqlpUgFvyURN6as/edit) y el del [20 oct](https://docs.google.com/document/d/1NGhC3j3l_PAq-QcMzwJexaMDARv30B6X4gLq4cUiPtQ/edit): qué está listo, pruebas, pendientes y preguntas.
 1. [Ficha del proyecto v2](https://docs.google.com/document/d/19-mbSp1wvEdasLmyVvMCxaBhyDd_DPvqVm2J3aZw1As/edit): qué es, los 3 requisitos, tecnología, fechas y por qué se reinicia.
 2. [Alcance y backlog de la Fase 1 v2](https://docs.google.com/document/d/1Tma7p_jbZTVBBvoTCKZNB3Lt3YXpihKjob5T5tNz8SE/edit): qué se construye, qué no, y los 18 tickets en orden.
-3. [Registro de decisiones v2](https://docs.google.com/document/d/1qJJv4afIyG4v9MXoeyAZ2OQoGUutqxLl8tZ5oLExU_c/edit): lo decidido, lo propuesto y lo que le toca decidir a Carlos.
+3. [Registro de decisiones v2.2](https://docs.google.com/document/d/1I3TNwovAdlJxo3X3qag-vAE6jZAlH4EZetf7XStF8dY/edit): lo decidido, lo propuesto y lo que le toca decidir a Carlos.
 
 ## 01 · Documentación
 
@@ -21,7 +21,7 @@ El prototipo se reinició desde cero el 19 de octubre y la Fase 1 quedó constru
 | [ERS (IEEE 830) v2](https://docs.google.com/document/d/1J9Q80-iD44e2p4VRieoNgQnbrF9MxCnlYqNrFUciuec/edit) | Requisitos, prioridad, ticket y cómo se verifica cada uno |
 | [Problema y usuario v2](https://docs.google.com/document/d/1UbIv-UC5Di_SGzowdn6aH_IsFV9UHKmvPV6Brnfw5pw/edit) | Need Card, usuarios y cómo preguntar sin sesgo |
 | [Propuesta de valor y guía de lenguaje v2](https://docs.google.com/document/d/1VHod4NUtEQ1_LtE_bh-pNFaD1XW6OaZqM_re3_-tEa4/edit) | Beneficio, palabras prohibidas y textos de referencia |
-| [Registro de decisiones v2](https://docs.google.com/document/d/1qJJv4afIyG4v9MXoeyAZ2OQoGUutqxLl8tZ5oLExU_c/edit) | Decisiones tomadas y pendientes |
+| [Registro de decisiones v2.2](https://docs.google.com/document/d/1I3TNwovAdlJxo3X3qag-vAE6jZAlH4EZetf7XStF8dY/edit) | Decisiones tomadas y pendientes |
 
 ## 02 · Investigación y validación
 
@@ -42,6 +42,7 @@ El prototipo se reinició desde cero el 19 de octubre y la Fase 1 quedó constru
 | [Resultado P1 — conjunto de prueba](https://docs.google.com/document/d/1dkcUM6Qgv_uTFK8nzgGz-sLKLfhw98-n4qQ8SjrkLuI/edit) | 106 de 108, 0 respuestas inventadas |
 | [Revisión de entrega (T18)](https://docs.google.com/document/d/1Ktu946_3TAfMuGGp_MyVnj3b2P9PaAuP3Tq3wGuBpLU/edit) | Seguridad, lenguaje (0 palabras prohibidas) y 2 mejoras de experiencia de usuario |
 | [Avance de la Fase 1 — 20 oct](https://docs.google.com/document/d/1NGhC3j3l_PAq-QcMzwJexaMDARv30B6X4gLq4cUiPtQ/edit) | Resumen para Carlos (07_Entregables) |
+| [Avance de la Fase 1 — 21 oct](https://docs.google.com/document/d/1tA0JQpPk8ZMU9j-CbCCV4tK4-DnhTqlpUgFvyURN6as/edit) | El chat entiende más formas de preguntar y la marca Merkatics (07_Entregables) |
 
 ## 04 · Multiempresa
 
@@ -60,12 +61,18 @@ El prototipo se reinició desde cero el 19 de octubre y la Fase 1 quedó constru
 | [Documento de integración con Merkatics v2](https://docs.google.com/document/d/118cral3_ghm-ky-E8VO1DOME4fQGQ_SFo7qywOfclA8/edit) | Mapeo negocio → organización, datos al CRM y gatillo (para aprobación de Carlos) |
 | [Opciones de precio y gatillo de venta v2](https://docs.google.com/document/d/1RXi8sYDxk2pHqb6JQkqCElq3PhVNN64tOFxVXFqubTk/edit) | 3 opciones de precio, 3 de gatillo y recomendación |
 
+## 09 · Demo Day
+
+| Documento | Para qué sirve |
+|---|---|
+| [Guion de la demo (5 min) y pitch](https://docs.google.com/document/d/12r23yC7cC2U-qa0hi7PXsVthASvelzqGYaIPRIXXFd8/edit) | Qué mostrar minuto a minuto, el pitch de 1 minuto y respuestas a preguntas frecuentes |
+
 ## Lo que sigue
 
 | Cuándo | Qué |
 |---|---|
 | Esta semana | Abrir la demo en el celular de otra persona (P9) y agendar la validación |
-| Mar 27 oct | Validación con persona real (D3) y guion de demo de 5 minutos (D4) |
+| Mar 27 oct | Validación con persona real (D3); el guion de demo (D4) ya está listo |
 | Mié 28 oct | Revisión con Carlos (propuesta) |
 
 Carpetas 07 (Fase 2 Django), 08 (Piloto) y 10 (Backlog): fase posterior; no se usan hasta que Carlos apruebe la Fase 1.

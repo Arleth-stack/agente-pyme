@@ -12,7 +12,7 @@ Proyecto 2026-544-16 · Merkatics GrowthLab · Practicante: Arleth Caballero. Re
 2. **Terminado = visto en la dirección pública**, guardado en la base y vivo después de recargar. Commit con mensaje claro.
 3. **Nunca éxito falso:** ninguna pantalla dice que guardó si la base no lo confirmó.
 4. **Aislamiento en la base:** cada tabla lleva `negocio_id` y reglas por fila; el cliente sin sesión no lee tablas, solo llama a las funciones `chat_*`.
-5. **Regla de lenguaje:** en pantalla nunca "IA", "inteligencia artificial", "automatización", "modelo", "entrenar", "bot", "prompt", "token", "API" ni "servidor". Textos de pantalla en `src/textos.js`; las respuestas que genera el chat viven en las funciones SQL.
+5. **Regla de lenguaje:** en pantalla nunca "IA", "inteligencia artificial", "automatización", "modelo", "entrenar", "bot", "prompt", "token", "API" ni "servidor". Textos de pantalla en `src/textos.js` (excepto la página de inicio, cuyo texto fijo vive en `index.html`; la prueba P5 también lo revisa); las respuestas que genera el chat viven en las funciones SQL.
 6. **No inventar:** el chat contesta con el texto exacto de la pregunta frecuente del negocio o avisa a una persona. Sin servicios externos de redacción en la Fase 1.
 7. **Esta vez no:** WhatsApp real, redacción con inteligencia artificial, Django, envío al CRM, cobros, avisos por correo.
 8. Gratis y simple: HTML, CSS y JavaScript con Vite; Supabase; Vercel; GitHub.
@@ -27,4 +27,4 @@ Proyecto 2026-544-16 · Merkatics GrowthLab · Practicante: Arleth Caballero. Re
 | `vercel.json` | Rutas limpias: `/chat/salon-bella` → `chat.html` |
 | `docs/` | Documentación v2 |
 
-Diseño: celular primero (360 px), texto ≥ 16 px, botones ≥ 44 px, verde WhatsApp solo en el chat, sin degradados morados.
+Diseño: celular primero (360 px), texto ≥ 16 px, botones ≥ 44 px. Marca Merkatics (grafito #111111, coral #E95349, letra Jost, logo en `public/marca/`); verde WhatsApp solo en el chat y sus fragmentos. Inicio: `src/inicio.css`; notas de diseño en `.taste-skill/notas.md`.
