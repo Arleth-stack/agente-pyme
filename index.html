@@ -3,33 +3,347 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tu WhatsApp contesta solo</title>
-    <meta name="description" content="Tu WhatsApp responde solo a las preguntas de tus clientes y te avisa cuando alguien te necesita." />
-    <link rel="stylesheet" href="/src/estilos.css" />
+    <title>Tu WhatsApp contesta solo · Merkatics</title>
+    <meta name="description" content="Escribe una vez lo que te preguntan tus clientes. El chat les contesta con tus palabras a cualquier hora y te avisa cuando alguien te necesita. Un módulo de Merkatics." />
+    <meta name="theme-color" content="#111111" />
+    <script>document.documentElement.classList.add('js')</script>
+    <link rel="icon" type="image/png" href="/marca/icono.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/inicio.css" />
   </head>
-  <body class="pantalla-inicio-fondo">
-    <main class="pantalla-inicio">
-      <section class="inicio-portada">
-        <h1 id="titulo"></h1>
-        <p id="texto" class="inicio-texto"></p>
-        <div class="inicio-botones">
-          <a href="/crear" id="boton-crear" class="boton-principal boton-enlace"></a>
-          <a href="/entrar" id="boton-entrar" class="boton-secundario boton-enlace"></a>
+  <body>
+    <header class="barra">
+      <a href="/" class="barra-marca" aria-label="Merkatics, inicio">
+        <img src="/marca/merkatics-oscuro.png" alt="Merkatics" width="173" height="40" />
+      </a>
+      <nav class="barra-enlaces" aria-label="Secciones">
+        <a href="#prueba">Pruébalo</a>
+        <a href="#como">Cómo funciona</a>
+        <a href="#para-quien">Para quién</a>
+        <a href="#preguntas">Preguntas</a>
+      </nav>
+      <a href="/entrar" class="barra-entrar">Entrar</a>
+    </header>
+
+    <main>
+      <!-- Portada: el mensaje de las 11:42 p. m. contestado sobre el escenario coral -->
+      <section class="portada" aria-labelledby="titulo">
+        <div class="portada-texto">
+          <h1 id="titulo">Tu WhatsApp<br /> contesta solo</h1>
+          <p class="portada-frase">Escribe una vez lo que te preguntan tus clientes. El chat les contesta con tus palabras a cualquier hora y te avisa cuando alguien te necesita.</p>
+          <div class="portada-acciones">
+            <a href="/crear" class="boton">Crear mi negocio</a>
+            <a href="#prueba" class="enlace">Pruébalo como cliente</a>
+          </div>
+        </div>
+
+        <div class="escenario obturador" id="escenario">
+          <div class="escenario-contenido">
+            <div class="wa" data-ui aria-label="Ejemplo: un cliente le escribe a Salón Bella a las 11:42 de la noche">
+              <div class="wa-encabezado">
+                <span class="wa-avatar" aria-hidden="true">SB</span>
+                <span class="wa-titulo"><strong>Salón Bella</strong><span>Cerrado · abre mañana a las 10:00 a. m.</span></span>
+              </div>
+              <div class="wa-mensajes" id="portada-chat">
+                <p class="wa-burbuja wa-cliente" data-paso="0">hola cuánto cuesta un corte de dama<span>11:42 p. m.</span></p>
+                <p class="wa-burbuja wa-negocio" data-paso="1">Corte de dama $250, corte de caballero $150 y corte de niño $120.<span>11:42 p. m.</span></p>
+                <p class="wa-burbuja wa-cliente" data-paso="2">y me pueden atender el sábado a las 11?<span>11:43 p. m.</span></p>
+                <p class="wa-burbuja wa-negocio" data-paso="3">¡Con gusto! Ya le pasé tu solicitud al equipo para que te confirme el lugar. Ahorita estamos cerrados; te escriben mañana a partir de las 10:00 a. m.<span>11:43 p. m.</span></p>
+                <p class="wa-escribiendo" aria-hidden="true"><i></i><i></i><i></i></p>
+              </div>
+            </div>
+
+            <div class="aviso-tarjeta" data-ui data-paso="4">
+              <p class="aviso-quien">Panel de Salón Bella</p>
+              <p class="aviso-motivo"><span class="punto" aria-hidden="true"></span>Te necesita · Pide una cita</p>
+              <p class="aviso-texto">«y me pueden atender el sábado a las 11?»</p>
+              <p class="aviso-hora">Mañana lo ves en tu panel</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="inicio-beneficios" id="beneficios"></section>
+      <!-- La cosa viva: el chat real de los 3 negocios de ejemplo -->
+      <section class="seccion prueba" id="prueba" aria-labelledby="prueba-titulo">
+        <div class="prueba-cabeza revelar">
+          <h2 id="prueba-titulo">Pruébalo como cliente</h2>
+          <p>Elige uno de los negocios de ejemplo y la hora a la que escribes. Contesta con las preguntas reales que escribió cada negocio.</p>
+        </div>
 
-      <section class="inicio-pasos">
-        <h2 id="como-funciona"></h2>
-        <ol id="pasos"></ol>
+        <div class="demo revelar" data-ui>
+          <div class="demo-chat wa">
+            <div class="wa-encabezado">
+              <span class="wa-avatar" id="demo-avatar" aria-hidden="true">SB</span>
+              <span class="wa-titulo"><strong id="demo-nombre">Salón Bella</strong><span id="demo-estado">&nbsp;</span></span>
+            </div>
+            <div class="wa-mensajes" id="demo-mensajes" aria-live="polite"></div>
+            <form class="wa-caja" id="demo-formulario" autocomplete="off">
+              <label class="oculto" for="demo-entrada">Tu mensaje</label>
+              <input id="demo-entrada" maxlength="300" placeholder="Escribe un mensaje" />
+              <button type="submit" aria-label="Enviar">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M2 21 23 12 2 3v7l15 2-15 2z"/></svg>
+              </button>
+            </form>
+          </div>
+
+          <div class="demo-controles">
+            <fieldset>
+              <legend>Negocio</legend>
+              <label class="control"><input type="radio" name="negocio" value="consultorio-dental-sonrisa-clara" /> <span>Consultorio Dental Sonrisa Clara</span></label>
+              <label class="control"><input type="radio" name="negocio" value="salon-bella" checked /> <span>Salón Bella</span></label>
+              <label class="control"><input type="radio" name="negocio" value="taller-rapido" /> <span>Taller Rápido</span></label>
+            </fieldset>
+            <fieldset>
+              <legend>Hora a la que escribes</legend>
+              <div class="segmentos">
+                <label><input type="radio" name="hora" value="" checked /><span>Ahora</span></label>
+                <label><input type="radio" name="hora" value="12:30" /><span>12:30 p. m.</span></label>
+                <label><input type="radio" name="hora" value="23:42" /><span>11:42 p. m.</span></label>
+              </div>
+            </fieldset>
+            <div class="demo-pistas">
+              <p>Prueba también</p>
+              <button type="button" class="pista" data-texto="quiero cita el sábado a las 11">quiero cita el sábado a las 11</button>
+              <button type="button" class="pista" data-texto="¿qué precios tienen?">¿qué precios tienen?</button>
+              <button type="button" class="pista" data-texto="me pueden comunicar con alguien">me pueden comunicar con alguien</button>
+            </div>
+            <a class="demo-abrir" id="demo-abrir" href="/chat/salon-bella" target="_blank" rel="noopener">Abrir el chat completo</a>
+          </div>
+        </div>
+        <p class="prueba-pie revelar">Escribe como le escribirías a tu dentista: sin acentos, con faltas, como sea.</p>
       </section>
 
-      <section class="inicio-ejemplos">
-        <h2 id="ejemplos"></h2>
-        <ul class="lista-negocios" id="lista-negocios"></ul>
+      <!-- El panel del dueño, con notas al margen -->
+      <section class="seccion avisa" aria-labelledby="avisa-titulo">
+        <h2 id="avisa-titulo" class="revelar">Y te avisa a ti</h2>
+
+        <div class="avisa-rejilla">
+          <ul class="notas notas-izq">
+            <li class="nota revelar" data-apunta="lista"><strong>Lo urgente arriba</strong>Las conversaciones que te necesitan aparecen primero, con el motivo.</li>
+            <li class="nota revelar" data-apunta="motivo"><strong>Por qué te avisa</strong>Pide una cita, se queja, quiere hablar contigo o preguntó algo que no tienes escrito.</li>
+            <li class="nota revelar" data-apunta="mensaje"><strong>Lo que escribió</strong>Ves el mensaje del cliente tal cual, con la hora.</li>
+          </ul>
+
+          <div class="panel revelar" data-ui aria-label="Ejemplo del panel del dueño de Salón Bella">
+            <div class="panel-cabeza">
+              <strong>Salón Bella</strong>
+              <div class="panel-pestanas"><span class="activa">Conversaciones</span><span>Preguntas</span><span>Mi negocio</span></div>
+            </div>
+            <div class="panel-filtros" data-parte="lista"><span class="activo">Te necesitan · 2</span><span>Todas · 14</span></div>
+            <ul class="panel-lista" data-parte="lista">
+              <li class="elegida">
+                <span class="panel-nombre">Mariana López <time>11:43 p. m.</time></span>
+                <span class="panel-motivo" data-parte="motivo">Pide una cita</span>
+                <span class="panel-extracto">y me pueden atender el sábado a las 11?</span>
+              </li>
+              <li>
+                <span class="panel-nombre">55 1234 0987 <time>9:15 p. m.</time></span>
+                <span class="panel-motivo">No la sabía</span>
+                <span class="panel-extracto">¿hacen permanente?</span>
+              </li>
+            </ul>
+            <div class="panel-detalle">
+              <p class="wa-burbuja wa-cliente" data-parte="mensaje">hola cuánto cuesta un corte de dama<span>11:42 p. m.</span></p>
+              <p class="wa-burbuja wa-negocio" data-parte="sigue">Corte de dama $250, corte de caballero $150 y corte de niño $120.<span>11:42 p. m.</span></p>
+              <p class="wa-burbuja wa-cliente" data-parte="mensaje">y me pueden atender el sábado a las 11?<span>11:43 p. m.</span></p>
+              <div class="panel-responder" data-parte="responder">
+                <label for="panel-respuesta">Tu respuesta</label>
+                <textarea id="panel-respuesta" rows="2">Sí, te aparto el sábado a las 11 con Karla. ¡Te esperamos!</textarea>
+                <div class="panel-botones">
+                  <button type="button" class="panel-enviar">Enviar</button>
+                  <button type="button" class="panel-resuelto" data-parte="resuelto">Marcar como resuelto</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="notas notas-der">
+            <li class="nota revelar" data-apunta="sigue"><strong>El chat no se detiene</strong>Aunque haya un aviso, sigue contestando precios y horarios mientras llegas.</li>
+            <li class="nota revelar" data-apunta="responder"><strong>Contestas desde aquí</strong>Tu respuesta le llega al cliente en el mismo chat.</li>
+            <li class="nota revelar" data-apunta="resuelto"><strong>Y listo</strong>Cuando terminas lo marcas como resuelto y sale de tu lista.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Cómo empiezas: lo que das y lo que regresa -->
+      <section class="seccion como" id="como" aria-labelledby="como-titulo">
+        <h2 id="como-titulo" class="revelar">Así empiezas</h2>
+        <p class="como-intro revelar">Un formulario de 4 pasos: tu negocio, tu horario, tus preguntas y tu cuenta. Te sugerimos las preguntas más comunes de tu giro.</p>
+
+        <ol class="intercambios">
+          <li class="intercambio revelar">
+            <p class="intercambio-frase">Primero, escribe lo que te preguntan.</p>
+            <div class="llamada" data-ui>
+              <label>¿Cómo lo preguntan tus clientes?<input value="¿Cuánto cuesta un corte?" readonly /></label>
+              <label>¿Qué les respondes?<textarea rows="2" readonly>Corte de dama $250, corte de caballero $150 y corte de niño $120.</textarea></label>
+            </div>
+            <div class="respuesta wa-fondo" data-ui>
+              <p class="wa-burbuja wa-cliente">cuanto cobran x el corte<span>4:10 p. m.</span></p>
+              <p class="wa-burbuja wa-negocio">Corte de dama $250, corte de caballero $150 y corte de niño $120.<span>4:10 p. m.</span></p>
+            </div>
+          </li>
+
+          <li class="intercambio revelar">
+            <p class="intercambio-frase">Luego, comparte tu enlace.</p>
+            <div class="llamada llamada-enlace" data-ui>
+              <span id="enlace-ejemplo">agente-pyme-merkatics.vercel.app/chat/salon-bella</span>
+              <button type="button" id="copiar-enlace">Copiar</button>
+            </div>
+            <div class="respuesta wa-fondo" data-ui>
+              <p class="wa-burbuja wa-negocio">¡Hola! Gracias por escribir a Salón Bella. Te ayudo a preparar tu próxima visita. Pregúntame por precios, servicios, citas, horario y cómo llegar.<span>4:12 p. m.</span></p>
+              <div class="wa-opciones"><span>¿Cuánto cuesta un corte?</span><span>¿Necesito cita?</span><span>¿A qué hora abren?</span></div>
+            </div>
+          </li>
+
+          <li class="intercambio intercambio-final revelar">
+            <p class="intercambio-frase">Y si no lo sabe, no lo inventa.</p>
+            <div class="llamada" data-ui>
+              <p class="wa-burbuja wa-cliente">¿hacen permanente?<span>9:15 p. m.</span></p>
+            </div>
+            <div class="respuesta respuesta-ancha wa-fondo" data-ui>
+              <p class="wa-burbuja wa-negocio">Esa no la tengo a la mano, pero ya le pasé tu pregunta al equipo. Ahorita estamos cerrados; te escriben mañana a partir de las 10:00 a. m.<br /><br />Mientras, te puedo ayudar con esto:<span>9:15 p. m.</span></p>
+              <div class="wa-opciones"><span>¿Hacen keratina o alaciado?</span><span>¿Cuánto cuesta un tinte?</span><span>¿Cuánto cuestan las mechas o el balayage?</span></div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Para quién: lo que preguntan en cada giro, con su respuesta -->
+      <section class="seccion para" id="para-quien" aria-labelledby="para-titulo">
+        <div class="para-lista">
+          <h2 id="para-titulo" class="revelar">Para quién es</h2>
+          <p class="para-intro revelar">Para los negocios que viven en WhatsApp. Esto es lo que les preguntan y lo que contesta el chat de cada uno.</p>
+
+          <div class="grupo revelar" data-foto="consultorio">
+            <p class="grupo-nombre">Consultorios y clínicas</p>
+            <ul>
+              <li><span>¿Cuánto cuesta una limpieza?</span><b>$600</b></li>
+              <li><span>¿Cuánto cuesta la consulta?</span><b>$300</b></li>
+              <li><span>¿Atienden niños?</span><b>Sábados</b></li>
+              <li><span>¿Aceptan tarjeta?</span><b>Sí</b></li>
+            </ul>
+          </div>
+          <div class="grupo revelar" data-foto="salon">
+            <p class="grupo-nombre">Salones y barberías</p>
+            <ul>
+              <li><span>¿Cuánto cuesta un corte de dama?</span><b>$250</b></li>
+              <li><span>¿Cuánto cuesta un tinte?</span><b>desde $650</b></li>
+              <li><span>¿Abren los lunes?</span><b>Descansan</b></li>
+              <li><span>¿Atienden caballeros?</span><b>Corte y barba</b></li>
+            </ul>
+          </div>
+          <div class="grupo revelar" data-foto="taller">
+            <p class="grupo-nombre">Talleres</p>
+            <ul>
+              <li><span>¿Cuánto cuesta el cambio de aceite?</span><b>desde $750</b></li>
+              <li><span>¿Cuánto cuesta el diagnóstico?</span><b>$350</b></li>
+              <li><span>¿Cargan el aire acondicionado?</span><b>$850</b></li>
+              <li><span>¿Dan garantía?</span><b>30 días</b></li>
+            </ul>
+          </div>
+          <div class="grupo revelar">
+            <p class="grupo-nombre">Gimnasios, inmobiliarias y más</p>
+            <ul>
+              <li><span>¿Cuánto cuesta la mensualidad?</span><b>Lo escribes tú</b></li>
+              <li><span>¿Tienen casas en renta?</span><b>Lo escribes tú</b></li>
+              <li><span>¿Hacen entregas a domicilio?</span><b>Lo escribes tú</b></li>
+            </ul>
+          </div>
+        </div>
+
+        <figure class="para-foto revelar" aria-live="polite">
+          <img src="/fotos/consultorio.jpg" data-foto="consultorio" alt="Sillón de un consultorio dental" class="activa" width="1400" height="1050" />
+          <img src="/fotos/salon.jpg" data-foto="salon" alt="Salón de belleza con sillones y espejos" width="1050" height="1400" loading="lazy" />
+          <img src="/fotos/taller.jpg" data-foto="taller" alt="Llave de impacto junto a la llanta de un auto" width="1024" height="683" loading="lazy" />
+        </figure>
+      </section>
+
+      <!-- Merkatics -->
+      <section class="seccion carta" aria-labelledby="carta-titulo">
+        <div class="carta-hoja revelar">
+          <img src="/marca/icono.png" alt="" width="44" height="44" class="carta-icono" />
+          <h2 id="carta-titulo">La puerta de entrada a Merkatics</h2>
+          <p>Este módulo es lo primero que hace Merkatics por un negocio: que <mark>ningún cliente se quede sin respuesta</mark>.</p>
+          <p>Lo hicimos para el consultorio que atiende con las manos ocupadas, el salón que recibe mensajes a medianoche y el taller que no puede soltar la llave para contestar.</p>
+          <p>No inventa nada. Contesta con lo que tú escribiste y, cuando algo te toca a ti, te avisa. Cada negocio ve solo a sus clientes.</p>
+          <p>Cuando tu negocio esté listo para crecer, Merkatics te acompaña con lo que sigue:</p>
+          <ul class="carta-sigue">
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.5c1.8.8 3 2.6 3 4.5"/></svg>
+              Seguimiento de tus clientes
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M17 9a4 4 0 0 1 0 6"/><path d="M19.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+              Campañas para que regresen
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16"/><path d="M6 16v-4"/><path d="M11 16V9"/><path d="M16 16V5"/><path d="M14 7l2-2 2 2"/></svg>
+              Ventas y resultados en un lugar
+            </li>
+          </ul>
+          <p class="carta-firma">Equipo Merkatics<span>Growth Operating System</span></p>
+        </div>
+      </section>
+
+      <!-- Preguntas: índice a la izquierda, una respuesta grande a la derecha -->
+      <section class="seccion preguntas" id="preguntas" aria-labelledby="preguntas-titulo">
+        <div class="preguntas-indice">
+          <h2 id="preguntas-titulo" class="revelar">Preguntas</h2>
+          <ul id="lista-preguntas" class="revelar">
+            <li><button type="button" aria-expanded="true" aria-controls="r1">¿Es mi mismo número de WhatsApp?</button>
+              <p id="r1">Todavía no. Por ahora tu negocio tiene un chat de prueba con su propio enlace, igual a WhatsApp, para probarlo con clientes de confianza. Conectar tu número es la siguiente etapa.</p></li>
+            <li><button type="button" aria-expanded="false" aria-controls="r2">¿Puede inventar un precio?</button>
+              <p id="r2" hidden>No. Contesta solo con el texto que tú escribiste. Si no encuentra la respuesta, le dice al cliente que ya le pasó su pregunta al equipo y te avisa a ti.</p></li>
+            <li><button type="button" aria-expanded="false" aria-controls="r3">¿Y si escriben de noche?</button>
+              <p id="r3" hidden>Contesta igual. Si ya cerraste, le dice al cliente a qué hora abres, y lo que necesite de ti lo ves en tu panel al día siguiente.</p></li>
+            <li><button type="button" aria-expanded="false" aria-controls="r4">¿Qué pasa cuando piden una cita?</button>
+              <p id="r4" hidden>Le pide el día y la hora, te avisa en tu panel con lo que escribió el cliente y tú confirmas desde ahí.</p></li>
+            <li><button type="button" aria-expanded="false" aria-controls="r5">¿Otro negocio puede ver a mis clientes?</button>
+              <p id="r5" hidden>No. Cada negocio solo ve sus conversaciones. Lo probamos con tres cuentas que intentaron leer y cambiar los datos de las otras: todo se rechazó.</p></li>
+            <li><button type="button" aria-expanded="false" aria-controls="r6">¿Necesito saber de computadoras?</button>
+              <p id="r6" hidden>No. Llenas un formulario con tu horario y tus respuestas, con ejemplos en cada pregunta. Lo puedes hacer desde tu celular.</p></li>
+            <li><button type="button" aria-expanded="false" aria-controls="r7">¿Cuánto cuesta?</button>
+              <p id="r7" hidden>Ahora está en etapa de prueba. Merkatics definirá el precio antes de abrirlo a más negocios.</p></li>
+          </ul>
+        </div>
+        <p class="preguntas-respuesta" id="respuesta-grande" aria-hidden="true">Todavía no. Por ahora tu negocio tiene un chat de prueba con su propio enlace, igual a WhatsApp, para probarlo con clientes de confianza. Conectar tu número es la siguiente etapa.</p>
+      </section>
+
+      <!-- Cierre: el primer paso ya abierto -->
+      <section class="cierre" aria-labelledby="cierre-titulo">
+        <div class="cierre-texto revelar">
+          <h2 id="cierre-titulo">Empieza con<br /> tu nombre</h2>
+          <p>Te llevamos al formulario con esto ya escrito. Faltan tu horario, tus preguntas y tu cuenta.</p>
+        </div>
+        <form class="dialogo revelar" data-ui action="/crear" method="get" id="dialogo-crear">
+          <p class="dialogo-titulo">Tu negocio</p>
+          <label for="cierre-nombre">Nombre del negocio</label>
+          <input id="cierre-nombre" name="nombre" maxlength="60" value="Estética Lupita" />
+          <p class="dialogo-etiqueta" id="cierre-giro-etiqueta">Giro</p>
+          <div class="dialogo-segmentos" role="radiogroup" aria-labelledby="cierre-giro-etiqueta">
+            <label><input type="radio" name="giro" value="consultorio" /><span>Consultorio</span></label>
+            <label><input type="radio" name="giro" value="salon" checked /><span>Salón</span></label>
+            <label><input type="radio" name="giro" value="taller" /><span>Taller</span></label>
+            <label><input type="radio" name="giro" value="otro" /><span>Otro</span></label>
+          </div>
+          <button type="submit" class="dialogo-boton">Crear mi negocio</button>
+        </form>
       </section>
     </main>
+
+    <footer class="pie">
+      <p>Tu WhatsApp contesta solo, un módulo de Merkatics</p>
+      <nav aria-label="Pie de página">
+        <a href="#prueba">Pruébalo</a>
+        <a href="/entrar">Entrar</a>
+        <a href="/demo">Demo para presentar</a>
+      </nav>
+      <p>2026</p>
+      <p class="creditos">Fotos: <a href="https://commons.wikimedia.org/w/index.php?curid=133426064">“Dental chair in a dentist clinic”</a> de IrfanDP, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, vía Wikimedia Commons; <a href="https://commons.wikimedia.org/w/index.php?curid=180549243">“Salon de Coiffure Le Temps d’une Coupe Estrablin 08”</a> de Jlgay38, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, vía Wikimedia Commons; <a href="https://www.flickr.com/photos/26344495@N05/49988037583">“Druckluft Schlagschrauber und ein Auto-Rad”</a> de Ivan Radic, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>, vía Flickr.</p>
+    </footer>
+
     <script type="module" src="/src/inicio.js"></script>
   </body>
 </html>

@@ -11,3 +11,6 @@ supabase/.branches/
 .env*
 !.env.example
 *.local.txt
+
+# Capturas del revisor de diseño (se regeneran)
+.taste-skill/*/
