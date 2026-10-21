@@ -1,0 +1,8 @@
+# Nunca subir a Vercel desde la terminal
+.env*
+*.local.txt
+.claude/
+.taste-skill/
+pruebas/
+docs/
+supabase/
