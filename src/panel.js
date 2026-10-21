@@ -604,6 +604,9 @@ async function arrancar() {
     $verChat.textContent = t.verChat;
     $verChat.href = `/chat/${negocio.slug}`;
     $verChat.hidden = false;
+    const $nota = document.getElementById('nota-prueba');
+    $nota.textContent = t.notaPrueba;
+    $nota.hidden = false;
     $mensaje.textContent = '';
     negocioActual = negocio;
     iniciarPestanas();

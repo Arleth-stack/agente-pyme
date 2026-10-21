@@ -264,6 +264,7 @@ h1, h2, legend { font-weight: 600; letter-spacing: -0.01em; }
 }
 .panel-encabezado h1 { margin: 0; font-size: 20px; }
 .enlace-suave { font-size: 14px; color: var(--coral-texto); }
+.nota-prueba { margin: 4px 0 0; font-size: 14px; color: var(--texto-suave); }
 .panel-contenido { max-width: 960px; margin: 0 auto; padding: 16px; }
 
 .panel-pestanas {

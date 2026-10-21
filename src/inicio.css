@@ -125,6 +125,7 @@ p { text-wrap: pretty; }
   max-width: 34ch;
   font-size: clamp(1.0625rem, 0.95rem + 0.35vw, 1.25rem);
 }
+.portada-nota { margin-top: 20px; max-width: 40ch; font-size: 15px; color: var(--suave); }
 .portada-acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 32px; }
 
 .escenario {
