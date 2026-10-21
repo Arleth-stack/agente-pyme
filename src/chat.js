@@ -41,17 +41,41 @@ function iniciales(nombre) {
     .map((p) => p[0].toUpperCase()).join('');
 }
 
-function burbuja({ autor, texto, creado_en }) {
+// Botones con preguntas para tocar: solo los de la última respuesta.
+function mostrarOpciones(opciones) {
+  const $fila = document.createElement('div');
+  $fila.className = 'chat-opciones';
+  for (const { pregunta, enviar: texto = pregunta } of opciones) {
+    const $o = document.createElement('button');
+    $o.type = 'button';
+    $o.className = 'chat-opcion';
+    $o.textContent = pregunta;
+    $o.addEventListener('click', () => {
+      if ($entrada.disabled) return;
+      enviar(texto, burbuja({ autor: 'cliente', texto }));
+    });
+    $fila.append($o);
+  }
+  $mensajes.append($fila);
+  $mensajes.scrollTop = $mensajes.scrollHeight;
+}
+
+function burbuja({ autor, texto, creado_en, opciones }) {
+  $mensajes.querySelectorAll('.chat-opciones').forEach(($f) => $f.remove());
   const $b = document.createElement('div');
   $b.className = `burbuja ${autor === 'cliente' ? 'burbuja-cliente' : 'burbuja-negocio'}`;
   const $texto = document.createElement('p');
-  $texto.textContent = texto;
+  // Con botones a la vista, la lista numerada sobra (sirve en WhatsApp, donde no hay botones).
+  $texto.textContent = opciones?.length && autor !== 'cliente'
+    ? texto.split('\n').filter((l) => !/^\d{1,2}\. /.test(l) && l !== 'Escríbeme el número o tu pregunta.').join('\n').trim()
+    : texto;
   const $hora = document.createElement('span');
   $hora.className = 'burbuja-hora';
   $hora.textContent = horaDe(creado_en ?? Date.now());
   $b.append($texto, $hora);
   $mensajes.append($b);
   $mensajes.scrollTop = $mensajes.scrollHeight;
+  if (autor !== 'cliente' && opciones?.length) mostrarOpciones(opciones);
   return $b;
 }
 
@@ -157,7 +181,16 @@ async function arrancar() {
   document.getElementById('nombre-negocio').textContent = negocio.nombre;
   document.getElementById('avatar').textContent = iniciales(negocio.nombre);
 
-  burbuja({ autor: 'asistente', texto: t.bienvenida(negocio.nombre), creado_en: Date.now() });
+  // La bienvenida la arma la base según el giro y las preguntas del negocio.
+  burbuja({
+    autor: 'asistente',
+    texto: negocio.bienvenida ?? t.bienvenida(negocio.nombre),
+    creado_en: Date.now(),
+    opciones: [
+      ...(negocio.sugerencias ?? []).map((pregunta) => ({ pregunta })),
+      { pregunta: t.hablarConPersona, enviar: 'persona' },
+    ],
+  });
 
   if (token) {
     const { data, error: errorMensajes } = await supabase.rpc('chat_mensajes', { p_token: token, p_despues_de: 0 });

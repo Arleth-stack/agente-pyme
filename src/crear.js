@@ -102,7 +102,7 @@ const validar = {
 const $listaPreguntas = document.getElementById('lista-preguntas');
 let giroSugerido = null;
 
-function tarjetaPregunta({ tema = 'otros', pregunta = '', otras = '', respuesta = '' } = {}) {
+function tarjetaPregunta({ tema = 'otros', pregunta = '', otras = '', respuesta = '', ejemplo = '' } = {}) {
   const $c = document.createElement('div');
   $c.className = 'crear-pregunta';
   $c.dataset.tema = tema;
@@ -127,6 +127,7 @@ function tarjetaPregunta({ tema = 'otros', pregunta = '', otras = '', respuesta 
   $r.rows = 2;
   $r.maxLength = 500;
   $r.value = respuesta;
+  $r.placeholder = ejemplo || t.p3.ejemplo;
 
   const $quitar = document.createElement('button');
   $quitar.type = 'button';
@@ -148,8 +149,8 @@ function prepararPreguntas() {
   if (giroSugerido === datos.giro && $listaPreguntas.children.length) return actualizarAutomaticas();
   if (giroSugerido && hayRespuestasEscritas()) return actualizarAutomaticas();
   giroSugerido = datos.giro;
-  $listaPreguntas.replaceChildren(...textos.sugeridas[datos.giro].map(([tema, pregunta, otras]) =>
-    tarjetaPregunta({ tema, pregunta, otras })));
+  $listaPreguntas.replaceChildren(...textos.sugeridas[datos.giro].map(([tema, pregunta, otras, ejemplo]) =>
+    tarjetaPregunta({ tema, pregunta, otras, ejemplo })));
   actualizarAutomaticas();
 }
 
@@ -313,4 +314,10 @@ $form.addEventListener('submit', async (e) => {
 $atras.addEventListener('click', () => irA(paso - 1));
 
 pintarTextos();
+
+// Desde la página de inicio llegan el nombre y el giro ya escritos (?nombre=…&giro=…).
+const recibido = new URLSearchParams(location.search);
+$nombre.value = (recibido.get('nombre') ?? '').slice(0, 60);
+if (recibido.get('giro') in t.giros) $giro.value = recibido.get('giro');
+
 irA(1);
