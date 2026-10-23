@@ -1,17 +1,18 @@
-# 00 · Índice del proyecto v2.2 (léeme primero)
+# 00 · Índice del proyecto v2.3 (léeme primero)
 
-Proyecto 2026-544-16 · Agente de WhatsApp para PyMEs · Documentación v2.2 · 21 de octubre de 2026
+Proyecto 2026-544-16 · Agente de WhatsApp para PyMEs · Documentación v2.3 · 23 de octubre de 2026
 
-El prototipo se reinició desde cero el 19 de octubre y la Fase 1 quedó construida el 20 de octubre (18 de 18 tickets). El 21 de octubre el chat entiende más formas de preguntar y la página usa la marca Merkatics. Estos son los documentos vigentes; los de la versión 1 están en 99_Archivo_Version_1.
+El prototipo se reinició desde cero el 19 de octubre y la Fase 1 quedó construida el 20 de octubre (18 de 18 tickets). El 21 de octubre el chat entiende más formas de preguntar y la página usa la marca Merkatics. Estos son los documentos vigentes.
 
 **Demo en línea:** https://agente-pyme-merkatics.vercel.app (para presentar: /demo)
 
 ## Empieza aquí
 
-0. [Avance de la Fase 1 — 21 oct 2026 (para Carlos)](https://docs.google.com/document/d/1tA0JQpPk8ZMU9j-CbCCV4tK4-DnhTqlpUgFvyURN6as/edit) y el del [20 oct](https://docs.google.com/document/d/1NGhC3j3l_PAq-QcMzwJexaMDARv30B6X4gLq4cUiPtQ/edit): qué está listo, pruebas, pendientes y preguntas.
-1. [Ficha del proyecto v2](https://docs.google.com/document/d/19-mbSp1wvEdasLmyVvMCxaBhyDd_DPvqVm2J3aZw1As/edit): qué es, los 3 requisitos, tecnología, fechas y por qué se reinicia.
-2. [Alcance y backlog de la Fase 1 v2](https://docs.google.com/document/d/1Tma7p_jbZTVBBvoTCKZNB3Lt3YXpihKjob5T5tNz8SE/edit): qué se construye, qué no, y los 18 tickets en orden.
-3. [Registro de decisiones v2.2](https://docs.google.com/document/d/1I3TNwovAdlJxo3X3qag-vAE6jZAlH4EZetf7XStF8dY/edit): lo decidido, lo propuesto y lo que le toca decidir a Carlos.
+0. [Presentación del proyecto (plantilla GrowthLab, con capturas)](https://docs.google.com/document/d/1qao4p32YTe2NEjf5yHVmh0XjLyNEGzZUIDfLU3pVPzo/edit): para la revisión con Carlos.
+1. [Avance de la Fase 1 — 21 oct 2026](https://docs.google.com/document/d/1tA0JQpPk8ZMU9j-CbCCV4tK4-DnhTqlpUgFvyURN6as/edit): qué está listo, pruebas y pendientes.
+2. [Ficha del proyecto v2](https://docs.google.com/document/d/19-mbSp1wvEdasLmyVvMCxaBhyDd_DPvqVm2J3aZw1As/edit): qué es, los 3 requisitos, tecnología, fechas y por qué se reinicia.
+3. [Alcance y backlog de la Fase 1 v2](https://docs.google.com/document/d/1Tma7p_jbZTVBBvoTCKZNB3Lt3YXpihKjob5T5tNz8SE/edit): qué se construye, qué no, y los 18 tickets en orden.
+4. [Registro de decisiones v2.2](https://docs.google.com/document/d/1I3TNwovAdlJxo3X3qag-vAE6jZAlH4EZetf7XStF8dY/edit): lo decidido, lo propuesto y lo que le toca decidir a Carlos.
 
 ## 01 · Documentación
 
@@ -39,9 +40,8 @@ El prototipo se reinició desde cero el 19 de octubre y la Fase 1 quedó constru
 | [Pantallas y flujo v2](https://docs.google.com/document/d/1_hIrO_ZCdmRhWOD101IzHH3iDiMkh4qZn3BNOKLJ2b0/edit) | Qué tiene cada pantalla y el guion de la demo |
 | [Modelo de datos v2](https://docs.google.com/document/d/1gplq7lHXhj6qYXucnTuYbD2W1kd_xcil8Irw9vcKF5w/edit) | Tablas, reglas, permisos y lógica del chat |
 | [Plan de pruebas v2.1](https://docs.google.com/document/d/1UYNSEpjYfw-QMBN8xFLuKUkCeASpd4AZm1Y6tKrD72s/edit) | 10 pruebas, el conjunto de 108 casos y el registro de resultados |
-| [Resultado P1 — conjunto de prueba](https://docs.google.com/document/d/1dkcUM6Qgv_uTFK8nzgGz-sLKLfhw98-n4qQ8SjrkLuI/edit) | 106 de 108, 0 respuestas inventadas |
+| [Evidencia de pruebas de la Fase 1 — 21 oct](https://docs.google.com/document/d/18-OXsjiRDF7sLj1ZJ0bdRW839MqjJPe6zIHVQX0DBwA/edit) | Guardado, aislamiento 6 de 6, respuestas 107 de 108 (0 inventadas), escalamiento y lenguaje |
 | [Revisión de entrega (T18)](https://docs.google.com/document/d/1Ktu946_3TAfMuGGp_MyVnj3b2P9PaAuP3Tq3wGuBpLU/edit) | Seguridad, lenguaje (0 palabras prohibidas) y 2 mejoras de experiencia de usuario |
-| [Avance de la Fase 1 — 20 oct](https://docs.google.com/document/d/1NGhC3j3l_PAq-QcMzwJexaMDARv30B6X4gLq4cUiPtQ/edit) | Resumen para Carlos (07_Entregables) |
 | [Avance de la Fase 1 — 21 oct](https://docs.google.com/document/d/1tA0JQpPk8ZMU9j-CbCCV4tK4-DnhTqlpUgFvyURN6as/edit) | El chat entiende más formas de preguntar y la marca Merkatics (07_Entregables) |
 
 ## 04 · Multiempresa
@@ -65,6 +65,7 @@ El prototipo se reinició desde cero el 19 de octubre y la Fase 1 quedó constru
 
 | Documento | Para qué sirve |
 |---|---|
+| [Presentación del proyecto (plantilla GrowthLab)](https://docs.google.com/document/d/1qao4p32YTe2NEjf5yHVmh0XjLyNEGzZUIDfLU3pVPzo/edit) | Pitch, MVP con capturas, arquitectura, decisiones, estado y siguientes pasos |
 | [Guion de la demo (5 min) y pitch](https://docs.google.com/document/d/12r23yC7cC2U-qa0hi7PXsVthASvelzqGYaIPRIXXFd8/edit) | Qué mostrar minuto a minuto, el pitch de 1 minuto y respuestas a preguntas frecuentes |
 
 ## Lo que sigue
@@ -75,4 +76,4 @@ El prototipo se reinició desde cero el 19 de octubre y la Fase 1 quedó constru
 | Mar 27 oct | Validación con persona real (D3); el guion de demo (D4) ya está listo |
 | Mié 28 oct | Revisión con Carlos (propuesta) |
 
-Carpetas 07 (Fase 2 Django), 08 (Piloto) y 10 (Backlog): fase posterior; no se usan hasta que Carlos apruebe la Fase 1.
+El 23 de octubre se quitaron las carpetas y subcarpetas vacías (07 Fase 2 Django, 08 Piloto, 10 Backlog y otras); se crean de nuevo cuando haya algo que guardar en ellas.
