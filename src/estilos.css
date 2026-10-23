@@ -319,6 +319,7 @@ h1, h2, legend { font-weight: 600; letter-spacing: -0.01em; }
 .conversacion.estado-te_necesita { border-left-color: var(--coral); background: #fff6f5; }
 .conversacion.estado-la_atiendes_tu { border-left-color: var(--grafito); }
 .conversacion-arriba { display: flex; justify-content: space-between; gap: 8px; font-size: 15px; }
+.lista-conversaciones > li { min-width: 0; }
 .conversacion-ultimo {
   margin: 4px 0 8px;
   color: var(--texto-suave);
