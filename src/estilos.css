@@ -339,6 +339,8 @@ h1, h2, legend { font-weight: 600; letter-spacing: -0.01em; }
 @media (min-width: 900px) {
   .conversaciones.con-detalle { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 16px; align-items: start; }
   .conversaciones.con-detalle .columna-lista { display: block; }
+  /* Sin esto, un mensaje largo ensancha la lista y queda debajo del detalle. */
+  .conversaciones.con-detalle > * { min-width: 0; }
   .conversaciones.con-detalle #volver { display: none; }
 }
 .detalle {
