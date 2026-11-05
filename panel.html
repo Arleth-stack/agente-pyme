@@ -15,116 +15,220 @@
     <header class="marca-barra">
       <a href="/" aria-label="Merkatics, ir al inicio"><img src="/marca/merkatics-claro.png" alt="Merkatics" width="121" height="28" /></a>
     </header>
-    <header class="panel-encabezado">
-      <div>
-        <h1 id="nombre-negocio"></h1>
-        <a id="ver-chat" class="enlace-suave" target="_blank" rel="noopener" hidden></a>
-        <p id="nota-prueba" class="nota-prueba" hidden></p>
+
+    <div class="panel-cuerpo">
+      <!-- Menú lateral: fijo a la izquierda en computadora, se abre con ☰ en celular -->
+      <aside id="menu" class="panel-menu" aria-label="Menú del panel">
+        <div class="menu-cabeza">
+          <strong id="menu-negocio"></strong>
+          <button id="menu-cerrar" class="boton-icono menu-cerrar" type="button" aria-label="Cerrar menú">✕</button>
+        </div>
+        <nav class="menu-lista" id="pestanas" hidden>
+          <button data-seccion="conversaciones" class="menu-item activa" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>
+            <span data-etiqueta></span><span id="menu-urgentes" class="menu-cuenta" hidden></span>
+          </button>
+          <button data-seccion="preguntas" class="menu-item" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14M12 17.5v.01"/></svg>
+            <span data-etiqueta></span>
+          </button>
+          <button data-seccion="reportes" class="menu-item" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-6"/></svg>
+            <span data-etiqueta></span>
+          </button>
+          <button data-seccion="compartir" class="menu-item" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2"/></svg>
+            <span data-etiqueta></span>
+          </button>
+          <button data-seccion="negocio" class="menu-item" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10l1.5-5h13L20 10M4 10v10h16V10M4 10h16M10 20v-5h4v5"/></svg>
+            <span data-etiqueta></span>
+          </button>
+          <button data-seccion="aislamiento" class="menu-item" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+            <span data-etiqueta></span>
+          </button>
+        </nav>
+        <div class="menu-pie">
+          <a id="ver-chat" class="boton-secundario boton-enlace" target="_blank" rel="noopener" hidden></a>
+          <button id="salir" class="boton-icono menu-salir" type="button" hidden></button>
+        </div>
+      </aside>
+      <div id="menu-fondo" class="menu-fondo" hidden></div>
+
+      <div class="panel-principal">
+        <header class="panel-encabezado">
+          <button id="menu-abrir" class="menu-abrir" type="button" aria-controls="menu" aria-expanded="false" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            <span id="menu-abrir-texto"></span>
+          </button>
+          <div class="panel-titulo">
+            <h1 id="nombre-negocio"></h1>
+            <p id="nota-prueba" class="nota-prueba" hidden></p>
+          </div>
+        </header>
+
+        <main class="panel-contenido">
+          <p id="mensaje" class="suave"></p>
+
+          <section id="plan" class="plan-aviso" role="status" hidden>
+            <p id="plan-texto"></p>
+            <button id="plan-boton" type="button" class="boton-principal" hidden></button>
+            <p id="plan-error" class="mensaje-error" role="alert" hidden></p>
+          </section>
+
+          <section id="seccion-conversaciones" class="conversaciones" hidden>
+            <div class="columna-lista">
+              <div class="filtros" id="filtros" role="tablist"></div>
+              <ul class="lista-conversaciones" id="lista-conversaciones"></ul>
+              <p id="sin-conversaciones" class="suave" hidden></p>
+            </div>
+
+            <article class="detalle" id="detalle" hidden>
+              <header class="detalle-encabezado">
+                <button id="volver" class="boton-icono" type="button"></button>
+                <div>
+                  <h2 id="detalle-nombre"></h2>
+                  <p id="detalle-datos" class="suave"></p>
+                </div>
+              </header>
+              <p id="detalle-aviso" class="detalle-aviso" hidden></p>
+              <div id="detalle-sugerencia" class="detalle-sugerencia" hidden>
+                <p id="detalle-sugerencia-texto"></p>
+                <button id="detalle-agregar" type="button" class="boton-chico"></button>
+              </div>
+              <div id="detalle-mensajes" class="detalle-mensajes"></div>
+              <form id="detalle-form" class="detalle-form" autocomplete="off">
+                <textarea id="detalle-texto" rows="2" maxlength="1000"></textarea>
+                <p id="detalle-error" class="mensaje-error" role="alert" hidden></p>
+                <div class="detalle-botones">
+                  <button id="detalle-resolver" type="button" class="boton-secundario"></button>
+                  <button id="detalle-enviar" type="submit" class="boton-principal"></button>
+                </div>
+              </form>
+            </article>
+          </section>
+
+          <section id="seccion-preguntas" hidden>
+            <div class="seccion-encabezado">
+              <p id="preguntas-ayuda" class="suave"></p>
+              <button id="preguntas-agregar" class="boton-principal" type="button"></button>
+            </div>
+            <form id="pregunta-form" class="tarjeta-form" novalidate hidden>
+              <h2 id="pregunta-form-titulo"></h2>
+              <p id="pf-origen" class="pf-origen" hidden></p>
+              <label for="pf-tema" id="pf-tema-etiqueta"></label>
+              <select id="pf-tema"></select>
+              <label for="pf-pregunta" id="pf-pregunta-etiqueta"></label>
+              <input id="pf-pregunta" maxlength="150" />
+              <label for="pf-otras" id="pf-otras-etiqueta"></label>
+              <input id="pf-otras" maxlength="300" />
+              <label for="pf-respuesta" id="pf-respuesta-etiqueta"></label>
+              <textarea id="pf-respuesta" rows="3" maxlength="500"></textarea>
+              <p id="pf-error" class="mensaje-error" role="alert" hidden></p>
+              <div class="detalle-botones">
+                <button id="pf-cancelar" type="button" class="boton-secundario"></button>
+                <button id="pf-guardar" type="submit" class="boton-principal"></button>
+              </div>
+            </form>
+            <p id="pf-ok" class="mensaje-ok" role="status" hidden></p>
+            <div id="lista-preguntas"></div>
+          </section>
+
+          <section id="seccion-reportes" class="reportes" hidden>
+            <div class="seccion-encabezado">
+              <div>
+                <h2 id="rep-titulo"></h2>
+                <p id="rep-ayuda" class="suave"></p>
+              </div>
+              <div class="filtros rep-periodo" id="rep-periodo" role="tablist"></div>
+            </div>
+            <p id="rep-mensaje" class="suave" hidden></p>
+            <div id="rep-contenido" hidden>
+              <div class="rep-tarjetas" id="rep-tarjetas"></div>
+              <div class="tarjeta-form rep-bloque">
+                <h3 id="rep-dias-titulo"></h3>
+                <div id="rep-dias" class="rep-barras"></div>
+              </div>
+              <div class="rep-columnas">
+                <div class="tarjeta-form rep-bloque">
+                  <h3 id="rep-top-titulo"></h3>
+                  <ol id="rep-top" class="rep-top"></ol>
+                </div>
+                <div class="tarjeta-form rep-bloque">
+                  <h3 id="rep-nosabe-titulo"></h3>
+                  <p id="rep-nosabe-ayuda" class="suave"></p>
+                  <ul id="rep-nosabe" class="rep-nosabe"></ul>
+                </div>
+              </div>
+              <div class="tarjeta-form rep-bloque">
+                <h3 id="rep-motivos-titulo"></h3>
+                <ul id="rep-motivos" class="rep-motivos"></ul>
+              </div>
+            </div>
+          </section>
+
+          <section id="seccion-compartir" class="compartir" hidden>
+            <div class="tarjeta-form">
+              <h2 id="comp-titulo"></h2>
+              <p id="comp-ayuda" class="suave"></p>
+              <div class="listo-enlace">
+                <input id="comp-url" readonly aria-label="Enlace de tu chat" />
+                <button id="comp-copiar" type="button" class="boton-chico"></button>
+              </div>
+              <div class="compartir-botones">
+                <a id="comp-whatsapp" class="boton-principal boton-enlace" target="_blank" rel="noopener"></a>
+                <a id="comp-probar" class="boton-secundario boton-enlace" target="_blank" rel="noopener"></a>
+              </div>
+              <details class="comp-mensaje">
+                <summary id="comp-mensaje-titulo"></summary>
+                <p id="comp-mensaje" class="suave"></p>
+              </details>
+            </div>
+            <div class="tarjeta-form compartir-qr" id="compartir-qr">
+              <h2 id="qr-titulo"></h2>
+              <p id="qr-ayuda" class="suave"></p>
+              <div id="qr" class="qr" role="img"></div>
+              <p id="qr-nombre" class="qr-nombre"></p>
+              <button id="qr-imprimir" type="button" class="boton-secundario"></button>
+            </div>
+          </section>
+
+          <section id="seccion-negocio" hidden>
+            <form id="negocio-form" class="tarjeta-form" novalidate>
+              <p id="negocio-ayuda" class="suave"></p>
+              <label for="nf-nombre" id="nf-nombre-etiqueta"></label>
+              <input id="nf-nombre" maxlength="60" autocomplete="organization" />
+              <label for="nf-telefono" id="nf-telefono-etiqueta"></label>
+              <input id="nf-telefono" inputmode="numeric" maxlength="14" autocomplete="tel" />
+              <label for="nf-direccion" id="nf-direccion-etiqueta"></label>
+              <input id="nf-direccion" maxlength="120" autocomplete="street-address" />
+              <h3 id="nf-horario-titulo"></h3>
+              <div id="nf-horario"></div>
+              <p id="nf-error" class="mensaje-error" role="alert" hidden></p>
+              <p id="nf-ok" class="mensaje-ok" role="status" hidden></p>
+              <div class="detalle-botones">
+                <button id="nf-guardar" type="submit" class="boton-principal"></button>
+              </div>
+            </form>
+          </section>
+          <section id="seccion-aislamiento" hidden>
+            <div class="tarjeta-form">
+              <h2 id="ais-titulo"></h2>
+              <p id="ais-ayuda" class="suave"></p>
+              <table class="tabla-aislamiento">
+                <thead><tr><th id="ais-col-negocio"></th><th id="ais-col-conv"></th><th id="ais-col-preg"></th></tr></thead>
+                <tbody id="ais-filas"></tbody>
+              </table>
+              <p id="ais-conclusion" class="mensaje-ok"></p>
+              <div class="detalle-botones">
+                <button id="ais-repetir" type="button" class="boton-secundario"></button>
+              </div>
+            </div>
+          </section>
+        </main>
       </div>
-      <button id="salir" class="boton-secundario" hidden></button>
-    </header>
-
-    <nav class="panel-pestanas" id="pestanas" hidden>
-      <button data-seccion="conversaciones" class="pestana activa"></button>
-      <button data-seccion="preguntas" class="pestana"></button>
-      <button data-seccion="negocio" class="pestana"></button>
-      <button data-seccion="aislamiento" class="pestana"></button>
-    </nav>
-
-    <main class="panel-contenido">
-      <p id="mensaje" class="suave"></p>
-
-      <section id="plan" class="plan-aviso" role="status" hidden>
-        <p id="plan-texto"></p>
-        <button id="plan-boton" type="button" class="boton-principal" hidden></button>
-        <p id="plan-error" class="mensaje-error" role="alert" hidden></p>
-      </section>
-
-      <section id="seccion-conversaciones" class="conversaciones" hidden>
-        <div class="columna-lista">
-          <div class="filtros" id="filtros" role="tablist"></div>
-          <ul class="lista-conversaciones" id="lista-conversaciones"></ul>
-          <p id="sin-conversaciones" class="suave" hidden></p>
-        </div>
-
-        <article class="detalle" id="detalle" hidden>
-          <header class="detalle-encabezado">
-            <button id="volver" class="boton-icono" type="button"></button>
-            <div>
-              <h2 id="detalle-nombre"></h2>
-              <p id="detalle-datos" class="suave"></p>
-            </div>
-          </header>
-          <p id="detalle-aviso" class="detalle-aviso" hidden></p>
-          <div id="detalle-mensajes" class="detalle-mensajes"></div>
-          <form id="detalle-form" class="detalle-form" autocomplete="off">
-            <textarea id="detalle-texto" rows="2" maxlength="1000"></textarea>
-            <p id="detalle-error" class="mensaje-error" role="alert" hidden></p>
-            <div class="detalle-botones">
-              <button id="detalle-resolver" type="button" class="boton-secundario"></button>
-              <button id="detalle-enviar" type="submit" class="boton-principal"></button>
-            </div>
-          </form>
-        </article>
-      </section>
-
-      <section id="seccion-preguntas" hidden>
-        <div class="seccion-encabezado">
-          <p id="preguntas-ayuda" class="suave"></p>
-          <button id="preguntas-agregar" class="boton-principal" type="button"></button>
-        </div>
-        <form id="pregunta-form" class="tarjeta-form" novalidate hidden>
-          <h2 id="pregunta-form-titulo"></h2>
-          <label for="pf-tema" id="pf-tema-etiqueta"></label>
-          <select id="pf-tema"></select>
-          <label for="pf-pregunta" id="pf-pregunta-etiqueta"></label>
-          <input id="pf-pregunta" maxlength="150" />
-          <label for="pf-otras" id="pf-otras-etiqueta"></label>
-          <input id="pf-otras" maxlength="300" />
-          <label for="pf-respuesta" id="pf-respuesta-etiqueta"></label>
-          <textarea id="pf-respuesta" rows="3" maxlength="500"></textarea>
-          <p id="pf-error" class="mensaje-error" role="alert" hidden></p>
-          <div class="detalle-botones">
-            <button id="pf-cancelar" type="button" class="boton-secundario"></button>
-            <button id="pf-guardar" type="submit" class="boton-principal"></button>
-          </div>
-        </form>
-        <div id="lista-preguntas"></div>
-      </section>
-
-      <section id="seccion-negocio" hidden>
-        <form id="negocio-form" class="tarjeta-form" novalidate>
-          <p id="negocio-ayuda" class="suave"></p>
-          <label for="nf-nombre" id="nf-nombre-etiqueta"></label>
-          <input id="nf-nombre" maxlength="60" autocomplete="organization" />
-          <label for="nf-telefono" id="nf-telefono-etiqueta"></label>
-          <input id="nf-telefono" inputmode="numeric" maxlength="14" autocomplete="tel" />
-          <label for="nf-direccion" id="nf-direccion-etiqueta"></label>
-          <input id="nf-direccion" maxlength="120" autocomplete="street-address" />
-          <h3 id="nf-horario-titulo"></h3>
-          <div id="nf-horario"></div>
-          <p id="nf-error" class="mensaje-error" role="alert" hidden></p>
-          <p id="nf-ok" class="mensaje-ok" role="status" hidden></p>
-          <div class="detalle-botones">
-            <button id="nf-guardar" type="submit" class="boton-principal"></button>
-          </div>
-        </form>
-      </section>
-      <section id="seccion-aislamiento" hidden>
-        <div class="tarjeta-form">
-          <h2 id="ais-titulo"></h2>
-          <p id="ais-ayuda" class="suave"></p>
-          <table class="tabla-aislamiento">
-            <thead><tr><th id="ais-col-negocio"></th><th id="ais-col-conv"></th><th id="ais-col-preg"></th></tr></thead>
-            <tbody id="ais-filas"></tbody>
-          </table>
-          <p id="ais-conclusion" class="mensaje-ok"></p>
-          <div class="detalle-botones">
-            <button id="ais-repetir" type="button" class="boton-secundario"></button>
-          </div>
-        </div>
-      </section>
-    </main>
+    </div>
 
     <script type="module" src="/src/panel.js"></script>
   </body>

@@ -2,6 +2,7 @@ import { supabase } from './supabase.js';
 import { textos } from './textos.js';
 import { crearEditorHorario } from './horario.js';
 import { abrirPago, leerPlan, diasRestantes } from './plan.js';
+import qrcode from 'qrcode-generator';
 
 const t = textos.panel;
 const $mensaje = document.getElementById('mensaje');
@@ -10,22 +11,56 @@ const $verChat = document.getElementById('ver-chat');
 const $pestanas = document.getElementById('pestanas');
 let negocioActual = null;
 
+// Menú lateral -------------------------------------------------------------
+// En computadora siempre está a la vista; en celular se abre con ☰ y se
+// cierra al elegir una sección, al tocar fuera o con Esc.
+
+const $menu = document.getElementById('menu');
+const $menuAbrir = document.getElementById('menu-abrir');
+const $menuFondo = document.getElementById('menu-fondo');
+const alAbrirSeccion = {};
+
+function menuAbierto(abierto) {
+  $menu.classList.toggle('abierto', abierto);
+  $menuFondo.hidden = !abierto;
+  $menuAbrir.setAttribute('aria-expanded', abierto);
+  document.body.classList.toggle('menu-abierto', abierto);
+  if (abierto) $menu.querySelector('.menu-item.activa')?.focus();
+}
+
 function iniciarPestanas() {
   for (const $b of $pestanas.querySelectorAll('[data-seccion]')) {
-    $b.textContent = t.pestanas[$b.dataset.seccion];
+    $b.querySelector('[data-etiqueta]').textContent = t.pestanas[$b.dataset.seccion];
     $b.addEventListener('click', () => mostrarSeccion($b.dataset.seccion));
   }
+  document.getElementById('menu-abrir-texto').textContent = t.menu.abrir;
+  document.getElementById('menu-cerrar').setAttribute('aria-label', t.menu.cerrar);
+  document.getElementById('menu-cerrar').addEventListener('click', () => menuAbierto(false));
+  $menuAbrir.addEventListener('click', () => menuAbierto(true));
+  $menuFondo.addEventListener('click', () => menuAbierto(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && $menu.classList.contains('abierto')) {
+      menuAbierto(false);
+      $menuAbrir.focus();
+    }
+  });
+  $menuAbrir.hidden = false;
   $pestanas.hidden = false;
   mostrarSeccion('conversaciones');
 }
 
 function mostrarSeccion(nombre) {
   for (const $b of $pestanas.querySelectorAll('[data-seccion]')) {
-    $b.classList.toggle('activa', $b.dataset.seccion === nombre);
+    const activa = $b.dataset.seccion === nombre;
+    $b.classList.toggle('activa', activa);
+    if (activa) $b.setAttribute('aria-current', 'page');
+    else $b.removeAttribute('aria-current');
   }
   for (const $s of document.querySelectorAll('[id^="seccion-"]')) {
     $s.hidden = $s.id !== `seccion-${nombre}`;
   }
+  menuAbierto(false);
+  alAbrirSeccion[nombre]?.();
 }
 
 // T07 · Mis conversaciones -------------------------------------------------
@@ -67,6 +102,11 @@ async function cargarConversaciones() {
 
 function pintarFiltros() {
   const cuenta = (estado) => conversaciones.filter((c) => estado === 'todas' || c.estado === estado).length;
+  // En el menú, cuántas conversaciones te necesitan ahora.
+  const $urgentes = document.getElementById('menu-urgentes');
+  const urgentes = cuenta('te_necesita');
+  $urgentes.textContent = urgentes;
+  $urgentes.hidden = !urgentes;
   $filtros.replaceChildren(...Object.entries(t.filtros).map(([clave, etiqueta]) => {
     const $b = document.createElement('button');
     $b.className = `filtro${clave === filtro ? ' activo' : ''}${clave === 'te_necesita' && cuenta(clave) ? ' urgente' : ''}`;
@@ -162,6 +202,8 @@ const $detTexto = document.getElementById('detalle-texto');
 const $detError = document.getElementById('detalle-error');
 const $detEnviar = document.getElementById('detalle-enviar');
 const $detResolver = document.getElementById('detalle-resolver');
+const $detSugerencia = document.getElementById('detalle-sugerencia');
+const $detAgregar = document.getElementById('detalle-agregar');
 let abierta = null;
 let ultimoMensaje = 0;
 
@@ -212,6 +254,16 @@ function pintarEncabezado(c) {
     $detAviso.hidden = true;
   }
   $detResolver.hidden = c.estado === 'al_dia';
+
+  // Lo último que el chat no supo contestar en esta conversación → pregunta nueva.
+  const noSabe = c.avisos
+    .filter((a) => a.motivo === 'no_la_sabe' && !yaEsPregunta(a.mensaje_cliente))
+    .sort((a, b) => new Date(b.creado_en) - new Date(a.creado_en))[0];
+  $detSugerencia.hidden = !noSabe;
+  if (noSabe) {
+    document.getElementById('detalle-sugerencia-texto').textContent = t.agregar.sugerencia(noSabe.mensaje_cliente);
+    $detAgregar.onclick = () => agregarComoPregunta(noSabe.mensaje_cliente);
+  }
 }
 
 async function cargarDetalle(primeraVez) {
@@ -219,7 +271,7 @@ async function cargarDetalle(primeraVez) {
   const id = abierta;
   const [{ data: conv }, { data: mensajes }] = await Promise.all([
     supabase.from('conversaciones')
-      .select('id, estado, cliente_nombre, cliente_telefono, interes, avisos(motivo, estado)')
+      .select('id, estado, cliente_nombre, cliente_telefono, interes, avisos(motivo, estado, mensaje_cliente, creado_en)')
       .eq('id', id).single(),
     supabase.from('mensajes').select('id, autor, texto, creado_en')
       .eq('conversacion_id', id).gt('id', primeraVez ? 0 : ultimoMensaje).order('id'),
@@ -283,6 +335,7 @@ function iniciarConversaciones() {
   $detTexto.placeholder = t.escribeRespuesta;
   $detEnviar.textContent = t.enviar;
   $detResolver.textContent = t.resolver;
+  $detAgregar.textContent = t.agregar.boton;
   setInterval(() => cargarDetalle(false), 4000);
   cargarConversaciones();
   // Así aparecen solos los mensajes y avisos nuevos (RF-PAN-09: ≤ 10 s).
@@ -316,6 +369,8 @@ function abrirFormulario(p) {
   $pfOtras.value = p?.otras_formas ?? '';
   $pfRespuesta.value = p?.respuesta ?? '';
   errorPregunta('');
+  $pfOrigen.hidden = true;
+  $pfOk.hidden = true;
   $pForm.hidden = false;
   $pForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
   $pfPregunta.focus();
@@ -324,6 +379,29 @@ function abrirFormulario(p) {
 function cerrarFormulario() {
   editando = null;
   $pForm.hidden = true;
+  $pfOrigen.hidden = true;
+}
+
+const $pfOrigen = document.getElementById('pf-origen');
+const $pfOk = document.getElementById('pf-ok');
+const normalizar = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ¿?¡!.,]/g, '').replace(/\s+/g, ' ').trim();
+
+// ¿Ese texto ya está guardado como pregunta (o como otra forma de preguntarla)?
+function yaEsPregunta(texto) {
+  const buscado = normalizar(texto ?? '');
+  return preguntas.some((p) => normalizar(p.pregunta) === buscado
+    || (p.otras_formas ?? '').split(',').some((o) => normalizar(o) === buscado));
+}
+
+// Idea tomada de Darwin: lo que el chat no supo se vuelve pregunta frecuente.
+function agregarComoPregunta(texto) {
+  mostrarSeccion('preguntas');
+  abrirFormulario(null);
+  $pfPregunta.value = texto.trim().slice(0, 150);
+  $pfTema.value = 'otros';
+  $pfOrigen.textContent = t.agregar.origen(texto.trim());
+  $pfOrigen.hidden = false;
+  $pfRespuesta.focus();
 }
 
 async function cargarPreguntas() {
@@ -435,8 +513,14 @@ $pForm.addEventListener('submit', async (e) => {
   $pfGuardar.disabled = false;
   $pfGuardar.textContent = tp.guardar;
   if (error) return errorPregunta(error.code === '23505' ? tp.repetida : tp.noSeGuardo);
+  const veniaDeCliente = !$pfOrigen.hidden;
   cerrarFormulario();
-  cargarPreguntas();
+  await cargarPreguntas();
+  // Solo se dice "guardada" después de que la base respondió sin error.
+  if (veniaDeCliente) {
+    $pfOk.textContent = t.agregar.guardada;
+    $pfOk.hidden = false;
+  }
 });
 
 function iniciarPreguntas() {
@@ -516,6 +600,7 @@ $nForm.addEventListener('submit', async (e) => {
   if (error || !data?.length) return avisoNegocio($nfError, tn.noSeGuardo);
   negocioActual.nombre = data[0].nombre;
   document.getElementById('nombre-negocio').textContent = data[0].nombre;
+  document.getElementById('menu-negocio').textContent = data[0].nombre;
   document.title = data[0].nombre;
   avisoNegocio($nfOk, tn.guardado);
 });
@@ -574,6 +659,246 @@ function iniciarAislamiento() {
   $aisRepetir.textContent = ta.repetir;
   $aisRepetir.addEventListener('click', probarAislamiento);
   document.querySelector('[data-seccion="aislamiento"]').addEventListener('click', probarAislamiento);
+}
+
+// Tu semana (reportes) -----------------------------------------------------
+// Todo se cuenta con lo que las reglas por fila dejan ver: solo este negocio.
+
+const tr = t.reportes;
+const $repPeriodo = document.getElementById('rep-periodo');
+const $repMensaje = document.getElementById('rep-mensaje');
+const $repContenido = document.getElementById('rep-contenido');
+let periodo = 7;
+let cargandoReportes = false;
+
+function el(etiqueta, clase, texto) {
+  const $e = document.createElement(etiqueta);
+  if (clase) $e.className = clase;
+  if (texto !== undefined) $e.textContent = texto;
+  return $e;
+}
+
+function avisoReportes(texto) {
+  $repMensaje.textContent = texto;
+  $repMensaje.hidden = !texto;
+}
+
+function pintarPeriodos() {
+  document.getElementById('rep-titulo').textContent = tr.titulos[periodo];
+  $repPeriodo.replaceChildren(...Object.entries(tr.periodos).map(([dias, etiqueta]) => {
+    const $b = el('button', `filtro${Number(dias) === periodo ? ' activo' : ''}`, etiqueta);
+    $b.type = 'button';
+    $b.setAttribute('role', 'tab');
+    $b.setAttribute('aria-selected', Number(dias) === periodo);
+    $b.addEventListener('click', () => {
+      periodo = Number(dias);
+      pintarPeriodos();
+      cargarReportes();
+    });
+    return $b;
+  }));
+}
+
+async function cargarReportes() {
+  if (cargandoReportes) return;
+  cargandoReportes = true;
+  avisoReportes(tr.cargando);
+  const desde = new Date();
+  desde.setHours(0, 0, 0, 0);
+  desde.setDate(desde.getDate() - (periodo - 1));
+  const iso = desde.toISOString();
+
+  const [convs, avisos, respuestas] = await Promise.all([
+    supabase.from('conversaciones').select('id, creada_en').gte('creada_en', iso),
+    supabase.from('avisos').select('conversacion_id, motivo, mensaje_cliente, creado_en').gte('creado_en', iso),
+    supabase.from('mensajes').select('pregunta_id, preguntas(pregunta)')
+      .eq('autor', 'asistente').not('pregunta_id', 'is', null).gte('creado_en', iso),
+  ]);
+  cargandoReportes = false;
+  if (convs.error || avisos.error || respuestas.error) {
+    $repContenido.hidden = true;
+    return avisoReportes(tr.sinConexion);
+  }
+  if (!convs.data.length && !respuestas.data.length) {
+    $repContenido.hidden = true;
+    return avisoReportes(tr.vacio);
+  }
+  avisoReportes('');
+  $repContenido.hidden = false;
+  pintarReportes(desde, convs.data, avisos.data, respuestas.data);
+}
+
+function pintarReportes(desde, convs, avisos, respuestas) {
+  // Tarjetas con los números grandes.
+  const conAviso = new Set(avisos.map((a) => a.conversacion_id));
+  const necesitaron = convs.filter((c) => conAviso.has(c.id)).length;
+  const soloChat = convs.length - necesitaron;
+  const pct = convs.length ? Math.round((soloChat / convs.length) * 100) : 0;
+  const tarjetas = [
+    [tr.conversaciones, convs.length, tr.conversacionesNota],
+    [tr.soloChat, soloChat, tr.soloChatNota(pct)],
+    [tr.teNecesitaron, necesitaron, tr.teNecesitaronNota],
+    [tr.respuestas, respuestas.length, tr.respuestasNota],
+  ];
+  document.getElementById('rep-tarjetas').replaceChildren(...tarjetas.map(([titulo, numero, nota]) => {
+    const $t = el('div', 'rep-tarjeta');
+    $t.append(el('span', 'rep-tarjeta-titulo', titulo), el('strong', 'rep-numero', numero.toLocaleString('es-MX')), el('span', 'suave', nota));
+    return $t;
+  }));
+
+  // Conversaciones por día: una barra por día, con su número al pasar el dedo o el ratón.
+  const dias = [];
+  for (let i = 0; i < periodo; i++) {
+    const d = new Date(desde);
+    d.setDate(d.getDate() + i);
+    dias.push({ fecha: d, n: 0 });
+  }
+  for (const c of convs) {
+    const d = new Date(c.creada_en);
+    d.setHours(0, 0, 0, 0);
+    const i = Math.round((d - desde) / 86400000);
+    if (dias[i]) dias[i].n += 1;
+  }
+  const max = Math.max(1, ...dias.map((d) => d.n));
+  const $barras = document.getElementById('rep-dias');
+  $barras.style.setProperty('--columnas', periodo);
+  $barras.classList.toggle('rep-barras-mes', periodo > 7);
+  $barras.replaceChildren(...dias.map(({ fecha, n }, i) => {
+    const etiqueta = tr.porDiaTabla(tr.dia(fecha), n);
+    const $col = el('div', 'rep-columna');
+    $col.tabIndex = 0;
+    $col.setAttribute('role', 'img');
+    $col.setAttribute('aria-label', etiqueta);
+    $col.title = etiqueta;
+    const $valor = el('span', 'rep-valor', n ? String(n) : '');
+    const $barra = el('span', `rep-barra${n ? '' : ' rep-barra-cero'}`);
+    $barra.style.height = `${(n / max) * 100}%`;
+    const $pista = el('span', 'rep-pista');
+    $pista.append($valor, $barra);
+    // En 30 días solo se rotula un día de cada semana para que no se encimen.
+    const rotular = periodo <= 7 || (periodo - 1 - i) % 7 === 0;
+    $col.append($pista, el('span', 'rep-dia', rotular ? tr.dia(fecha) : ''));
+    return $col;
+  }));
+
+  // Lo que más preguntan (por pregunta frecuente usada).
+  const cuenta = new Map();
+  for (const r of respuestas) {
+    const texto = r.preguntas?.pregunta;
+    if (texto) cuenta.set(texto, (cuenta.get(texto) ?? 0) + 1);
+  }
+  const top = [...cuenta].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const topMax = top[0]?.[1] ?? 1;
+  const $top = document.getElementById('rep-top');
+  $top.replaceChildren(...(top.length ? top.map(([texto, n]) => {
+    const $li = el('li');
+    const $fila = el('div', 'rep-top-fila');
+    $fila.append(el('span', 'rep-top-texto', texto), el('span', 'rep-top-veces', tr.veces(n)));
+    const $medida = el('span', 'rep-medida');
+    $medida.style.width = `${(n / topMax) * 100}%`;
+    $li.append($fila, $medida);
+    return $li;
+  }) : [el('li', 'suave rep-vacio', tr.topVacio)]));
+
+  // Lo que no supo contestar, sin repetir, con su botón para agregarlo.
+  const vistos = new Set();
+  const noSabe = avisos
+    .filter((a) => a.motivo === 'no_la_sabe')
+    .sort((a, b) => new Date(b.creado_en) - new Date(a.creado_en))
+    .filter((a) => {
+      const llave = normalizar(a.mensaje_cliente);
+      if (vistos.has(llave) || yaEsPregunta(a.mensaje_cliente)) return false;
+      vistos.add(llave);
+      return true;
+    })
+    .slice(0, 6);
+  document.getElementById('rep-nosabe-ayuda').hidden = !noSabe.length;
+  document.getElementById('rep-nosabe').replaceChildren(...(noSabe.length ? noSabe.map((a) => {
+    const $li = el('li');
+    $li.append(el('span', '', `«${a.mensaje_cliente}»`));
+    const $b = el('button', 'boton-chico', t.agregar.boton);
+    $b.type = 'button';
+    $b.addEventListener('click', () => agregarComoPregunta(a.mensaje_cliente));
+    $li.append($b);
+    return $li;
+  }) : [el('li', 'suave rep-vacio', tr.noSabeVacio)]));
+
+  // Por qué te necesitaron.
+  const motivos = Object.keys(t.motivos)
+    .map((m) => [m, avisos.filter((a) => a.motivo === m).length])
+    .filter(([, n]) => n)
+    .sort((a, b) => b[1] - a[1]);
+  document.getElementById('rep-motivos').replaceChildren(...(motivos.length ? motivos.map(([m, n]) => {
+    const $li = el('li');
+    $li.append(el('span', 'etiqueta etiqueta-motivo', t.motivos[m]), el('strong', '', String(n)));
+    return $li;
+  }) : [el('li', 'suave rep-vacio', tr.motivosVacio)]));
+}
+
+function iniciarReportes() {
+  document.getElementById('rep-ayuda').textContent = tr.ayuda;
+  document.getElementById('rep-dias-titulo').textContent = tr.porDia;
+  document.getElementById('rep-top-titulo').textContent = tr.top;
+  document.getElementById('rep-nosabe-titulo').textContent = tr.noSabe;
+  document.getElementById('rep-nosabe-ayuda').textContent = tr.noSabeAyuda;
+  document.getElementById('rep-motivos-titulo').textContent = tr.motivos;
+  pintarPeriodos();
+  // Se recalcula cada vez que se abre la sección.
+  alAbrirSeccion.reportes = cargarReportes;
+}
+
+// Comparte tu chat (enlace, WhatsApp y código QR) ---------------------------
+
+const tc = t.compartir;
+
+function iniciarCompartir() {
+  const url = `${location.origin}/chat/${negocioActual.slug}`;
+  const nombre = () => negocioActual.nombre;
+  document.getElementById('comp-titulo').textContent = tc.titulo;
+  document.getElementById('comp-ayuda').textContent = tc.ayuda;
+  document.getElementById('comp-url').value = url;
+  const $copiar = document.getElementById('comp-copiar');
+  $copiar.textContent = tc.copiar;
+  $copiar.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      $copiar.textContent = tc.copiado;
+      setTimeout(() => { $copiar.textContent = tc.copiar; }, 2000);
+    } catch {
+      document.getElementById('comp-url').select();
+    }
+  });
+  const $whatsapp = document.getElementById('comp-whatsapp');
+  $whatsapp.textContent = tc.whatsapp;
+  const $probar = document.getElementById('comp-probar');
+  $probar.textContent = tc.probar;
+  $probar.href = url;
+  document.getElementById('comp-mensaje-titulo').textContent = tc.mensajeTitulo;
+  document.getElementById('qr-titulo').textContent = tc.qrTitulo;
+  document.getElementById('qr-ayuda').textContent = tc.qrAyuda;
+  const $imprimir = document.getElementById('qr-imprimir');
+  $imprimir.textContent = tc.imprimir;
+  $imprimir.addEventListener('click', () => {
+    document.body.classList.add('imprimiendo-qr');
+    window.print();
+  });
+  window.addEventListener('afterprint', () => document.body.classList.remove('imprimiendo-qr'));
+
+  // El código QR se arma aquí mismo, sin mandar el enlace a ningún otro sitio.
+  const qr = qrcode(0, 'M');
+  qr.addData(url);
+  qr.make();
+  const $qr = document.getElementById('qr');
+  $qr.innerHTML = qr.createSvgTag({ cellSize: 6, margin: 2, scalable: true });
+
+  // El nombre puede cambiar en "Mi negocio": el mensaje se arma al abrir la sección.
+  alAbrirSeccion.compartir = () => {
+    const mensaje = tc.mensaje(nombre(), url);
+    $whatsapp.href = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+    document.getElementById('comp-mensaje').textContent = mensaje;
+    document.getElementById('qr-nombre').textContent = tc.qrNombre(nombre());
+    $qr.setAttribute('aria-label', tc.qrDescripcion(nombre()));
+  };
 }
 
 // Prueba gratis de 7 días y plan mensual ------------------------------------
@@ -668,6 +993,7 @@ async function arrancar() {
   } else {
     document.title = negocio.nombre;
     document.getElementById('nombre-negocio').textContent = negocio.nombre;
+    document.getElementById('menu-negocio').textContent = negocio.nombre;
     $verChat.textContent = t.verChat;
     $verChat.href = `/chat/${negocio.slug}`;
     $verChat.hidden = false;
@@ -681,6 +1007,8 @@ async function arrancar() {
     iniciarPreguntas();
     iniciarNegocio();
     iniciarAislamiento();
+    iniciarReportes();
+    iniciarCompartir();
     iniciarPlan();
   }
 }
