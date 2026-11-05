@@ -14,22 +14,46 @@
     <link rel="stylesheet" href="/src/inicio.css" />
   </head>
   <body>
+    <div class="sitio">
+    <!-- Menú lateral: fijo a la izquierda en computadora; en celular y tableta se abre con «Menú» -->
+    <aside class="lateral" id="lateral" aria-label="Menú">
+      <div class="lateral-cabeza">
+        <a href="/" class="barra-marca" aria-label="Merkatics, inicio">
+          <img src="/marca/merkatics-claro.png" alt="Merkatics" width="173" height="40" />
+        </a>
+        <button type="button" class="lateral-cerrar" id="lateral-cerrar" aria-label="Cerrar menú">✕</button>
+      </div>
+      <nav class="lateral-enlaces" aria-label="Secciones">
+        <a href="#inicio"><span>01</span>Inicio</a>
+        <a href="#prueba"><span>02</span>Pruébalo</a>
+        <a href="#avisa"><span>03</span>Te avisa</a>
+        <a href="#como"><span>04</span>Cómo funciona</a>
+        <a href="#para-quien"><span>05</span>Para quién</a>
+        <a href="#merkatics"><span>06</span>Merkatics</a>
+        <a href="#preguntas"><span>07</span>Preguntas</a>
+      </nav>
+      <div class="lateral-pie">
+        <a href="/crear" class="boton">Crear mi negocio</a>
+        <a href="/entrar" class="lateral-entrar">Entrar a mi panel</a>
+        <a href="/demo" class="lateral-demo">Demo para presentar</a>
+      </div>
+    </aside>
+    <div class="lateral-fondo" id="lateral-fondo" hidden></div>
+
+    <div class="sitio-contenido">
     <header class="barra">
       <a href="/" class="barra-marca" aria-label="Merkatics, inicio">
         <img src="/marca/merkatics-claro.png" alt="Merkatics" width="173" height="40" />
       </a>
-      <nav class="barra-enlaces" aria-label="Secciones">
-        <a href="#prueba">Pruébalo</a>
-        <a href="#como">Cómo funciona</a>
-        <a href="#para-quien">Para quién</a>
-        <a href="#preguntas">Preguntas</a>
-      </nav>
       <a href="/entrar" class="barra-entrar">Entrar</a>
+      <button type="button" class="barra-menu" id="lateral-abrir" aria-controls="lateral" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>Menú
+      </button>
     </header>
 
     <main>
       <!-- Portada: el mensaje de las 11:42 p. m. contestado sobre el escenario coral -->
-      <section class="portada" aria-labelledby="titulo">
+      <section class="portada" id="inicio" aria-labelledby="titulo">
         <div class="portada-texto">
           <h1 id="titulo">Tu WhatsApp<br /> contesta solo</h1>
           <p class="portada-frase">Escribe una vez lo que te preguntan tus clientes. El chat les contesta con tus palabras a cualquier hora y te avisa cuando alguien te necesita.</p>
@@ -117,7 +141,7 @@
       </section>
 
       <!-- El panel del dueño, con notas al margen -->
-      <section class="seccion avisa" aria-labelledby="avisa-titulo">
+      <section class="seccion avisa" id="avisa" aria-labelledby="avisa-titulo">
         <h2 id="avisa-titulo" class="revelar">Y te avisa a ti</h2>
 
         <div class="avisa-rejilla">
@@ -262,7 +286,7 @@
       </section>
 
       <!-- Merkatics -->
-      <section class="seccion carta" aria-labelledby="carta-titulo">
+      <section class="seccion carta" id="merkatics" aria-labelledby="carta-titulo">
         <div class="carta-hoja revelar">
           <img src="/marca/icono.png" alt="" width="44" height="44" class="carta-icono" />
           <h2 id="carta-titulo">La puerta de entrada a Merkatics</h2>
@@ -344,6 +368,8 @@
       <p>2026</p>
       <p class="creditos">Fotos: <a href="https://commons.wikimedia.org/w/index.php?curid=133426064">“Dental chair in a dentist clinic”</a> de IrfanDP, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, vía Wikimedia Commons; <a href="https://commons.wikimedia.org/w/index.php?curid=180549243">“Salon de Coiffure Le Temps d’une Coupe Estrablin 08”</a> de Jlgay38, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, vía Wikimedia Commons; <a href="https://www.flickr.com/photos/26344495@N05/49988037583">“Druckluft Schlagschrauber und ein Auto-Rad”</a> de Ivan Radic, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>, vía Flickr.</p>
     </footer>
+    </div>
+    </div>
 
     <script type="module" src="/src/inicio.js"></script>
   </body>

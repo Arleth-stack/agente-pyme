@@ -243,3 +243,64 @@ $botones.forEach(($b) => {
   $b.addEventListener('focus', () => elegir($b));
   $b.addEventListener('mouseenter', () => { if (matchMedia('(hover: hover)').matches) elegir($b); });
 });
+
+// Menú lateral --------------------------------------------------------------
+// En computadora está fijo; en celular y tableta se abre con «Menú» y se
+// cierra al elegir una sección, al tocar fuera o con Esc.
+const $lateral = document.getElementById('lateral');
+const $lateralAbrir = document.getElementById('lateral-abrir');
+const $lateralFondo = document.getElementById('lateral-fondo');
+const enCajon = matchMedia('(max-width: 1099px)');
+
+function lateralAbierto(abierto) {
+  $lateral.classList.toggle('abierto', abierto);
+  $lateralFondo.hidden = !abierto;
+  $lateralAbrir.setAttribute('aria-expanded', abierto);
+  document.body.classList.toggle('lateral-abierto', abierto);
+  if (abierto) $lateral.querySelector('.lateral-enlaces a')?.focus();
+}
+
+$lateralAbrir.addEventListener('click', () => lateralAbierto(true));
+document.getElementById('lateral-cerrar').addEventListener('click', () => {
+  lateralAbierto(false);
+  $lateralAbrir.focus();
+});
+$lateralFondo.addEventListener('click', () => lateralAbierto(false));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && $lateral.classList.contains('abierto')) {
+    lateralAbierto(false);
+    $lateralAbrir.focus();
+  }
+});
+$lateral.addEventListener('click', (e) => {
+  if (e.target.closest('a') && enCajon.matches) lateralAbierto(false);
+});
+enCajon.addEventListener('change', () => lateralAbierto(false));
+
+// Marca en el menú la sección que estás viendo.
+const $enlacesMenu = [...$lateral.querySelectorAll('.lateral-enlaces a')];
+// La sección que cruza la franja de en medio de la pantalla es la actual.
+function marcarActual(id) {
+  for (const $a of $enlacesMenu) {
+    const es = $a.hash === `#${id}`;
+    $a.classList.toggle('actual', es);
+    if (es) $a.setAttribute('aria-current', 'true');
+    else $a.removeAttribute('aria-current');
+  }
+}
+// Al tocar un enlace se marca ese, aunque la sección sea corta.
+let fijadoHasta = 0;
+$lateral.addEventListener('click', (e) => {
+  const $a = e.target.closest('.lateral-enlaces a');
+  if (!$a) return;
+  marcarActual($a.hash.slice(1));
+  fijadoHasta = Date.now() + 1200;
+});
+const vigia = new IntersectionObserver((entradas) => {
+  const e = entradas.find((x) => x.isIntersecting);
+  if (e && Date.now() > fijadoHasta) marcarActual(e.target.id);
+}, { rootMargin: '-35% 0px -60% 0px' });
+$enlacesMenu.forEach(($a) => {
+  const $s = document.querySelector($a.hash);
+  if ($s) vigia.observe($s);
+});

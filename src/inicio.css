@@ -35,7 +35,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+@media (min-width: 1100px) { html { scroll-padding-top: 24px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -83,7 +84,7 @@ p { text-wrap: pretty; }
 }
 .boton:active { transform: scale(0.97); }
 
-.enlace, .barra-enlaces a, .barra-entrar, .pie a, .demo-abrir {
+.enlace, .barra-entrar, .pie a, .demo-abrir {
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: 0.25em;
@@ -92,20 +93,83 @@ p { text-wrap: pretty; }
 }
 @media (hover: hover) and (pointer: fine) {
   .boton:hover { background: #f06a61; }
-  .enlace:hover, .barra-enlaces a:hover, .barra-entrar:hover, .pie a:hover, .demo-abrir:hover { text-decoration-color: currentColor; }
+  .enlace:hover, .barra-entrar:hover, .pie a:hover, .demo-abrir:hover { text-decoration-color: currentColor; }
 }
 
 /* Barra ---------------------------------------------------------------- */
 .barra {
-  display: flex; align-items: center; gap: 40px;
-  padding: 26px var(--margen);
+  display: flex; align-items: center; gap: 20px;
+  padding: 18px var(--margen);
   font-size: 15px;
-  position: relative; z-index: 2;
+  position: sticky; top: 0; z-index: 20;
+  background: var(--fondo);
+  border-bottom: 1px solid var(--superficie-2);
 }
 .barra-marca img { height: 36px; width: auto; }
-.barra-enlaces { display: flex; gap: 32px; margin-left: auto; }
-.barra-enlaces a { text-decoration-line: underline; }
-.barra-entrar { font-weight: 500; }
+.barra-entrar { font-weight: 500; margin-left: auto; min-height: 44px; display: inline-flex; align-items: center; }
+.barra-menu {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; padding: 0 14px 0 10px;
+  border: 1px solid var(--tinta); border-radius: 2px; background: var(--fondo);
+  font-size: 15px; font-weight: 500; cursor: pointer;
+}
+.barra-menu svg, .lateral-cerrar svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+
+/* Menú lateral ----------------------------------------------------------
+   Celular y tableta: cajón que se abre con «Menú».
+   Computadora (≥ 1100 px): columna fija a la izquierda, siempre a la vista. */
+.lateral {
+  position: fixed; inset: 0 auto 0 0; z-index: 40;
+  display: flex; flex-direction: column; gap: 32px;
+  width: min(320px, 86vw);
+  padding: 26px 24px 24px;
+  background: var(--fondo);
+  border-right: 1px solid var(--superficie-2);
+  overflow-y: auto;
+  transform: translateX(-102%);
+  visibility: hidden;
+  transition: transform 260ms var(--ease-out), visibility 0s linear 260ms;
+}
+.lateral.abierto { transform: none; visibility: visible; transition: transform 260ms var(--ease-out); box-shadow: 12px 0 32px rgb(0 0 0 / 14%); }
+.lateral-fondo { position: fixed; inset: 0; z-index: 35; background: rgb(17 17 17 / 45%); }
+body.lateral-abierto { overflow: hidden; }
+.lateral-cabeza { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.lateral-cabeza .barra-marca img { height: 34px; }
+.lateral-cerrar { width: 44px; height: 44px; border: none; background: none; font-size: 20px; cursor: pointer; color: var(--suave); }
+.lateral-enlaces { display: grid; gap: 2px; }
+.lateral-enlaces a {
+  display: flex; align-items: baseline; gap: 14px;
+  min-height: 46px; padding: 10px 12px;
+  border-left: 3px solid transparent;
+  font-size: 17px; font-weight: 500; text-decoration: none;
+  color: var(--suave);
+  transition: color var(--t-hover) ease, background-color var(--t-hover) ease, border-color var(--t-hover) ease;
+}
+.lateral-enlaces a span { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; color: var(--suave); font-variant-numeric: tabular-nums; }
+.lateral-enlaces a.actual { color: var(--tinta); border-left-color: var(--coral); background: var(--superficie); }
+.lateral-enlaces a.actual span { color: var(--coral-texto); }
+.lateral-pie { display: grid; gap: 6px; margin-top: auto; padding-top: 24px; border-top: 1px solid var(--superficie-2); }
+.lateral-pie .boton { width: 100%; margin-bottom: 6px; }
+.lateral-entrar, .lateral-demo { display: flex; align-items: center; min-height: 44px; padding: 0 4px; text-decoration: none; }
+.lateral-entrar { font-weight: 500; }
+.lateral-demo { font-size: 15px; color: var(--suave); }
+@media (hover: hover) and (pointer: fine) {
+  .lateral-enlaces a:hover { color: var(--tinta); background: var(--superficie); }
+  .lateral-entrar:hover, .lateral-demo:hover { text-decoration: underline; text-underline-offset: 0.25em; }
+  .barra-menu:hover { background: var(--superficie); }
+}
+@media (prefers-reduced-motion: reduce) { .lateral, .lateral.abierto { transition: none; } }
+
+@media (min-width: 1100px) {
+  .sitio { display: grid; grid-template-columns: 260px minmax(0, 1fr); }
+  .lateral {
+    position: sticky; top: 0; z-index: 2;
+    width: auto; height: 100vh; height: 100svh;
+    transform: none; visibility: visible; transition: none;
+  }
+  .lateral-cerrar, .lateral-fondo, .barra { display: none !important; }
+  .sitio-contenido { min-width: 0; padding-top: 8px; }
+}
 
 /* Portada -------------------------------------------------------------- */
 .portada {
@@ -540,10 +604,8 @@ p { text-wrap: pretty; }
 
 /* Celular --------------------------------------------------------------- */
 @media (max-width: 760px) {
-  .barra { gap: 16px; padding-top: 18px; padding-bottom: 18px; }
+  .barra { gap: 12px; padding-top: 12px; padding-bottom: 12px; }
   .barra-marca img { height: 30px; }
-  .barra-enlaces { display: none; }
-  .barra-entrar { margin-left: auto; }
 
   .portada { min-height: 0; padding-top: 28px; }
   .portada h1 { font-size: 10.5vw; }
