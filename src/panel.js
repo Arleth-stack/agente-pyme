@@ -1,6 +1,7 @@
 import { supabase } from './supabase.js';
 import { textos } from './textos.js';
 import { crearEditorHorario } from './horario.js';
+import { abrirPago, leerPlan, diasRestantes } from './plan.js';
 
 const t = textos.panel;
 const $mensaje = document.getElementById('mensaje');
@@ -575,6 +576,72 @@ function iniciarAislamiento() {
   document.querySelector('[data-seccion="aislamiento"]').addEventListener('click', probarAislamiento);
 }
 
+// Prueba gratis de 7 días y plan mensual ------------------------------------
+
+const tpl = textos.plan;
+const $plan = document.getElementById('plan');
+const $planTexto = document.getElementById('plan-texto');
+const $planBoton = document.getElementById('plan-boton');
+const $planError = document.getElementById('plan-error');
+
+function pintarPlan(plan) {
+  // Los negocios de la demo no pagan.
+  if (!plan || plan.es_demo) return ($plan.hidden = true);
+  const ok = plan.estado === 'prueba' || plan.estado === 'activa';
+  $plan.classList.toggle('plan-ok', ok);
+  $planBoton.hidden = ok || plan.estado === 'pago_pendiente';
+  if (plan.estado === 'prueba') {
+    $planTexto.textContent = tpl.prueba(diasRestantes(plan.prueba_termina), tpl.fecha(plan.prueba_termina));
+  } else if (plan.estado === 'activa') {
+    $planTexto.textContent = tpl.activa;
+  } else if (plan.estado === 'pago_pendiente') {
+    $planTexto.textContent = tpl.pagoPendiente;
+  } else if (plan.estado === 'cancelada') {
+    $planTexto.textContent = tpl.cancelada;
+    $planBoton.textContent = tpl.activarPlan;
+  } else {
+    $planTexto.textContent = plan.puede_probar ? `${tpl.titulo}. ${tpl.explicacion}` : tpl.sinPrueba;
+    $planBoton.textContent = plan.puede_probar ? tpl.activar : tpl.activarPlan;
+  }
+  $plan.hidden = false;
+}
+
+$planBoton.addEventListener('click', async () => {
+  const etiqueta = $planBoton.textContent;
+  $planBoton.disabled = true;
+  $planBoton.textContent = tpl.abriendo;
+  $planError.hidden = true;
+  try {
+    await abrirPago();
+  } catch {
+    $planBoton.disabled = false;
+    $planBoton.textContent = etiqueta;
+    $planError.textContent = tpl.noAbrio;
+    $planError.hidden = false;
+  }
+});
+
+async function iniciarPlan() {
+  const params = new URLSearchParams(location.search);
+  const s = params.get('s');
+  if (params.has('plan')) history.replaceState(null, '', location.pathname);
+  if (s) {
+    $planTexto.textContent = tpl.confirmando;
+    $planBoton.hidden = true;
+    $plan.hidden = false;
+  }
+  try {
+    pintarPlan(await leerPlan(s));
+    if (params.get('plan') === 'cancelado' && !$planBoton.hidden) {
+      $planError.textContent = tpl.volvioSinTarjeta;
+      $planError.hidden = false;
+    }
+  } catch {
+    // Sin respuesta: no se inventa un estado.
+    $plan.hidden = true;
+  }
+}
+
 // Arranque (al final, cuando todo lo de arriba ya está declarado) -----------
 
 async function arrancar() {
@@ -614,6 +681,7 @@ async function arrancar() {
     iniciarPreguntas();
     iniciarNegocio();
     iniciarAislamiento();
+    iniciarPlan();
   }
 }
 

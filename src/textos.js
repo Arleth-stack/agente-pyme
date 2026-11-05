@@ -192,6 +192,26 @@ export const textos = {
     singular: { lun: 'lunes', mar: 'martes', mie: 'miércoles', jue: 'jueves', vie: 'viernes', sab: 'sábado', dom: 'domingo' },
   },
 
+  // Prueba gratis de 7 días y plan mensual (panel y último paso de "Crea tu negocio").
+  plan: {
+    titulo: 'Tu prueba gratis de 7 días',
+    explicacion: 'Registra tu tarjeta en la página segura de Stripe. Hoy no se te cobra nada: al día 7 se cobra el primer mes (1 dólar) y después cada mes.',
+    activar: 'Activar prueba gratis',
+    despues: 'Ahora no, ir a mi panel',
+    sinPrueba: 'Ya usaste tu prueba gratis. Registra tu tarjeta para activar tu plan: se cobra 1 dólar hoy y después cada mes.',
+    activarPlan: 'Activar mi plan',
+    abriendo: 'Abriendo la página de pago…',
+    noAbrio: 'No pudimos abrir la página de pago. Revisa tu internet e inténtalo de nuevo.',
+    confirmando: 'Confirmando tu tarjeta con Stripe…',
+    volvioSinTarjeta: 'No se registró ninguna tarjeta. Puedes activar tu prueba cuando quieras.',
+    prueba: (dias, fecha) =>
+      `Prueba gratis: ${dias <= 1 ? 'te queda 1 día' : `te quedan ${dias} días`}. El ${fecha} se cobra el primer mes (1 dólar) a tu tarjeta.`,
+    activa: 'Plan mensual activo: 1 dólar al mes.',
+    pagoPendiente: 'No pudimos cobrar tu mes. Revisa que tu tarjeta tenga fondos; Stripe lo volverá a intentar en los próximos días.',
+    cancelada: 'Tu plan está cancelado. Actívalo de nuevo cuando quieras.',
+    fecha: (iso) => new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'long' }),
+  },
+
   panel: {
     cargando: 'Cargando tu panel…',
     salir: 'Salir',

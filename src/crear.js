@@ -1,6 +1,7 @@
 import { supabase } from './supabase.js';
 import { textos } from './textos.js';
 import { crearEditorHorario, describirHorario } from './horario.js';
+import { abrirPago } from './plan.js';
 
 const t = textos.crear;
 const $form = document.getElementById('formulario');
@@ -270,7 +271,27 @@ function mostrarListo(negocio) {
   const $chat = document.getElementById('listo-chat');
   $chat.textContent = tl.probar;
   $chat.href = `/chat/${negocio.slug}`;
-  texto('listo-panel', tl.panel);
+  // Último paso: la prueba gratis de 7 días (registrar tarjeta en Stripe).
+  const tp = textos.plan;
+  texto('plan-titulo', tp.titulo);
+  texto('plan-texto', tp.explicacion);
+  texto('listo-panel', tp.despues);
+  const $activar = document.getElementById('plan-activar');
+  const $planError = document.getElementById('plan-error');
+  $activar.textContent = tp.activar;
+  $activar.addEventListener('click', async () => {
+    $activar.disabled = true;
+    $activar.textContent = tp.abriendo;
+    $planError.hidden = true;
+    try {
+      await abrirPago();
+    } catch {
+      $activar.disabled = false;
+      $activar.textContent = tp.activar;
+      $planError.textContent = tp.noAbrio;
+      $planError.hidden = false;
+    }
+  });
   $form.hidden = true;
   $pasos.hidden = true;
   document.getElementById('subtitulo').hidden = true;

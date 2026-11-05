@@ -14,8 +14,9 @@ Proyecto 2026-544-16 · Merkatics GrowthLab · Practicante: Arleth Caballero. Re
 4. **Aislamiento en la base:** cada tabla lleva `negocio_id` y reglas por fila; el cliente sin sesión no lee tablas, solo llama a las funciones `chat_*`.
 5. **Regla de lenguaje:** en pantalla nunca "IA", "inteligencia artificial", "automatización", "modelo", "entrenar", "bot", "prompt", "token", "API" ni "servidor". Textos de pantalla en `src/textos.js` (excepto la página de inicio, cuyo texto fijo vive en `index.html`; la prueba P5 también lo revisa); las respuestas que genera el chat viven en las funciones SQL.
 6. **No inventar:** el chat contesta con el texto exacto de la pregunta frecuente del negocio o avisa a una persona. Sin servicios externos de redacción en la Fase 1.
-7. **Esta vez no:** WhatsApp real, redacción con inteligencia artificial, Django, envío al CRM, cobros, avisos por correo.
+7. **Esta vez no:** WhatsApp real, redacción con inteligencia artificial, Django, envío al CRM, avisos por correo.
 8. Gratis y simple: HTML, CSS y JavaScript con Vite; Supabase; Vercel; GitHub.
+9. **Cobros (pedido de Carlos, 5 nov 2026):** prueba gratis de 7 días con tarjeta y luego 1 USD al mes, con Stripe en modo de prueba. La tarjeta solo se escribe en la página de Stripe. Las llaves secretas viven en `.env.local` y en Vercel, nunca en git ni en el chat. Funciones en `api/` (`prueba`, `plan`, `stripe-aviso`); estado en `negocios.plan_estado`.
 
 ## Cómo está armado
 
@@ -24,6 +25,7 @@ Proyecto 2026-544-16 · Merkatics GrowthLab · Practicante: Arleth Caballero. Re
 | `index.html`, `chat.html` | Una página por pantalla (Vite multipágina, ver `vite.config.js`) |
 | `src/` | JavaScript y estilos; `textos.js` con todos los textos |
 | `supabase/migrations/` | Tablas, reglas por fila, funciones y datos de los 3 negocios demo |
+| `api/` | Funciones de Vercel para la prueba gratis y el cobro con Stripe |
 | `vercel.json` | Rutas limpias: `/chat/salon-bella` → `chat.html` |
 | `docs/` | Documentación v2 |
 
