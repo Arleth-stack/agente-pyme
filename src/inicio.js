@@ -1,5 +1,6 @@
 import { supabase } from './supabase.js';
 import { textos } from './textos.js';
+import qrcode from 'qrcode-generator';
 
 const t = textos.inicio;
 const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -108,11 +109,27 @@ function iniciales(nombre) {
   return nombre.split(/\s+/).filter((p) => p.length > 2).slice(0, 2).map((p) => p[0].toUpperCase()).join('');
 }
 
+// QR del chat de ejemplo elegido: se escanea con el celular y abre el chat real.
+// Se arma aquí mismo; el enlace no se manda a ningún otro sitio.
+const $qr = document.getElementById('demo-qr');
+function pintarQr() {
+  if (!$qr) return;
+  const qr = qrcode(0, 'M');
+  qr.addData(`${location.origin}/chat/${demo.slug}`);
+  qr.make();
+  $qr.innerHTML = qr.createSvgTag({ cellSize: 5, margin: 0, scalable: true });
+  const nombre = document.querySelector(`input[name="negocio"][value="${demo.slug}"]`)
+    ?.closest('label')?.textContent.trim() ?? '';
+  document.getElementById('demo-qr-nombre').textContent = nombre;
+  $qr.setAttribute('aria-label', `Código QR que abre el chat de ${nombre} en tu celular`);
+}
+
 async function cargarDemo() {
   const version = ++demo.version;
   demo.token = null;
   $demoMensajes.replaceChildren();
   $demoAbrir.href = `/chat/${demo.slug}${demo.hora ? `?hora=${demo.hora}` : ''}`;
+  pintarQr();
   const { data, error } = await supabase.rpc('chat_negocio', { p_slug: demo.slug, p_hora: horaSimulada() });
   if (version !== demo.version) return;
   if (error || !data) {

@@ -6,6 +6,7 @@ const SB_URL = process.env.VITE_SUPABASE_URL;
 const SB_SECRETA = process.env.SUPABASE_SECRET_KEY;
 const STRIPE_SECRETA = process.env.STRIPE_SECRET_KEY;
 export const PRECIO_ID = process.env.STRIPE_PRICE_ID;
+export const PORTAL_ID = process.env.STRIPE_PORTAL_ID;
 export const DIAS_PRUEBA = 7;
 
 export const json = (datos, status = 200) => new Response(JSON.stringify(datos), {
@@ -56,7 +57,7 @@ async function sb(ruta, { metodo = 'GET', datos, token } = {}) {
   return r.status === 204 ? null : r.json();
 }
 
-const COLUMNAS = 'id,slug,nombre,es_demo,plan_estado,prueba_termina,stripe_cliente,stripe_suscripcion';
+const COLUMNAS = 'id,slug,nombre,es_demo,plan_estado,prueba_termina,plan_termina,stripe_cliente,stripe_suscripcion';
 
 // Quién hace la petición: se valida su sesión con Supabase y se busca SU negocio.
 export async function negocioDeSesion(request) {
@@ -66,7 +67,6 @@ export async function negocioDeSesion(request) {
   try {
     usuario = await sb('/auth/v1/user', { token });
   } catch (e) {
-    console.error(e.message);
     return null;
   }
   if (!usuario?.id) return null;
@@ -102,6 +102,8 @@ export async function guardarPlan(negocioId, suscripcion) {
       prueba_termina: suscripcion.trial_end ? new Date(suscripcion.trial_end * 1000).toISOString() : null,
       stripe_cliente: typeof suscripcion.customer === 'string' ? suscripcion.customer : suscripcion.customer?.id,
       stripe_suscripcion: suscripcion.id,
+      // Canceló desde la página de Stripe: sigue activo hasta esta fecha.
+      plan_termina: suscripcion.cancel_at ? new Date(suscripcion.cancel_at * 1000).toISOString() : null,
       plan_actualizado: new Date().toISOString(),
     },
   });
@@ -112,6 +114,9 @@ export const resumenPlan = (n) => ({
   es_demo: n.es_demo,
   estado: n.plan_estado,
   prueba_termina: n.prueba_termina,
+  plan_termina: n.plan_termina,
+  // Con tarjeta registrada puede abrir la página de Stripe para cambiarla o cancelar.
+  puede_administrar: Boolean(n.stripe_cliente),
   // La prueba gratis se da una sola vez por negocio.
   puede_probar: !n.stripe_suscripcion,
 });

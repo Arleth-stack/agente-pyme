@@ -59,19 +59,24 @@ function mostrarError(mensaje) {
   $error.hidden = !mensaje;
 }
 
+// La barra de pasos: los hechos, el actual y los que faltan.
+function pintarPasos(n) {
+  $pasos.replaceChildren(...t.pasos.map((nombre, i) => {
+    const $li = document.createElement('li');
+    $li.textContent = nombre;
+    $li.className = i + 1 < n ? 'hecho' : i + 1 === n ? 'actual' : '';
+    if (i + 1 === n) $li.setAttribute('aria-current', 'step');
+    return $li;
+  }));
+  $pasos.setAttribute('aria-label', t.pasoDe(n));
+}
+
 function irA(n) {
   paso = n;
   for (const $f of $form.querySelectorAll('fieldset[data-paso]')) {
     $f.hidden = Number($f.dataset.paso) !== paso;
   }
-  $pasos.replaceChildren(...t.pasos.map((nombre, i) => {
-    const $li = document.createElement('li');
-    $li.textContent = nombre;
-    $li.className = i + 1 < paso ? 'hecho' : i + 1 === paso ? 'actual' : '';
-    if (i + 1 === paso) $li.setAttribute('aria-current', 'step');
-    return $li;
-  }));
-  $pasos.setAttribute('aria-label', t.pasoDe(paso));
+  pintarPasos(paso);
   $atras.hidden = paso === 1;
   $siguiente.textContent = paso === 4 ? t.p4.crear : t.siguiente;
   mostrarError('');
@@ -274,7 +279,18 @@ function mostrarListo(negocio) {
   // Último paso: la prueba gratis de 7 días (registrar tarjeta en Stripe).
   const tp = textos.plan;
   texto('plan-titulo', tp.titulo);
-  texto('plan-texto', tp.explicacion);
+  texto('plan-texto', tp.lineaIntro);
+  // Hoy · día 7 · cada mes: qué pasa con su tarjeta, sin letras chiquitas.
+  const cobro = new Date(Date.now() + 7 * 86400000).toISOString();
+  document.getElementById('plan-linea').replaceChildren(...tp.linea.map(([cuando, que]) => {
+    const $li = document.createElement('li');
+    const $cuando = document.createElement('strong');
+    $cuando.textContent = typeof cuando === 'function' ? cuando(tp.fecha(cobro)) : cuando;
+    const $que = document.createElement('span');
+    $que.textContent = que;
+    $li.append($cuando, $que);
+    return $li;
+  }));
   texto('listo-panel', tp.despues);
   const $activar = document.getElementById('plan-activar');
   const $planError = document.getElementById('plan-error');
@@ -293,7 +309,7 @@ function mostrarListo(negocio) {
     }
   });
   $form.hidden = true;
-  $pasos.hidden = true;
+  pintarPasos(5);
   document.getElementById('subtitulo').hidden = true;
   document.getElementById('listo').hidden = false;
   document.getElementById('listo-titulo').focus?.();

@@ -43,9 +43,9 @@ export const textos = {
   crear: {
     volver: '‹ Inicio',
     titulo: 'Crea tu negocio',
-    subtitulo: 'En 4 pasos creas el chat de tu negocio y lo pruebas como si fueras tu cliente. Conectar tu número de WhatsApp es la siguiente etapa.',
-    pasos: ['Tu negocio', 'Horario', 'Preguntas', 'Tu cuenta'],
-    pasoDe: (n) => `Paso ${n} de 4`,
+    subtitulo: 'En 5 pasos creas el chat de tu negocio, lo pruebas como si fueras tu cliente y activas tus 7 días gratis. Conectar tu número de WhatsApp es la siguiente etapa.',
+    pasos: ['Tu negocio', 'Horario', 'Preguntas', 'Tu cuenta', 'Prueba gratis'],
+    pasoDe: (n) => `Paso ${n} de 5`,
     siguiente: 'Siguiente',
     atras: 'Atrás',
     p1: {
@@ -100,8 +100,8 @@ export const textos = {
       repetidas: 'Hay preguntas repetidas. Regresa al paso 3 y quita una.',
     },
     listo: {
-      titulo: '¡Listo! Tu chat de prueba ya contesta.',
-      texto: 'Este es el enlace de tu chat de prueba. Pruébalo como si fueras tu cliente o compártelo con clientes de confianza. Tu número de WhatsApp todavía no está conectado.',
+      titulo: '¡Tu chat ya contesta!',
+      texto: 'Este es su enlace. Ábrelo y escríbele como si fueras tu cliente. Tu número de WhatsApp todavía no está conectado.',
       copiar: 'Copiar',
       copiado: 'Copiado',
       probar: 'Probar mi chat',
@@ -196,6 +196,7 @@ export const textos = {
   plan: {
     titulo: 'Tu prueba gratis de 7 días',
     explicacion: 'Registra tu tarjeta en la página segura de Stripe. Hoy no se te cobra nada: al día 7 se cobra el primer mes (1 dólar) y después cada mes.',
+    lineaIntro: 'Tu tarjeta se registra en la página segura de Stripe. Así queda:',
     activar: 'Activar prueba gratis',
     despues: 'Ahora no, ir a mi panel',
     sinPrueba: 'Ya usaste tu prueba gratis. Registra tu tarjeta para activar tu plan: se cobra 1 dólar hoy y después cada mes.',
@@ -210,6 +211,28 @@ export const textos = {
     pagoPendiente: 'No pudimos cobrar tu mes. Revisa que tu tarjeta tenga fondos; Stripe lo volverá a intentar en los próximos días.',
     cancelada: 'Tu plan está cancelado. Actívalo de nuevo cuando quieras.',
     fecha: (iso) => new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'long' }),
+    // Lo que se ve fijo en el menú lateral del panel.
+    menu: {
+      sinActivar: 'Activa tus 7 días gratis',
+      prueba: (dias) => `Prueba gratis · ${dias <= 1 ? 'queda 1 día' : `quedan ${dias} días`}`,
+      activa: 'Plan mensual · 1 dólar',
+      termina: (fecha) => `Tu plan termina el ${fecha}`,
+      pagoPendiente: 'No pudimos cobrar tu mes',
+      cancelada: 'Plan cancelado',
+    },
+    administrar: 'Administrar mi plan',
+    actualizarTarjeta: 'Actualizar mi tarjeta',
+    abriendoPortal: 'Abriendo…',
+    noAbrioPortal: 'No pudimos abrir la página de tu plan. Inténtalo de nuevo.',
+    bienvenida: (fecha) => `¡Listo! Tus 7 días gratis empezaron. El ${fecha} se cobra 1 dólar por tu primer mes. Lo ves siempre en el menú.`,
+    termina: (fecha) => `Cancelaste tu plan: sigue activo hasta el ${fecha}. Si cambias de opinión, reactívalo en «Administrar mi plan».`,
+    cerrar: 'Cerrar aviso',
+    // Línea de tiempo del último paso de «Crea tu negocio».
+    linea: [
+      ['Hoy', 'Registras tu tarjeta. No se te cobra nada.'],
+      [(fecha) => fecha, 'Se cobra 1 dólar por tu primer mes.'],
+      ['Cada mes', '1 dólar. Cancelas cuando quieras desde tu panel.'],
+    ],
   },
 
   panel: {
@@ -218,6 +241,18 @@ export const textos = {
     verChat: 'Ver mi chat',
     notaPrueba: 'Chat de prueba: tus clientes te escriben en el enlace de tu chat. Tu número de WhatsApp todavía no está conectado.',
     sinNegocio: 'Tu cuenta todavía no tiene un negocio.',
+    crearNegocio: 'Crear mi negocio',
+    // Lista guiada para el dueño recién llegado.
+    pasos: {
+      titulo: 'Tus primeros pasos',
+      progreso: (n, total) => `${n} de ${total} listos`,
+      ocultar: 'Ocultar',
+      listo: '¡Todo listo! Ya puedes recibir a tus clientes.',
+      creado: ['Crea tu negocio', ''],
+      prueba: ['Activa tus 7 días gratis', 'Activar'],
+      probar: ['Escríbele a tu chat como si fueras tu cliente', 'Probar mi chat'],
+      compartir: ['Comparte tu enlace con tus clientes', 'Compartir'],
+    },
     sinConexion: 'No pudimos cargar tu panel. Revisa tu internet e inténtalo de nuevo.',
     pestanas: {
       conversaciones: 'Conversaciones',
@@ -225,7 +260,6 @@ export const textos = {
       reportes: 'Reportes',
       compartir: 'Comparte tu chat',
       negocio: 'Mi negocio',
-      aislamiento: 'Prueba de aislamiento',
     },
     menu: { abrir: 'Menú', cerrar: 'Cerrar menú' },
 
@@ -279,18 +313,6 @@ export const textos = {
       qrDescripcion: (negocio) => `Código QR que abre el chat de ${negocio}`,
       qrNombre: (negocio) => `Escanéame y pregúntale a ${negocio}`,
       imprimir: 'Imprimir código',
-    },
-    aislamiento: {
-      titulo: 'Cada negocio ve solo su información',
-      ayuda: 'Con tu sesión intentamos leer las conversaciones y preguntas de los otros negocios de la demo. Esto es lo que se pudo ver:',
-      negocio: 'Negocio',
-      conversaciones: 'Conversaciones que puedes ver',
-      preguntas: 'Preguntas que puedes ver',
-      tuyo: (nombre) => `${nombre} (tu negocio)`,
-      conclusion: (nombre) => `Aunque se intente, ${nombre} no puede leer nada de los otros negocios.`,
-      fallo: 'Atención: se pudo ver información de otro negocio. Avísale al equipo técnico.',
-      repetir: 'Repetir la prueba',
-      probando: 'Probando…',
     },
     negocio: {
       ayuda: 'Así te ven tus clientes. Si alguien escribe fuera de horario, le decimos cuándo le contestas.',

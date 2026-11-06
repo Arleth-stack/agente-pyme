@@ -34,6 +34,7 @@
       </nav>
       <div class="lateral-pie">
         <a href="/crear" class="boton">Crear mi negocio</a>
+        <p class="lateral-gratis">7 días gratis</p>
         <a href="/entrar" class="lateral-entrar">Entrar a mi panel</a>
         <a href="/demo" class="lateral-demo">Demo para presentar</a>
       </div>
@@ -61,6 +62,7 @@
             <a href="/crear" class="boton">Crear mi negocio</a>
             <a href="#prueba" class="enlace">Pruébalo como cliente</a>
           </div>
+          <p class="portada-gratis"><span aria-hidden="true">✓</span> 7 días gratis, después 1 dólar al mes. Cancelas cuando quieras.</p>
           <p class="portada-nota">Por ahora funciona como chat de prueba, con su propio enlace. Conectar tu número de WhatsApp es la siguiente etapa.</p>
         </div>
 
@@ -138,6 +140,16 @@
           </div>
         </div>
         <p class="prueba-pie revelar">Escribe como le escribirías a tu dentista: sin acentos, con faltas, como sea.</p>
+
+        <!-- En computadora: el mismo chat de ejemplo, en el celular del interesado -->
+        <div class="demo-celular revelar">
+          <div class="demo-qr" id="demo-qr" role="img" aria-label="Código QR que abre el chat de Salón Bella en tu celular"></div>
+          <div class="demo-celular-texto">
+            <p class="demo-celular-titulo">Pruébalo en tu celular</p>
+            <p>Escanea el código con la cámara y escríbele a <strong id="demo-qr-nombre">Salón Bella</strong> como si fueras su cliente. Así se va a ver el chat de tu negocio, antes de que lo crees.</p>
+            <p class="demo-celular-nota">El código cambia según el negocio que elijas arriba.</p>
+          </div>
+        </div>
       </section>
 
       <!-- El panel del dueño, con notas al margen -->
@@ -326,11 +338,11 @@
             <li><button type="button" aria-expanded="false" aria-controls="r4">¿Qué pasa cuando piden una cita?</button>
               <p id="r4" hidden>Le pide el día y la hora, te avisa en tu panel con lo que escribió el cliente y tú confirmas desde ahí.</p></li>
             <li><button type="button" aria-expanded="false" aria-controls="r5">¿Otro negocio puede ver a mis clientes?</button>
-              <p id="r5" hidden>No. Cada negocio solo ve sus conversaciones. Lo probamos con tres cuentas que intentaron leer y cambiar los datos de las otras: todo se rechazó. Cada dueño puede repetir la prueba desde su panel.</p></li>
+              <p id="r5" hidden>No. Cada negocio solo ve sus conversaciones. Lo probamos con tres cuentas que intentaron leer y cambiar los datos de las otras: todo se rechazó.</p></li>
             <li><button type="button" aria-expanded="false" aria-controls="r6">¿Necesito saber de computadoras?</button>
               <p id="r6" hidden>No. Llenas un formulario con tu horario y tus respuestas, con ejemplos en cada pregunta. Lo puedes hacer desde tu celular.</p></li>
             <li><button type="button" aria-expanded="false" aria-controls="r7">¿Cuánto cuesta?</button>
-              <p id="r7" hidden>Ahora está en etapa de prueba. Merkatics definirá el precio antes de abrirlo a más negocios.</p></li>
+              <p id="r7" hidden>Los primeros 7 días son gratis. Al crear tu negocio registras tu tarjeta en la página segura de Stripe y no se te cobra nada ese día; al día 7 se cobra 1 dólar y después cada mes. Cancelas cuando quieras desde tu panel. Es un precio de prueba: Merkatics definirá el precio final.</p></li>
           </ul>
         </div>
         <p class="preguntas-respuesta" id="respuesta-grande" aria-hidden="true">Todavía no. Por ahora tu negocio tiene un chat de prueba con su propio enlace, igual a WhatsApp, para probarlo con clientes de confianza. Conectar tu número es la siguiente etapa.</p>
@@ -340,7 +352,7 @@
       <section class="cierre" aria-labelledby="cierre-titulo">
         <div class="cierre-texto revelar">
           <h2 id="cierre-titulo">Empieza con<br /> tu nombre</h2>
-          <p>Te llevamos al formulario con esto ya escrito. Faltan tu horario, tus preguntas y tu cuenta.</p>
+          <p>Te llevamos al formulario con esto ya escrito. Faltan tu horario, tus preguntas y tu cuenta. Los primeros 7 días son gratis.</p>
         </div>
         <form class="dialogo revelar" data-ui action="/crear" method="get" id="dialogo-crear">
           <p class="dialogo-titulo">Tu negocio</p>

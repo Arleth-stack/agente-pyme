@@ -1,7 +1,7 @@
 import { supabase } from './supabase.js';
 import { textos } from './textos.js';
 import { crearEditorHorario } from './horario.js';
-import { abrirPago, leerPlan, diasRestantes } from './plan.js';
+import { abrirPago, abrirPortal, leerPlan, diasRestantes } from './plan.js';
 import qrcode from 'qrcode-generator';
 
 const t = textos.panel;
@@ -61,6 +61,8 @@ function mostrarSeccion(nombre) {
   }
   menuAbierto(false);
   alAbrirSeccion[nombre]?.();
+  pintarPasos();
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 // T07 · Mis conversaciones -------------------------------------------------
@@ -94,6 +96,7 @@ async function cargarConversaciones() {
   const nueva = JSON.stringify(data);
   if (nueva === firma) return;
   firma = nueva;
+  queueMicrotask(pintarPasos);
   // Las que necesitan atención van arriba; dentro de cada grupo, la más reciente primero.
   conversaciones = data.sort((a, b) => ordenEstado[a.estado] - ordenEstado[b.estado]);
   pintarFiltros();
@@ -138,6 +141,7 @@ function pintarVacio(visibles) {
     $copiar.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(enlace);
+        marcarCompartido();
         $copiar.textContent = t.enlaceCopiado;
       } catch { /* el enlace queda a la vista para copiarlo a mano */ }
     });
@@ -219,6 +223,7 @@ function cerrarConversacion() {
   $detalle.hidden = true;
   $seccion.classList.remove('con-detalle');
   pintarLista();
+  pintarPasos();
 }
 
 function horaCorta(fecha) {
@@ -292,6 +297,7 @@ async function abrirConversacion(id) {
   $detalle.hidden = false;
   $seccion.classList.add('con-detalle');
   pintarLista();
+  pintarPasos();
   await cargarDetalle(true);
   $detTexto.focus();
 }
@@ -605,62 +611,6 @@ $nForm.addEventListener('submit', async (e) => {
   avisoNegocio($nfOk, tn.guardado);
 });
 
-// T15 · Prueba de aislamiento ----------------------------------------------
-
-const ta = t.aislamiento;
-const $aisFilas = document.getElementById('ais-filas');
-const $aisConclusion = document.getElementById('ais-conclusion');
-const $aisRepetir = document.getElementById('ais-repetir');
-
-// Cuenta lo que la sesión del dueño alcanza a ver de un negocio, buscándolo
-// por su enlace. Las reglas por fila deciden: de otros negocios regresa 0.
-async function contarVisibles(slug) {
-  const contar = (tabla) => supabase.from(tabla)
-    .select('id, negocios!inner(slug)', { count: 'exact', head: true })
-    .eq('negocios.slug', slug);
-  const [c, p] = await Promise.all([contar('conversaciones'), contar('preguntas')]);
-  return { conversaciones: c.count ?? 0, preguntas: p.count ?? 0 };
-}
-
-async function probarAislamiento() {
-  $aisRepetir.disabled = true;
-  $aisRepetir.textContent = ta.probando;
-  const { data: demo } = await supabase.rpc('negocios_demo');
-  const negocios = [{ slug: negocioActual.slug, nombre: negocioActual.nombre, propio: true },
-    ...(demo ?? []).filter((n) => n.slug !== negocioActual.slug)];
-
-  let fuga = false;
-  const filas = [];
-  for (const n of negocios) {
-    const visto = await contarVisibles(n.slug);
-    if (!n.propio && (visto.conversaciones || visto.preguntas)) fuga = true;
-    const $tr = document.createElement('tr');
-    if (n.propio) $tr.className = 'fila-propia';
-    for (const valor of [n.propio ? ta.tuyo(n.nombre) : n.nombre, visto.conversaciones, visto.preguntas]) {
-      const $td = document.createElement('td');
-      $td.textContent = valor;
-      $tr.append($td);
-    }
-    filas.push($tr);
-  }
-  $aisFilas.replaceChildren(...filas);
-  $aisConclusion.textContent = fuga ? ta.fallo : ta.conclusion(negocioActual.nombre);
-  $aisConclusion.className = fuga ? 'mensaje-error' : 'mensaje-ok';
-  $aisRepetir.disabled = false;
-  $aisRepetir.textContent = ta.repetir;
-}
-
-function iniciarAislamiento() {
-  document.getElementById('ais-titulo').textContent = ta.titulo;
-  document.getElementById('ais-ayuda').textContent = ta.ayuda;
-  document.getElementById('ais-col-negocio').textContent = ta.negocio;
-  document.getElementById('ais-col-conv').textContent = ta.conversaciones;
-  document.getElementById('ais-col-preg').textContent = ta.preguntas;
-  $aisRepetir.textContent = ta.repetir;
-  $aisRepetir.addEventListener('click', probarAislamiento);
-  document.querySelector('[data-seccion="aislamiento"]').addEventListener('click', probarAislamiento);
-}
-
 // Tu semana (reportes) -----------------------------------------------------
 // Todo se cuenta con lo que las reglas por fila dejan ver: solo este negocio.
 
@@ -862,6 +812,7 @@ function iniciarCompartir() {
   $copiar.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(url);
+      marcarCompartido();
       $copiar.textContent = tc.copiado;
       setTimeout(() => { $copiar.textContent = tc.copiar; }, 2000);
     } catch {
@@ -870,6 +821,7 @@ function iniciarCompartir() {
   });
   const $whatsapp = document.getElementById('comp-whatsapp');
   $whatsapp.textContent = tc.whatsapp;
+  $whatsapp.addEventListener('click', marcarCompartido);
   const $probar = document.getElementById('comp-probar');
   $probar.textContent = tc.probar;
   $probar.href = url;
@@ -879,6 +831,7 @@ function iniciarCompartir() {
   const $imprimir = document.getElementById('qr-imprimir');
   $imprimir.textContent = tc.imprimir;
   $imprimir.addEventListener('click', () => {
+    marcarCompartido();
     document.body.classList.add('imprimiendo-qr');
     window.print();
   });
@@ -902,62 +855,122 @@ function iniciarCompartir() {
 }
 
 // Prueba gratis de 7 días y plan mensual ------------------------------------
+// El estado vive fijo en el menú lateral. El aviso grande de arriba solo sale
+// cuando hay algo que hacer (activar, pago fallido, cancelado) o al volver de Stripe.
 
 const tpl = textos.plan;
 const $plan = document.getElementById('plan');
 const $planTexto = document.getElementById('plan-texto');
 const $planBoton = document.getElementById('plan-boton');
+const $planCerrar = document.getElementById('plan-cerrar');
 const $planError = document.getElementById('plan-error');
+const $menuPlan = document.getElementById('menu-plan');
+const $menuPlanTexto = document.getElementById('menu-plan-texto');
+const $menuPlanBarra = document.getElementById('menu-plan-barra');
+const $menuPlanBoton = document.getElementById('menu-plan-boton');
+let planActual = null;
 
-function pintarPlan(plan) {
-  // Los negocios de la demo no pagan.
-  if (!plan || plan.es_demo) return ($plan.hidden = true);
-  const ok = plan.estado === 'prueba' || plan.estado === 'activa';
-  $plan.classList.toggle('plan-ok', ok);
-  $planBoton.hidden = ok || plan.estado === 'pago_pendiente';
-  if (plan.estado === 'prueba') {
-    $planTexto.textContent = tpl.prueba(diasRestantes(plan.prueba_termina), tpl.fecha(plan.prueba_termina));
-  } else if (plan.estado === 'activa') {
-    $planTexto.textContent = tpl.activa;
-  } else if (plan.estado === 'pago_pendiente') {
-    $planTexto.textContent = tpl.pagoPendiente;
-  } else if (plan.estado === 'cancelada') {
-    $planTexto.textContent = tpl.cancelada;
-    $planBoton.textContent = tpl.activarPlan;
-  } else {
-    $planTexto.textContent = plan.puede_probar ? `${tpl.titulo}. ${tpl.explicacion}` : tpl.sinPrueba;
-    $planBoton.textContent = plan.puede_probar ? tpl.activar : tpl.activarPlan;
+// Qué hace cada botón del plan: registrar tarjeta o abrir la página de Stripe del plan.
+async function accionPlan($boton, accion, $error) {
+  const etiqueta = $boton.textContent;
+  $boton.disabled = true;
+  $boton.textContent = accion === 'portal' ? tpl.abriendoPortal : tpl.abriendo;
+  if ($error) $error.hidden = true;
+  try {
+    await (accion === 'portal' ? abrirPortal() : abrirPago());
+  } catch {
+    $boton.disabled = false;
+    $boton.textContent = etiqueta;
+    const mensaje = accion === 'portal' ? tpl.noAbrioPortal : tpl.noAbrio;
+    if ($error) {
+      $error.textContent = mensaje;
+      $error.hidden = false;
+    } else {
+      avisoPlan(mensaje, null);
+    }
   }
+}
+
+function avisoPlan(texto, boton, { ok = false, cerrable = false } = {}) {
+  $planTexto.textContent = texto;
+  $plan.classList.toggle('plan-ok', ok);
+  $planBoton.hidden = !boton;
+  if (boton) {
+    $planBoton.textContent = boton.texto;
+    $planBoton.dataset.accion = boton.accion;
+  }
+  $planCerrar.hidden = !cerrable;
+  $planError.hidden = true;
   $plan.hidden = false;
 }
 
-$planBoton.addEventListener('click', async () => {
-  const etiqueta = $planBoton.textContent;
-  $planBoton.disabled = true;
-  $planBoton.textContent = tpl.abriendo;
-  $planError.hidden = true;
-  try {
-    await abrirPago();
-  } catch {
-    $planBoton.disabled = false;
-    $planBoton.textContent = etiqueta;
-    $planError.textContent = tpl.noAbrio;
-    $planError.hidden = false;
+function pintarPlan(plan, { recienVuelve = false } = {}) {
+  planActual = plan;
+  // Los negocios de la demo no pagan.
+  if (!plan || plan.es_demo) {
+    $plan.hidden = true;
+    $menuPlan.hidden = true;
+    pintarPasos();
+    return;
   }
-});
+  const tm = tpl.menu;
+  let menu = '';
+  let menuBoton = null;
+  $menuPlanBarra.hidden = true;
+  $plan.hidden = true;
+
+  if (plan.estado === 'prueba' && !plan.plan_termina) {
+    const dias = diasRestantes(plan.prueba_termina);
+    menu = tm.prueba(dias);
+    $menuPlanBarra.hidden = false;
+    $menuPlanBarra.firstElementChild.style.width = `${Math.min(100, ((7 - dias) / 7) * 100 + 8)}%`;
+    menuBoton = { texto: tpl.administrar, accion: 'portal' };
+    if (recienVuelve) avisoPlan(tpl.bienvenida(tpl.fecha(plan.prueba_termina)), null, { ok: true, cerrable: true });
+  } else if ((plan.estado === 'prueba' || plan.estado === 'activa') && plan.plan_termina) {
+    menu = tm.termina(tpl.fecha(plan.plan_termina));
+    menuBoton = { texto: tpl.administrar, accion: 'portal' };
+    avisoPlan(tpl.termina(tpl.fecha(plan.plan_termina)), { texto: tpl.administrar, accion: 'portal' }, { cerrable: true });
+  } else if (plan.estado === 'activa') {
+    menu = tm.activa;
+    menuBoton = { texto: tpl.administrar, accion: 'portal' };
+  } else if (plan.estado === 'pago_pendiente') {
+    menu = tm.pagoPendiente;
+    menuBoton = { texto: tpl.actualizarTarjeta, accion: 'portal' };
+    avisoPlan(tpl.pagoPendiente, { texto: tpl.actualizarTarjeta, accion: 'portal' });
+  } else if (plan.estado === 'cancelada') {
+    menu = tm.cancelada;
+    menuBoton = { texto: tpl.activarPlan, accion: 'pago' };
+    avisoPlan(tpl.cancelada, { texto: tpl.activarPlan, accion: 'pago' });
+  } else {
+    menu = tm.sinActivar;
+    menuBoton = { texto: plan.puede_probar ? tpl.activar : tpl.activarPlan, accion: 'pago' };
+    avisoPlan(plan.puede_probar ? tpl.explicacion : tpl.sinPrueba,
+      { texto: plan.puede_probar ? tpl.activar : tpl.activarPlan, accion: 'pago' });
+  }
+
+  $menuPlan.className = `menu-plan plan-${plan.estado}`;
+  $menuPlanTexto.textContent = menu;
+  $menuPlanBoton.textContent = menuBoton.texto;
+  $menuPlanBoton.dataset.accion = menuBoton.accion;
+  $menuPlanBoton.disabled = false;
+  $menuPlan.hidden = false;
+  pintarPasos();
+}
+
+$planBoton.addEventListener('click', () => accionPlan($planBoton, $planBoton.dataset.accion, $planError));
+$menuPlanBoton.addEventListener('click', () => accionPlan($menuPlanBoton, $menuPlanBoton.dataset.accion, null));
+$planCerrar.addEventListener('click', () => { $plan.hidden = true; });
 
 async function iniciarPlan() {
+  $planCerrar.setAttribute('aria-label', tpl.cerrar);
   const params = new URLSearchParams(location.search);
   const s = params.get('s');
-  if (params.has('plan')) history.replaceState(null, '', location.pathname);
-  if (s) {
-    $planTexto.textContent = tpl.confirmando;
-    $planBoton.hidden = true;
-    $plan.hidden = false;
-  }
+  const vuelta = params.get('plan');
+  if (vuelta) history.replaceState(null, '', location.pathname);
+  if (s) avisoPlan(tpl.confirmando, null);
   try {
-    pintarPlan(await leerPlan(s));
-    if (params.get('plan') === 'cancelado' && !$planBoton.hidden) {
+    pintarPlan(await leerPlan(s), { recienVuelve: vuelta === 'listo' });
+    if (vuelta === 'cancelado' && !$planBoton.hidden) {
       $planError.textContent = tpl.volvioSinTarjeta;
       $planError.hidden = false;
     }
@@ -966,6 +979,78 @@ async function iniciarPlan() {
     $plan.hidden = true;
   }
 }
+
+// Tus primeros pasos ------------------------------------------------------
+// Cada paso se marca con lo que ya está guardado (negocio, plan, conversaciones).
+// Lo único que no está en la base es "compartí mi enlace": se recuerda en este
+// navegador porque compartir pasa fuera de la página.
+
+const tps = t.pasos;
+const $pasosCaja = document.getElementById('pasos');
+let pasosOcultos = false;
+const llaveLocal = (cosa) => `agente-pyme:${cosa}:${negocioActual?.slug}`;
+function leerLocal(cosa) { try { return localStorage.getItem(llaveLocal(cosa)) === '1'; } catch { return false; } }
+function guardarLocal(cosa) { try { localStorage.setItem(llaveLocal(cosa), '1'); } catch { /* sin memoria del navegador */ } }
+
+function marcarCompartido() {
+  guardarLocal('compartio');
+  pintarPasos();
+}
+
+function pintarPasos() {
+  // Hasta saber en qué va su plan, para no ofrecer algo que ya hizo.
+  if (!negocioActual || negocioActual.es_demo || !planActual || pasosOcultos || leerLocal('pasos-ocultos')) {
+    $pasosCaja.hidden = true;
+    return;
+  }
+  const conPlan = ['prueba', 'activa'].includes(planActual?.estado);
+  const lista = [
+    ['creado', true, null],
+    ['prueba', conPlan, () => accionPlan(document.querySelector('[data-paso="prueba"] button'), 'pago', null)],
+    ['probar', conversaciones.length > 0, () => window.open(`/chat/${negocioActual.slug}`, '_blank', 'noopener')],
+    ['compartir', leerLocal('compartio'), () => mostrarSeccion('compartir')],
+  ];
+  const hechos = lista.filter(([, hecho]) => hecho).length;
+  document.getElementById('pasos-titulo').textContent = hechos === lista.length ? tps.listo : tps.titulo;
+  document.getElementById('pasos-progreso').textContent = tps.progreso(hechos, lista.length);
+  document.getElementById('pasos-barra').style.width = `${(hechos / lista.length) * 100}%`;
+  const $ocultar = document.getElementById('pasos-ocultar');
+  $ocultar.textContent = tps.ocultar;
+  document.getElementById('pasos-lista').replaceChildren(...lista.map(([clave, hecho, accion]) => {
+    const [texto, etiqueta] = tps[clave];
+    const $li = document.createElement('li');
+    $li.className = hecho ? 'hecho' : '';
+    $li.dataset.paso = clave;
+    const $marca = document.createElement('span');
+    $marca.className = 'primeros-marca';
+    $marca.setAttribute('aria-hidden', 'true');
+    $marca.textContent = hecho ? '✓' : '';
+    const $texto = document.createElement('span');
+    $texto.className = 'primeros-texto';
+    $texto.textContent = texto;
+    $li.append($marca, $texto);
+    if (!hecho && accion) {
+      const $b = document.createElement('button');
+      $b.type = 'button';
+      $b.className = 'boton-chico';
+      $b.textContent = etiqueta;
+      $b.addEventListener('click', accion);
+      $li.append($b);
+    }
+    return $li;
+  }));
+  // En la sección de conversaciones y sin un cliente abierto.
+  const enConversaciones = !document.getElementById('seccion-conversaciones').hidden;
+  $pasosCaja.hidden = !enConversaciones || Boolean(abierta);
+  // Si la lista ya ofrece activar la prueba, no se repite en el aviso de arriba.
+  if (!$pasosCaja.hidden && planActual?.estado === 'sin_activar') $plan.hidden = true;
+}
+
+document.getElementById('pasos-ocultar').addEventListener('click', () => {
+  pasosOcultos = true;
+  guardarLocal('pasos-ocultos');
+  pintarPasos();
+});
 
 // Arranque (al final, cuando todo lo de arriba ya está declarado) -----------
 
@@ -983,13 +1068,19 @@ async function arrancar() {
   });
 
   // Las reglas por fila solo dejan ver los negocios donde esta cuenta es miembro.
-  const { data: negocios, error } = await supabase.from('negocios').select('id, slug, nombre').limit(1);
+  const { data: negocios, error } = await supabase.from('negocios').select('id, slug, nombre, es_demo').limit(1);
   const negocio = negocios?.[0];
 
   if (error) {
     $mensaje.textContent = t.sinConexion;
   } else if (!negocio) {
-    $mensaje.textContent = t.sinNegocio;
+    // Tiene cuenta pero no negocio: el siguiente paso es crearlo.
+    $mensaje.textContent = `${t.sinNegocio} `;
+    const $crear = document.createElement('a');
+    $crear.href = '/crear';
+    $crear.className = 'boton-principal boton-enlace';
+    $crear.textContent = t.crearNegocio;
+    $mensaje.append($crear);
   } else {
     document.title = negocio.nombre;
     document.getElementById('nombre-negocio').textContent = negocio.nombre;
@@ -1006,7 +1097,6 @@ async function arrancar() {
     iniciarConversaciones();
     iniciarPreguntas();
     iniciarNegocio();
-    iniciarAislamiento();
     iniciarReportes();
     iniciarCompartir();
     iniciarPlan();

@@ -21,6 +21,13 @@ export async function abrirPago() {
   location.assign(url);
 }
 
+// Lleva al dueño a la página de Stripe para cambiar su tarjeta, ver sus cobros o cancelar.
+export async function abrirPortal() {
+  const { url } = await llamar('/api/portal');
+  if (!url) throw new Error('sin_url');
+  location.assign(url);
+}
+
 // Estado del plan confirmado con Stripe. `s` = id del pago al volver de Stripe.
 export const leerPlan = (s) => llamar('/api/plan', s ? { s } : {});
 

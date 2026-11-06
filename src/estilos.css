@@ -435,13 +435,20 @@ h1, h2, legend { font-weight: 600; letter-spacing: -0.01em; }
 .crear { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
 .crear h1 { margin: 12px 0 4px; font-size: 26px; }
 .crear > p { margin: 0 0 16px; }
-.pasos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; list-style: none; margin: 0 0 16px; padding: 0; counter-reset: paso; }
+.pasos { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; list-style: none; margin: 0 0 16px; padding: 0; counter-reset: paso; }
 .pasos li {
   counter-increment: paso;
   padding-top: 8px;
   border-top: 4px solid var(--borde);
   font-size: 13px;
+  line-height: 1.25;
   color: var(--texto-suave);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+/* En celular la barra solo muestra números: el título del paso ya está abajo. */
+@media (max-width: 480px) {
+  .pasos li { font-size: 0; }
+  .pasos li::before { font-size: 13px; content: counter(paso) !important; }
 }
 .pasos li::before { content: counter(paso) ". "; }
 .pasos li.hecho { border-top-color: var(--grafito); }
@@ -495,12 +502,6 @@ h1, h2, legend { font-weight: 600; letter-spacing: -0.01em; }
 .inicio-botones .boton-principal { margin-top: 0; }
 .entrar-crear { margin: 16px 0 0; text-align: center; font-size: 15px; }
 
-/* Prueba de aislamiento (T15) */
-.tabla-aislamiento { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 15px; }
-.tabla-aislamiento th, .tabla-aislamiento td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--borde); }
-.tabla-aislamiento th { font-size: 13px; color: var(--texto-suave); font-weight: 600; }
-.tabla-aislamiento td:not(:first-child), .tabla-aislamiento th:not(:first-child) { text-align: center; }
-.tabla-aislamiento .fila-propia td { font-weight: 600; background: #fff6f5; }
 
 /* Demo (T16) */
 .pantalla-demo { min-height: 100dvh; display: flex; flex-direction: column; }
@@ -688,3 +689,60 @@ body.menu-abierto { overflow: hidden; }
 .rep-motivos li { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .rep-nosabe li.rep-vacio, .rep-top li.rep-vacio { background: none; padding: 0; list-style: none; }
 .rep-top:has(.rep-vacio) { padding-left: 0; }
+
+/* Recorrido con más flujo (6 nov) ------------------------------------------ */
+
+/* Cada sección del panel entra suave al cambiar en el menú. */
+@media (prefers-reduced-motion: no-preference) {
+  .panel-contenido > section:not([hidden]),
+  .panel-contenido > .primeros:not([hidden]),
+  .panel-contenido > .plan-aviso:not([hidden]),
+  .crear fieldset:not([hidden]),
+  .crear .listo:not([hidden]) { animation: entrar-suave 0.28s cubic-bezier(0.22, 1, 0.36, 1); }
+  .detalle:not([hidden]) { animation: entrar-suave 0.22s cubic-bezier(0.22, 1, 0.36, 1); }
+}
+@keyframes entrar-suave {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Estado del plan, fijo en el menú lateral */
+.menu-plan { display: grid; gap: 6px; margin-bottom: 8px; padding: 12px; border-radius: 12px; background: var(--gris-claro); }
+.menu-plan-texto { margin: 0; font-size: 15px; font-weight: 600; color: var(--grafito); }
+.menu-plan-barra { height: 6px; border-radius: 3px; background: #fff; overflow: hidden; }
+.menu-plan-barra span { display: block; height: 100%; border-radius: 3px; background: var(--coral); transition: width 0.4s ease; }
+.menu-plan-boton { justify-self: start; min-height: 36px; padding: 0; border: none; background: none; font: inherit; font-size: 14px; color: var(--coral-texto); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.menu-plan-boton:disabled { opacity: 0.6; cursor: default; }
+.menu-plan.plan-sin_activar, .menu-plan.plan-cancelada, .menu-plan.plan-pago_pendiente { background: var(--coral-claro); }
+.menu-plan.plan-sin_activar .menu-plan-boton, .menu-plan.plan-cancelada .menu-plan-boton {
+  justify-self: stretch; min-height: 40px; border-radius: 8px; background: var(--coral); color: var(--grafito); font-weight: 600; text-decoration: none;
+}
+.plan-aviso { position: relative; }
+.plan-cerrar { color: var(--texto-suave); font-size: 18px; min-height: 36px; padding: 0 6px; }
+.plan-aviso.plan-ok { border: 1px solid #b7e3c8; }
+
+/* Tus primeros pasos */
+.primeros { margin-bottom: 16px; padding: 16px; background: #fff; border: 1px solid var(--borde); border-radius: 12px; }
+.primeros-cabeza { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.primeros-cabeza h2 { margin: 0; font-size: 18px; }
+.primeros-cabeza .suave { font-size: 14px; }
+.primeros-cabeza .boton-icono { margin-left: auto; min-height: 32px; font-size: 14px; color: var(--texto-suave); }
+.primeros-barra { height: 6px; margin: 10px 0 6px; border-radius: 3px; background: var(--gris-claro); overflow: hidden; }
+.primeros-barra span { display: block; height: 100%; border-radius: 3px; background: var(--coral); transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.primeros-lista { list-style: none; margin: 0; padding: 0; display: grid; }
+.primeros-lista li { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 6px 0; border-bottom: 1px solid var(--borde); }
+.primeros-lista li:last-child { border-bottom: none; }
+.primeros-marca { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border: 2px solid #c9ced3; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; }
+.primeros-lista li.hecho .primeros-marca { border-color: #1f8f5f; background: #1f8f5f; }
+.primeros-texto { flex: 1; font-size: 15px; }
+.primeros-lista li.hecho .primeros-texto { color: var(--texto-suave); text-decoration: line-through; text-decoration-color: #c9ced3; }
+.primeros-lista .boton-chico { flex: none; }
+#mensaje .boton-enlace { display: inline-flex; margin-left: 8px; vertical-align: middle; }
+
+/* Línea de tiempo del paso 5: hoy, día 7, cada mes */
+.plan-linea { list-style: none; margin: 4px 0 4px; padding: 0; display: grid; gap: 0; }
+.plan-linea li { position: relative; display: grid; grid-template-columns: 150px 1fr; gap: 10px; padding: 8px 0 8px 22px; font-size: 15px; }
+.plan-linea li::before { content: ''; position: absolute; left: 4px; top: 14px; width: 10px; height: 10px; border-radius: 50%; background: var(--coral); }
+.plan-linea li:not(:last-child)::after { content: ''; position: absolute; left: 8px; top: 26px; bottom: -6px; width: 2px; background: #f3b4ae; }
+.plan-linea strong { font-weight: 600; }
+@media (max-width: 420px) { .plan-linea li { grid-template-columns: 1fr; gap: 0; } }

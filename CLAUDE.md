@@ -16,7 +16,7 @@ Proyecto 2026-544-16 · Merkatics GrowthLab · Practicante: Arleth Caballero. Re
 6. **No inventar:** el chat contesta con el texto exacto de la pregunta frecuente del negocio o avisa a una persona. Sin servicios externos de redacción en la Fase 1.
 7. **Esta vez no:** WhatsApp real, redacción con inteligencia artificial, Django, envío al CRM, avisos por correo.
 8. Gratis y simple: HTML, CSS y JavaScript con Vite; Supabase; Vercel; GitHub.
-9. **Cobros (pedido de Carlos, 5 nov 2026):** prueba gratis de 7 días con tarjeta y luego 1 USD al mes, con Stripe en modo de prueba. La tarjeta solo se escribe en la página de Stripe. Las llaves secretas viven en `.env.local` y en Vercel, nunca en git ni en el chat. Funciones en `api/` (`prueba`, `plan`, `stripe-aviso`); estado en `negocios.plan_estado`.
+9. **Cobros (pedido de Carlos, 5 nov 2026):** prueba gratis de 7 días con tarjeta y luego 1 USD al mes, con Stripe en modo de prueba. La tarjeta solo se escribe en la página de Stripe. Las llaves secretas viven en `.env.local` y en Vercel, nunca en git ni en el chat. Funciones en `api/` (`prueba`, `plan`, `portal`, `stripe-aviso`); estado en `negocios.plan_estado` y `plan_termina`. El dueño cambia su tarjeta o cancela en la página de Stripe («Administrar mi plan»). La prueba de aislamiento ya no se muestra en el panel (6 nov, pedido de Arleth); sigue en `pruebas/aislamiento.mjs`.
 
 ## Cómo está armado
 
