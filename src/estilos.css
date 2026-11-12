@@ -212,7 +212,7 @@ h1, h2, legend { font-weight: 600; letter-spacing: -0.01em; }
   grid-template-rows: auto 1fr;
   min-height: 100dvh;
 }
-.pantalla-entrar > main { align-self: center; justify-self: center; margin: 16px; }
+.pantalla-entrar > main { align-self: center; justify-self: center; width: min(380px, calc(100% - 32px)); margin: 16px 0; }
 .tarjeta-entrar {
   width: 100%;
   max-width: 380px;
@@ -500,7 +500,7 @@ h1, h2, legend { font-weight: 600; letter-spacing: -0.01em; }
 .plan-aviso .mensaje-error { flex-basis: 100%; }
 .inicio-botones { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 32px; }
 .inicio-botones .boton-principal { margin-top: 0; }
-.entrar-crear { margin: 16px 0 0; text-align: center; font-size: 15px; }
+.tarjeta-entrar .entrar-crear { margin: 18px 0 0; text-align: center; font-size: 15px; }
 
 
 /* Demo (T16) */
@@ -528,7 +528,7 @@ h1, h2, legend { font-weight: 600; letter-spacing: -0.01em; }
 
 /* Crítica de experiencia de usuario (T18) */
 .primeros-pasos { display: grid; gap: 10px; padding: 16px; background: #fff; border: 1px dashed var(--acento); border-radius: 12px; }
-.primeros-pasos a { word-break: break-all; color: var(--coral-texto); }
+.primeros-pasos a { overflow-wrap: anywhere; color: var(--coral-texto); }
 .primeros-pasos .boton-chico { justify-self: start; }
 #volver { white-space: nowrap; }
 

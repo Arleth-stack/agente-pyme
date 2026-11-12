@@ -133,7 +133,7 @@ function pintarVacio(visibles) {
     $enlace.href = enlace;
     $enlace.target = '_blank';
     $enlace.rel = 'noopener';
-    $enlace.textContent = enlace;
+    $enlace.textContent = enlace.replace(/^https?:\/\//, '');
     const $copiar = document.createElement('button');
     $copiar.type = 'button';
     $copiar.className = 'boton-chico';

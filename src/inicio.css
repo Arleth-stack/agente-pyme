@@ -676,3 +676,68 @@ body.lateral-abierto { overflow: hidden; }
 .portada-gratis { margin-top: 18px; font-size: 15px; font-weight: 500; }
 .portada-gratis span { display: inline-grid; place-items: center; width: 20px; height: 20px; margin-right: 6px; border-radius: 50%; background: var(--coral); color: var(--sobre-coral); font-size: 12px; }
 .lateral-gratis { margin: -2px 0 4px; text-align: center; font-size: 13px; color: var(--suave); }
+
+/* Portada sin encimarse (12 nov) ------------------------------------------
+   El texto y el escenario coral nunca comparten espacio:
+   - Con poco ancho, el escenario va DEBAJO del texto, de orilla a orilla.
+   - Con ancho de sobra (≥ 1120 px de contenido), van lado a lado en dos
+     columnas: el título arriba a todo lo ancho, el texto a la izquierda y el
+     escenario a la derecha. Lo decide el ancho real del contenido (con o sin
+     menú lateral), no el de la ventana. */
+.sitio-contenido { container: contenido / inline-size; }
+.portada {
+  min-height: 0;
+  padding-bottom: 0;
+}
+.portada-cuerpo { max-width: 34rem; }
+.portada-cuerpo .portada-frase { max-width: 34ch; }
+
+.escenario {
+  position: relative;
+  left: auto; right: auto; top: auto; bottom: auto;
+  height: 600px;
+  margin: 56px calc(var(--margen) * -1) 0;
+  container: escenario / inline-size;
+}
+.escenario-contenido { inset: 56px 0 0 max(20px, var(--margen)); }
+.wa { width: min(400px, calc(100cqi - 40px)); }
+
+/* La tarjeta del panel flota a la derecha del chat, como una notificación. */
+.aviso-tarjeta {
+  display: block;
+  position: absolute;
+  top: 250px;
+  left: calc(min(400px, 100cqi - 40px) + 20px);
+  width: 280px;
+  margin: 0;
+}
+/* Solo aparece si cabe completa a un lado del chat, sin taparle nada. */
+@container escenario (max-width: 760px) { .aviso-tarjeta { display: none; } }
+
+@container contenido (min-width: 1120px) {
+  .portada-texto { display: contents; }
+  .portada {
+    display: grid;
+    grid-template-columns: minmax(0, 34rem) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(32px, 4cqi, 64px);
+    row-gap: 40px;
+    min-height: max(700px, calc(100svh - 24px));
+  }
+  .portada h1 { grid-column: 1 / -1; grid-row: 1; position: relative; z-index: 1; }
+  .portada-cuerpo { grid-column: 1; grid-row: 2; align-self: start; padding-bottom: 56px; }
+  .escenario {
+    grid-column: 2; grid-row: 2;
+    align-self: stretch;
+    height: auto; min-height: 560px;
+    margin: 0 calc(var(--margen) * -1) 0 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .escenario { height: 560px; margin-top: 48px; }
+  .escenario-contenido { inset: 40px 0 0 16px; }
+}
+
+/* La hora en dos renglones a propósito: «12:30» y abajo «p. m.», nunca «p.» / «m.» */
+.segmentos span small { display: block; font-size: 11px; line-height: 1.1; opacity: 0.85; }
