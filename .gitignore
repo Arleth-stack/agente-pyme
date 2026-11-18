@@ -14,3 +14,10 @@ supabase/.branches/
 
 # Capturas del revisor de diseño (se regeneran)
 .taste-skill/*/
+
+# Backend (Fase 2)
+backend/.env
+backend/.mysql-local/
+backend/.venv/
+__pycache__/
+*.pyc
