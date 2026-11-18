@@ -15,6 +15,7 @@ from canales.whatsapp import webhook
 from chat import api as chat
 from crm.api import csv_crm
 from negocios import api as neg
+from negocios import pagos
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +42,11 @@ urlpatterns = [
     path('api/panel/preguntas/<uuid:pk>', neg.pregunta),
     path('api/panel/reportes', neg.reportes),
     path('api/panel/crm.csv', csv_crm),
+
+    path('api/panel/plan', pagos.plan),
+    path('api/panel/plan/prueba', pagos.prueba),
+    path('api/panel/plan/portal', pagos.portal),
+    path('api/stripe-aviso', pagos.aviso_stripe),
 
     path('api/whatsapp/webhook', webhook),
 ]

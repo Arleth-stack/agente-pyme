@@ -112,3 +112,37 @@ class AltaTest(APITestCase):
         User.objects.create_user(username='y@ejemplo.com', password='clave-segura-1')
         r = self.client.post('/api/cuentas/entrar', {'correo': 'y@ejemplo.com', 'contrasena': 'otra-clave'}, format='json')
         self.assertEqual(r.status_code, 400)
+
+
+class StripeTest(APITestCase):
+    """F2-07 sin llamar a Stripe de verdad."""
+
+    def setUp(self):
+        self.n, self.u, _ = negocio_con_dueno('Salon D', 'd@ejemplo.com')
+        self.client.force_authenticate(self.u)
+
+    def test_aviso_de_stripe_con_firma_actualiza_el_plan(self):
+        import hashlib
+        import hmac
+        import json
+        import time
+        from django.test import override_settings
+        evento = {'type': 'customer.subscription.updated', 'data': {'object': {
+            'id': 'sub_123', 'status': 'trialing', 'customer': 'cus_1', 'trial_end': int(time.time()) + 7 * 86400,
+            'cancel_at': None, 'metadata': {'negocio_id': str(self.n.id)}}}}
+        crudo = json.dumps(evento).encode()
+        t = str(int(time.time()))
+        with override_settings(STRIPE_WEBHOOK_SECRET='whsec_prueba'):
+            firma = hmac.new(b'whsec_prueba', f'{t}.'.encode() + crudo, hashlib.sha256).hexdigest()
+            malo = self.client.post('/api/stripe-aviso', crudo, content_type='application/json',
+                                    HTTP_STRIPE_SIGNATURE=f't={t},v1=000')
+            self.assertEqual(malo.status_code, 400)
+            r = self.client.post('/api/stripe-aviso', crudo, content_type='application/json',
+                                 HTTP_STRIPE_SIGNATURE=f't={t},v1={firma}')
+        self.assertEqual(r.status_code, 200)
+        self.n.refresh_from_db()
+        self.assertEqual((self.n.plan_estado, self.n.stripe_suscripcion), ('prueba', 'sub_123'))
+
+    def test_demo_no_paga(self):
+        Negocio.objects.filter(id=self.n.id).update(es_demo=True)
+        self.assertEqual(self.client.post('/api/panel/plan/prueba').status_code, 400)

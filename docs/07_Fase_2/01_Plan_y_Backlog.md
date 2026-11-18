@@ -52,7 +52,9 @@ La Fase 1 dejó funcionando el recorrido completo con Supabase (base de datos y 
 |---|---|---|
 | 17–18 nov 2026 | F2-01, F2-02, F2-03, F2-04, F2-05 listos en la compu; F2-08, F2-09, F2-10, F2-11 y F2-12 programados y con pruebas, esperando llaves y cuentas | 32 pruebas automáticas en verde (`manage.py test`); conjunto P1 con el motor en Python: 107 de 108, 0 inventadas, y respuesta idéntica a la Fase 1 en los 105 casos comparables (`pruebas/resultados/2026-11-18_P1_python.md`); mudanza: 10 negocios, 10 cuentas (entran con su misma contraseña), 69 preguntas, 26 conversaciones, 89 mensajes, 16 avisos |
 
-Pendiente: F2-06 (pantallas contra Django), F2-07 (Stripe en Django), F2-13 (publicar en PythonAnywhere) y F2-14 (revisión final).
+| 18 nov 2026 | F2-07 Stripe en Django (prueba gratis, plan, Administrar mi plan, avisos de Stripe con firma) | 34 pruebas en verde; prueba en vivo del servidor con el chat de Salón Bella mudado |
+
+Pendiente: F2-06 (pantallas contra Django), F2-13 (publicar en PythonAnywhere) y F2-14 (revisión final).
 
 ## Lo que necesita Arleth (cuando llegue su ticket)
 
