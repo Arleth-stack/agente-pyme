@@ -9,19 +9,23 @@ Red de seguridad (si algo falla, se usa el texto exacto del dueño):
 - Cada número de la respuesta original (precios, horas, fechas) tiene que
   aparecer igual en la redactada, y no puede aparecer ningún número nuevo.
 - No puede ser mucho más larga que la original ni usar palabras prohibidas.
-- Si no hay llave, si el dueño la apagó, si Gemini tarda más de 8 s o si se
+- Si no hay llave, si el dueño la apagó, si Gemini tarda más de 6 s o si se
   acabó la capa gratis del día, no pasa nada: se contesta con el texto exacto.
 """
 import logging
 import re
+import time
 
 import requests
 from django.conf import settings
 
 log = logging.getLogger(__name__)
 
-MODELO = getattr(settings, 'GEMINI_MODELO', None) or 'gemini-2.5-flash'
+# Se prueban en orden: si uno está saturado (503) o Google lo retiró (404), sigue el próximo.
+MODELOS = [m.strip() for m in (getattr(settings, 'GEMINI_MODELOS', '') or
+                               'gemini-3.5-flash,gemini-3.8-flash,gemini-flash-latest').split(',') if m.strip()]
 URL = 'https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent'
+ESPERA_MAXIMA_S = 6
 TIPOS_QUE_SE_REDACTAN = {'faq', 'varias', 'temas'}
 PROHIBIDAS = re.compile(r'\b(ia|inteligencia artificial|bot|modelo|prompt|token|api|servidor|automatizaci[oó]n)\b', re.I)
 
@@ -65,18 +69,29 @@ def redactar(negocio, texto_cliente, decision):
         'systemInstruction': {'parts': [{'text': INSTRUCCIONES.format(negocio=negocio.nombre)}]},
         'contents': [{'role': 'user', 'parts': [{'text': f'Mensaje del cliente: {texto_cliente}\n\n'
                                                         f'Respuesta oficial del dueño:\n{original}'}]}],
-        'generationConfig': {'temperature': 0.3, 'maxOutputTokens': 300,
+        'generationConfig': {'temperature': 0.3, 'maxOutputTokens': 400,
                              'thinkingConfig': {'thinkingBudget': 0}},
     }
-    try:
-        r = requests.post(URL.format(modelo=MODELO), json=cuerpo, timeout=8,
-                          headers={'x-goog-api-key': clave, 'content-type': 'application/json'})
-        if r.status_code != 200:
-            log.warning('Gemini respondió %s; se usa el texto exacto.', r.status_code)
-            return None
-        partes = r.json()['candidates'][0]['content']['parts']
-        texto = ''.join(p.get('text', '') for p in partes).strip().strip('"«»')
-    except (requests.RequestException, KeyError, IndexError, ValueError) as e:
-        log.warning('Gemini no contestó (%s); se usa el texto exacto.', e)
+    texto = None
+    limite = time.monotonic() + ESPERA_MAXIMA_S  # el cliente no espera más que esto en total
+    for modelo in MODELOS:
+        quedan = limite - time.monotonic()
+        if quedan < 1:
+            break
+        try:
+            r = requests.post(URL.format(modelo=modelo), json=cuerpo, timeout=quedan,
+                              headers={'x-goog-api-key': clave, 'content-type': 'application/json'})
+            if r.status_code in (404, 500, 503):
+                log.warning('Gemini %s respondió %s; se prueba el siguiente.', modelo, r.status_code)
+                continue
+            if r.status_code != 200:  # 429 = se acabó la capa gratis del día: no tiene caso insistir
+                log.warning('Gemini respondió %s; se usa el texto exacto.', r.status_code)
+                return None
+            partes = r.json()['candidates'][0]['content']['parts']
+            texto = ''.join(p.get('text', '') for p in partes if not p.get('thought')).strip().strip('"«»')
+            break
+        except (requests.RequestException, KeyError, IndexError, ValueError) as e:
+            log.warning('Gemini %s no contestó (%s).', modelo, e)
+    if texto is None:
         return None
     return texto if es_segura(original, texto) else None
