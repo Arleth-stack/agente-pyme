@@ -153,3 +153,8 @@ LOGGING = {
     'handlers': {'consola': {'class': 'logging.StreamHandler'}},
     'root': {'handlers': ['consola'], 'level': 'WARNING'},
 }
+
+# Las pruebas automáticas nunca llaman a servicios reales (Gemini, Meta, Stripe, correo).
+import sys  # noqa: E402
+if len(sys.argv) > 1 and sys.argv[1] == 'test':
+    GEMINI_API_KEY = STRIPE_SECRET_KEY = WHATSAPP_TOKEN = EMAIL_HOST = MERKATICS_CRM_URL = ''

@@ -99,11 +99,18 @@ class RedaccionTest(TestCase):
         self.d = {'tipo': 'faq', 'texto': 'El corte de dama cuesta $250.'}
 
     def test_red_de_seguridad(self):
-        self.assertTrue(redaccion.es_segura('Cuesta $250.', '¡Claro! El corte de dama te sale en $250.'))
+        self.assertTrue(redaccion.es_segura('Cuesta $250.', '¡Claro! El corte de dama te sale en $250.',
+                                            'cuanto cuesta el corte de dama'))
         self.assertFalse(redaccion.es_segura('Cuesta $250.', 'Cuesta $200.'))           # cambió el precio
         self.assertFalse(redaccion.es_segura('Cuesta $250.', 'Cuesta $250 y el tinte $600.'))  # agregó un dato
         self.assertFalse(redaccion.es_segura('Cuesta $250.', 'Soy un bot: cuesta $250.'))      # palabra prohibida
         self.assertTrue(redaccion.es_segura('Desde $1,100.', 'Va desde $1100.'))
+        # Sin números, pero agrega una invitación que el dueño no escribió.
+        self.assertFalse(redaccion.es_segura('El corte de dama cuesta $250.',
+                                             'El corte de dama cuesta $250. Quedo a tus órdenes por si gustas agendar tu cita.'))
+        self.assertTrue(redaccion.es_segura('Sí, la keratina va desde $1,500 según el largo del cabello.',
+                                            'Hola, sí hacemos keratina. El costo va desde $1,500 según el largo de tu cabello.',
+                                            'hacen keratina?'))
 
     @mock.patch('chat.redaccion.requests.post')
     def test_usa_la_redaccion_si_es_segura(self, post):
