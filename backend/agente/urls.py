@@ -13,3 +13,7 @@ urlpatterns = [
     path('crm/', include('crm.urls')),
     path('admin/', admin.site.urls),
 ]
+
+admin.site.site_header = 'Merkatics · Tu WhatsApp contesta solo'
+admin.site.site_title = 'Administración'
+admin.site.index_title = 'Negocios, conversaciones y cuentas'
