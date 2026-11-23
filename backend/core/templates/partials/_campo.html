@@ -1,0 +1,7 @@
+{# Campo de formulario con su etiqueta, ayuda y error: {% include 'partials/_campo.html' with campo=form.telefono %} #}
+<div class="mb-3">
+  <label class="form-label" for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+  {{ campo }}
+  {% if campo.help_text %}<div class="form-text">{{ campo.help_text }}</div>{% endif %}
+  {% for e in campo.errors %}<div class="invalid-feedback d-block">{{ e }}</div>{% endfor %}
+</div>

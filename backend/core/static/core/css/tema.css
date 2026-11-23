@@ -1,0 +1,62 @@
+/* Tema de Merkatics sobre Bootstrap 5: grafito, coral y letra Jost. */
+:root {
+  --grafito: #111111;
+  --coral: #e95349;
+  --coral-claro: #fde2df;
+  --coral-texto: #a8201a;
+  --gris-claro: #f1f1f1;
+  --texto: #111b21;
+  --texto-suave: #54656f;
+  --borde: #e3e6e8;
+  --verde-whatsapp: #008069;
+
+  --bs-body-font-family: 'Jost', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --bs-body-font-size: 1rem;
+  --bs-body-color: var(--texto);
+  --bs-body-bg: #ffffff;
+  --bs-secondary-color: var(--texto-suave);
+  --bs-border-color: var(--borde);
+  --bs-border-radius: 0.5rem;
+  --bs-border-radius-lg: 0.75rem;
+  --bs-primary: var(--coral);
+  --bs-primary-rgb: 233, 83, 73;
+  --bs-link-color: var(--coral-texto);
+  --bs-link-color-rgb: 168, 32, 26;
+  --bs-link-hover-color: var(--grafito);
+  --bs-focus-ring-color: rgba(233, 83, 73, 0.35);
+}
+
+body { -webkit-font-smoothing: antialiased; }
+.text-suave { color: var(--texto-suave) !important; }
+.bg-gris { background: var(--gris-claro) !important; }
+.icono { flex: none; vertical-align: -0.2em; }
+
+/* Botones: coral con letra grafito, como en la marca. */
+.btn { --bs-btn-font-weight: 600; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; }
+.btn-primary {
+  --bs-btn-bg: var(--coral); --bs-btn-border-color: var(--coral); --bs-btn-color: var(--grafito);
+  --bs-btn-hover-bg: #f06a61; --bs-btn-hover-border-color: #f06a61; --bs-btn-hover-color: var(--grafito);
+  --bs-btn-active-bg: #d64d4d; --bs-btn-active-border-color: #d64d4d; --bs-btn-active-color: var(--grafito);
+  --bs-btn-disabled-bg: var(--coral); --bs-btn-disabled-border-color: var(--coral); --bs-btn-disabled-color: var(--grafito);
+}
+.btn-dark { --bs-btn-bg: var(--grafito); --bs-btn-border-color: var(--grafito); }
+.btn-outline-secondary { --bs-btn-color: var(--texto); --bs-btn-border-color: var(--borde); --bs-btn-hover-bg: var(--gris-claro); --bs-btn-hover-color: var(--texto); --bs-btn-hover-border-color: var(--texto-suave); }
+.btn-sm { min-height: 36px; }
+
+/* Formularios */
+.form-control, .form-select { min-height: 44px; border-color: #c9ced3; }
+.form-control:focus, .form-select:focus { border-color: var(--coral); box-shadow: 0 0 0 0.2rem var(--bs-focus-ring-color); }
+.form-label { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.3rem; }
+.invalid-feedback, .alert-danger { color: var(--coral-texto); }
+.alert-danger { background: var(--coral-claro); border-color: #f3b4ae; }
+
+/* Tarjetas */
+.card { --bs-card-border-color: var(--borde); --bs-card-border-radius: 0.75rem; }
+
+/* Barra con el logo (pantallas sencillas: entrar, crear) */
+.barra-marca { background: #fff; border-bottom: 1px solid var(--borde); }
+.barra-marca img { height: 28px; width: auto; }
+
+/* Accesibilidad: foco visible y menos movimiento si así se pidió */
+:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

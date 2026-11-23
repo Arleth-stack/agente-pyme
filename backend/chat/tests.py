@@ -2,13 +2,13 @@
 from unittest import mock
 
 from django.test import TestCase, override_settings
-from rest_framework.test import APITestCase
 
 from negocios.models import Negocio, Pregunta
 
-from . import redaccion
+from core import ia as redaccion
+
 from .models import Aviso, Conversacion
-from .motor import buscar_pregunta, detectar_motivo, normalizar, similitud
+from .servicios import buscar_pregunta, detectar_motivo, normalizar, similitud
 
 HORARIO = {d: {'abre': '00:00', 'cierra': '23:59'} for d in ('lun', 'mar', 'mie', 'jue', 'vie', 'sab', 'dom')}
 
@@ -45,16 +45,17 @@ class TextoTest(TestCase):
         self.assertIsNone(buscar_pregunta(n, '¿hacen extensiones de pestañas?'))
 
 
-class ChatPublicoTest(APITestCase):
+class ChatPublicoTest(TestCase):
     def setUp(self):
         self.n = salon()
-        self.token = self.client.post(f'/api/chat/{self.n.slug}/iniciar').json()['token']
+        self.token = self.client.post(f'/chat/{self.n.slug}/iniciar/').json()['token']
 
     def enviar(self, texto):
-        return self.client.post('/api/chat-enviar', {'token': self.token, 'texto': texto}, format='json').json()
+        return self.client.post('/chat/enviar/', {'token': self.token, 'texto': texto},
+                                content_type='application/json').json()
 
     def test_estado_del_negocio(self):
-        r = self.client.get(f'/api/chat/{self.n.slug}').json()
+        r = self.client.get(f'/chat/{self.n.slug}/estado/').json()
         self.assertEqual(r['nombre'], 'Salón Prueba')
         self.assertIn('Pregúntame por', r['bienvenida'])
 
@@ -81,15 +82,14 @@ class ChatPublicoTest(APITestCase):
         self.assertEqual(avisos.get().motivo, 'queja_o_urgencia')
 
     def test_token_inventado(self):
-        r = self.client.post('/api/chat-enviar', {'token': '00000000-0000-0000-0000-000000000000', 'texto': 'hola'},
-                             format='json')
+        r = self.client.post('/chat/enviar/', {'token': '00000000-0000-0000-0000-000000000000', 'texto': 'hola'},
+                             content_type='application/json')
         self.assertEqual(r.status_code, 404)
 
 
-def respuesta_gemini(texto, status=200):
-    m = mock.Mock(status_code=status)
-    m.json.return_value = {'candidates': [{'content': {'parts': [{'text': texto}]}}]}
-    return m
+def error_gemini(codigo):
+    from google.genai import errors
+    return errors.APIError(codigo, {'error': {'code': codigo, 'message': 'simulado'}})
 
 
 @override_settings(GEMINI_API_KEY='llave-de-prueba')
@@ -112,22 +112,29 @@ class RedaccionTest(TestCase):
                                             'Hola, sí hacemos keratina. El costo va desde $1,500 según el largo de tu cabello.',
                                             'hacen keratina?'))
 
-    @mock.patch('chat.redaccion.requests.post')
+    @mock.patch('core.ia._pedir')
     def test_usa_la_redaccion_si_es_segura(self, post):
-        post.return_value = respuesta_gemini('¡Hola! El corte de dama te cuesta $250.')
+        post.return_value = '¡Hola! El corte de dama te cuesta $250.'
         self.assertEqual(redaccion.redactar(self.n, 'cuanto el corte', self.d), '¡Hola! El corte de dama te cuesta $250.')
 
-    @mock.patch('chat.redaccion.requests.post')
+    @mock.patch('core.ia._pedir')
     def test_si_inventa_se_usa_el_texto_exacto(self, post):
-        post.return_value = respuesta_gemini('El corte cuesta $250 y hoy hay 2x1.')
+        post.return_value = 'El corte cuesta $250 y hoy hay 2x1.'
         self.assertIsNone(redaccion.redactar(self.n, 'cuanto el corte', self.d))
 
-    @mock.patch('chat.redaccion.requests.post')
+    @mock.patch('core.ia._pedir')
     def test_si_se_acaba_la_capa_gratis(self, post):
-        post.return_value = respuesta_gemini('', status=429)
+        post.side_effect = error_gemini(429)
         self.assertIsNone(redaccion.redactar(self.n, 'cuanto el corte', self.d))
+        self.assertEqual(post.call_count, 1)  # con 429 no insiste con otros modelos
 
-    @mock.patch('chat.redaccion.requests.post')
+    @mock.patch('core.ia._pedir')
+    def test_si_un_modelo_esta_saturado_usa_el_siguiente(self, post):
+        post.side_effect = [error_gemini(503), 'Claro, el corte de dama cuesta $250.']
+        self.assertEqual(redaccion.redactar(self.n, 'cuanto el corte de dama', self.d),
+                         'Claro, el corte de dama cuesta $250.')
+
+    @mock.patch('core.ia._pedir')
     def test_no_redacta_avisos_ni_si_el_dueno_la_apago(self, post):
         self.assertIsNone(redaccion.redactar(self.n, 'x', {'tipo': 'aviso', 'texto': 'Ya le avisé al equipo.'}))
         self.n.redaccion_activa = False
@@ -138,11 +145,11 @@ class RedaccionTest(TestCase):
     def test_sin_llave_no_pasa_nada(self):
         self.assertIsNone(redaccion.redactar(self.n, 'x', self.d))
 
-    @mock.patch('chat.redaccion.requests.post')
+    @mock.patch('core.ia._pedir')
     def test_en_el_chat_queda_guardado_el_original(self, post):
-        post.return_value = respuesta_gemini('Claro, el corte de dama cuesta $250.')
-        token = self.client.post(f'/api/chat/{self.n.slug}/iniciar').json()['token']
-        r = self.client.post('/api/chat-enviar', {'token': token, 'texto': 'cuanto el corte de dama'},
+        post.return_value = 'Claro, el corte de dama cuesta $250.'
+        token = self.client.post(f'/chat/{self.n.slug}/iniciar/').json()['token']
+        r = self.client.post('/chat/enviar/', {'token': token, 'texto': 'cuanto el corte de dama'},
                              content_type='application/json').json()
         self.assertEqual(r[1]['texto'], 'Claro, el corte de dama cuesta $250.')
         conv = Conversacion.objects.get(token=token)

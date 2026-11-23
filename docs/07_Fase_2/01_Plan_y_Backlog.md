@@ -10,7 +10,9 @@ La Fase 1 dejó funcionando el recorrido completo con Supabase (base de datos y 
 
 | Tema | Decisión | Por qué |
 |---|---|---|
-| Lenguaje y marco | Python con Django y Django REST Framework | Lo pide la Asignación para la Fase 2; el modelo de datos pasa casi igual |
+| Lenguaje y marco | Python con Django 6.1, plantillas de Django y Bootstrap 5 con el tema de Merkatics (23 nov: se cambia el frontend Vite + API por plantillas, pedido de Merkatics) | Lo pide la Asignación para la Fase 2 |
+| Cuentas | El dueño entra con su número de WhatsApp (10 dígitos) y contraseña (23 nov) | Pedido de Arleth |
+| Avisos al dueño | Por WhatsApp a su número, no por correo (23 nov) | Pedido de Arleth |
 | Base de datos | MySQL | Pedido de Arleth; PythonAnywhere la incluye gratis |
 | Publicación | PythonAnywhere (cuenta gratis) | Gratis, ya trae Django y MySQL, lo más simple |
 | Redacción con inteligencia artificial | Opción gratuita: Gemini de Google (capa gratis) | Sin costo; con límites diarios. Si falla o se pasa del límite, el chat contesta con el texto exacto del dueño (como en la Fase 1) |
@@ -54,7 +56,9 @@ La Fase 1 dejó funcionando el recorrido completo con Supabase (base de datos y 
 
 | 18 nov 2026 | F2-07 Stripe en Django (prueba gratis, plan, Administrar mi plan, avisos de Stripe con firma) | 34 pruebas en verde; prueba en vivo del servidor con el chat de Salón Bella mudado |
 
-Pendiente: F2-06 (pantallas contra Django), F2-13 (publicar en PythonAnywhere) y F2-14 (revisión final).
+| 23 nov 2026 | Gemini probado en vivo con la llave de Arleth. Estructura de carpetas como la guía del compañero: config + core + users + inicio + negocios + chat + panel + pagos + canales + crm; django-environ, mysqlclient, google-genai, Bootstrap 5 y Lucide guardados en el proyecto; cuenta propia que entra con WhatsApp | 38 pruebas en verde; `importar_mvp` corrido 2 veces sin duplicar; Salón Bella entra con su WhatsApp y su misma contraseña; P1 107/108 |
+
+Pendiente: F2-06 (pasar cada pantalla a plantillas con Bootstrap, una app a la vez), F2-13 (publicar en PythonAnywhere) y F2-14 (revisión final).
 
 ## Lo que necesita Arleth (cuando llegue su ticket)
 

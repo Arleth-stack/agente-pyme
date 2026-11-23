@@ -34,20 +34,20 @@ class WhatsAppTest(TestCase):
     def post(self, cuerpo, firma=True):
         crudo = json.dumps(cuerpo).encode()
         h = {'HTTP_X_HUB_SIGNATURE_256': 'sha256=' + hmac.new(SECRETO.encode(), crudo, hashlib.sha256).hexdigest()}
-        return self.client.post('/api/whatsapp/webhook', crudo, content_type='application/json',
+        return self.client.post('/whatsapp/webhook/', crudo, content_type='application/json',
                                 **(h if firma else {}))
 
     def test_verificacion_de_meta(self):
-        r = self.client.get('/api/whatsapp/webhook', {'hub.mode': 'subscribe', 'hub.verify_token': 'verifica',
+        r = self.client.get('/whatsapp/webhook/', {'hub.mode': 'subscribe', 'hub.verify_token': 'verifica',
                                                       'hub.challenge': '12345'})
         self.assertEqual(r.content, b'12345')
-        r = self.client.get('/api/whatsapp/webhook', {'hub.mode': 'subscribe', 'hub.verify_token': 'otro'})
+        r = self.client.get('/whatsapp/webhook/', {'hub.mode': 'subscribe', 'hub.verify_token': 'otro'})
         self.assertEqual(r.status_code, 403)
 
     def test_sin_firma_no_entra(self):
         self.assertEqual(self.post(mensaje('hola'), firma=False).status_code, 403)
 
-    @mock.patch('canales.whatsapp.requests.post')
+    @mock.patch('canales.servicios.requests.post')
     def test_contesta_por_whatsapp_y_una_sola_vez(self, post):
         post.return_value = mock.Mock(status_code=200)
         self.post(mensaje('cuanto cuesta el corte de dama?'))
@@ -59,7 +59,7 @@ class WhatsAppTest(TestCase):
         conv = Conversacion.objects.get(canal='whatsapp')
         self.assertEqual((conv.cliente_nombre, conv.cliente_telefono), ('Mariana', '5511112222'))
 
-    @mock.patch('canales.whatsapp.requests.post')
+    @mock.patch('canales.servicios.requests.post')
     def test_cita_por_whatsapp_llega_al_crm(self, post):
         post.return_value = mock.Mock(status_code=200)
         self.post(mensaje('quiero una cita el sábado a las 11', wamid='wamid.2'))
@@ -68,9 +68,9 @@ class WhatsAppTest(TestCase):
         self.assertEqual(envio.datos['interes'], 'cita')
         self.assertEqual(envio.datos['origen'], 'Agente de WhatsApp')
 
-    @mock.patch('canales.whatsapp.requests.post')
+    @mock.patch('canales.servicios.requests.post')
     def test_respuesta_del_dueno_fuera_de_24_horas_no_se_envia(self, post):
-        from canales.whatsapp import enviar_texto
+        from canales.servicios import enviar_texto
         conv = Conversacion.objects.create(negocio=self.n, canal='whatsapp', whatsapp_cliente='5215511112222',
                                            ultimo_mensaje_cliente_en=timezone.now() - timedelta(hours=30))
         self.assertFalse(enviar_texto(conv, 'Hola'))

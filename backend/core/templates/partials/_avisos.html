@@ -1,0 +1,5 @@
+{% load icono %}{% if messages %}<div class="container-fluid pt-3" aria-live="polite">
+  {% for m in messages %}<div class="alert {% if m.tags == 'error' %}alert-danger{% elif m.tags == 'success' %}alert-success{% else %}alert-secondary{% endif %} d-flex align-items-center gap-2 mb-2" role="{% if m.tags == 'error' %}alert{% else %}status{% endif %}">
+    {% if m.tags == 'success' %}{% icono "circle-check" %}{% elif m.tags == 'error' %}{% icono "circle-alert" %}{% endif %}<span>{{ m }}</span>
+  </div>{% endfor %}
+</div>{% endif %}

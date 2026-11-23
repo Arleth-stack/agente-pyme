@@ -17,7 +17,7 @@ from django.db import transaction
 from django.utils import timezone
 
 from chat.models import Conversacion
-from chat.motor import recibir
+from chat.servicios import recibir
 from negocios.models import Negocio, Pregunta
 
 RAIZ = Path(__file__).resolve().parents[4]

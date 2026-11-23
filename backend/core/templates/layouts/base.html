@@ -1,0 +1,24 @@
+{% load static %}<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}{{ NOMBRE_PRODUCTO }} · Merkatics{% endblock %}</title>
+  <meta name="description" content="{% block descripcion %}Escribe una vez lo que te preguntan tus clientes. El chat les contesta con tus palabras a cualquier hora y te avisa cuando alguien te necesita.{% endblock %}">
+  <link rel="icon" type="image/png" href="{% static 'core/img/icono.png' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'core/vendor/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/tema.css' %}">
+  {% block estilos %}{% endblock %}
+</head>
+<body class="{% block clase_body %}{% endblock %}">
+  {% block barra %}{% include 'partials/_barra_marca.html' %}{% endblock %}
+  {% include 'partials/_avisos.html' %}
+  {% block contenido %}{% endblock %}
+  {% block pie %}{% endblock %}
+  <script src="{% static 'core/vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -21,3 +21,7 @@ backend/.mysql-local/
 backend/.venv/
 __pycache__/
 *.pyc
+backend/media/*
+!backend/media/.gitkeep
+backend/db.sqlite3
+backend/staticfiles/

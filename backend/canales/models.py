@@ -1,4 +1,4 @@
-"""F2-09 · WhatsApp real (Meta Cloud API): qué número de WhatsApp es de qué negocio."""
+"""Qué número de WhatsApp (Meta) es de qué negocio."""
 from django.db import models
 
 from negocios.models import Negocio
@@ -9,7 +9,7 @@ class CanalWhatsApp(models.Model):
     # «Phone number ID» que Meta da en WhatsApp → Configuración de la API.
     phone_number_id = models.CharField(max_length=40, unique=True)
     numero_visible = models.CharField(max_length=20, blank=True, help_text='Ej. +52 55 1234 5678')
-    # WhatsApp del dueño con lada (5215512345678) para mandarle avisos (F2-10).
+    # Solo si los avisos deben ir a otro número que el de la cuenta del dueño (con lada, p. ej. 525512345678).
     dueno_whatsapp = models.CharField(max_length=20, blank=True)
     activo = models.BooleanField(default=True)
     creado_en = models.DateTimeField(auto_now_add=True)
