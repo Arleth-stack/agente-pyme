@@ -1,0 +1,51 @@
+{# El panel del dueño, con notas al margen #}
+<section class="seccion avisa" id="avisa" aria-labelledby="avisa-titulo">
+  <h2 id="avisa-titulo" class="revelar">Y te avisa a ti</h2>
+
+  <div class="avisa-rejilla">
+    <ul class="notas notas-izq">
+      <li class="nota revelar" tabindex="0" data-apunta="lista"><strong>Lo urgente arriba</strong>Las conversaciones que te necesitan aparecen primero, con el motivo.</li>
+      <li class="nota revelar" tabindex="0" data-apunta="motivo"><strong>Por qué te avisa</strong>Pide una cita, se queja, quiere hablar contigo o preguntó algo que no tienes escrito.</li>
+      <li class="nota revelar" tabindex="0" data-apunta="mensaje"><strong>Lo que escribió</strong>Ves el mensaje del cliente tal cual, con la hora.</li>
+    </ul>
+
+    <div class="panel revelar" data-ui aria-label="Ejemplo del panel del dueño de Salón Bella">
+      <div class="panel-cabeza">
+        <strong>Salón Bella</strong>
+        <div class="panel-pestanas"><span class="activa">Conversaciones</span><span>Preguntas</span><span>Mi negocio</span></div>
+      </div>
+      <div class="panel-filtros" data-parte="lista"><span class="activo">Te necesitan · 2</span><span>Todas · 14</span></div>
+      <ul class="panel-lista" data-parte="lista">
+        <li class="elegida">
+          <span class="panel-nombre">Mariana López <time>11:43 p. m.</time></span>
+          <span class="panel-motivo" data-parte="motivo">Pide una cita</span>
+          <span class="panel-extracto">y me pueden atender el sábado a las 11?</span>
+        </li>
+        <li>
+          <span class="panel-nombre">55 1234 0987 <time>9:15 p. m.</time></span>
+          <span class="panel-motivo">No la sabe</span>
+          <span class="panel-extracto">¿hacen permanente?</span>
+        </li>
+      </ul>
+      <div class="panel-detalle">
+        <p class="wa-burbuja wa-cliente" data-parte="mensaje">hola cuánto cuesta un corte de dama<span>11:42 p. m.</span></p>
+        <p class="wa-burbuja wa-negocio" data-parte="sigue">Corte de dama $250, corte de caballero $150 y corte de niño $120.<span>11:42 p. m.</span></p>
+        <p class="wa-burbuja wa-cliente" data-parte="mensaje">y me pueden atender el sábado a las 11?<span>11:43 p. m.</span></p>
+        <div class="panel-responder" data-parte="responder">
+          <label for="panel-respuesta">Tu respuesta</label>
+          <textarea id="panel-respuesta" rows="2">Sí, te aparto el sábado a las 11 con Karla. ¡Te esperamos!</textarea>
+          <div class="panel-botones">
+            <button type="button" class="panel-enviar">Enviar</button>
+            <button type="button" class="panel-resuelto" data-parte="resuelto">Marcar como resuelto</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="notas notas-der">
+      <li class="nota revelar" tabindex="0" data-apunta="sigue"><strong>El chat no se detiene</strong>Aunque haya un aviso, sigue contestando precios y horarios mientras llegas.</li>
+      <li class="nota revelar" tabindex="0" data-apunta="responder"><strong>Contestas desde aquí</strong>Tu respuesta le llega al cliente en el mismo chat.</li>
+      <li class="nota revelar" tabindex="0" data-apunta="resuelto"><strong>Y listo</strong>Cuando terminas lo marcas como resuelto y sale de tu lista.</li>
+    </ul>
+  </div>
+</section>

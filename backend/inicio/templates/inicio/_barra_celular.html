@@ -1,0 +1,10 @@
+{% load static icono %}
+<header class="barra d-lg-none">
+  <a href="{% url 'inicio:inicio' %}" class="barra-marca" aria-label="Merkatics, inicio">
+    <img src="{% static 'core/img/merkatics-claro.png' %}" alt="Merkatics" width="173" height="40">
+  </a>
+  <a href="{% url 'users:entrar' %}" class="barra-entrar">Entrar</a>
+  <button type="button" class="barra-menu" data-bs-toggle="offcanvas" data-bs-target="#lateral" aria-controls="lateral">
+    {% icono "menu" tam=20 %}Menú
+  </button>
+</header>

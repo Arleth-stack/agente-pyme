@@ -1,0 +1,50 @@
+{% load static %}
+{# Para quién: lo que preguntan en cada giro, con su respuesta #}
+<section class="seccion para" id="para-quien" aria-labelledby="para-titulo">
+  <div class="para-lista">
+    <h2 id="para-titulo" class="revelar">Para quién es</h2>
+    <p class="para-intro revelar">Para los negocios que viven en WhatsApp. Esto es lo que les preguntan y lo que contesta el chat de cada uno.</p>
+
+    <div class="grupo revelar" data-foto="consultorio">
+      <p class="grupo-nombre">Consultorios y clínicas</p>
+      <ul>
+        <li><span>¿Cuánto cuesta una limpieza?</span><b>$600</b></li>
+        <li><span>¿Cuánto cuesta la consulta?</span><b>$300</b></li>
+        <li><span>¿Atienden niños?</span><b>Sábados</b></li>
+        <li><span>¿Aceptan tarjeta?</span><b>Sí</b></li>
+      </ul>
+    </div>
+    <div class="grupo revelar" data-foto="salon">
+      <p class="grupo-nombre">Salones y barberías</p>
+      <ul>
+        <li><span>¿Cuánto cuesta un corte de dama?</span><b>$250</b></li>
+        <li><span>¿Cuánto cuesta un tinte?</span><b>desde $650</b></li>
+        <li><span>¿Abren los lunes?</span><b>Descansan</b></li>
+        <li><span>¿Atienden caballeros?</span><b>Corte y barba</b></li>
+      </ul>
+    </div>
+    <div class="grupo revelar" data-foto="taller">
+      <p class="grupo-nombre">Talleres</p>
+      <ul>
+        <li><span>¿Cuánto cuesta el cambio de aceite?</span><b>desde $750</b></li>
+        <li><span>¿Cuánto cuesta el diagnóstico?</span><b>$350</b></li>
+        <li><span>¿Cargan el aire acondicionado?</span><b>$850</b></li>
+        <li><span>¿Dan garantía?</span><b>30 días</b></li>
+      </ul>
+    </div>
+    <div class="grupo revelar">
+      <p class="grupo-nombre">Gimnasios, inmobiliarias y más</p>
+      <ul>
+        <li><span>¿Cuánto cuesta la mensualidad?</span><b>Lo escribes tú</b></li>
+        <li><span>¿Tienen casas en renta?</span><b>Lo escribes tú</b></li>
+        <li><span>¿Hacen entregas a domicilio?</span><b>Lo escribes tú</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <figure class="para-foto revelar" aria-live="polite">
+    <img src="{% static 'inicio/img/fotos/consultorio.jpg' %}" data-foto="consultorio" alt="Sillón de un consultorio dental" class="activa" width="1400" height="1050">
+    <img src="{% static 'inicio/img/fotos/salon.jpg' %}" data-foto="salon" alt="Salón de belleza con sillones y espejos" width="1050" height="1400" loading="lazy">
+    <img src="{% static 'inicio/img/fotos/taller.jpg' %}" data-foto="taller" alt="Llave de impacto junto a la llanta de un auto" width="1024" height="683" loading="lazy">
+  </figure>
+</section>

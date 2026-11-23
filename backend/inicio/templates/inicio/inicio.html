@@ -1,4 +1,32 @@
 {% extends 'layouts/base.html' %}
-{# Pantalla por pasar en la migración: por ahora solo confirma que la estructura funciona. #}
-{% block titulo %}Inicio{% endblock %}
-{% block contenido %}<main class="container py-5"><h1 class="h3">Inicio</h1></main>{% endblock %}
+{% load static %}
+{% block titulo %}Tu WhatsApp contesta solo · Merkatics{% endblock %}
+{% block descripcion %}Escribe una vez lo que te preguntan tus clientes. El chat les contesta con tus palabras a cualquier hora y te avisa cuando alguien te necesita. Un módulo de Merkatics.{% endblock %}
+{% block estilos %}<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="{% static 'inicio/css/inicio.css' %}">{% endblock %}
+{% block clase_body %}pagina-inicio{% endblock %}
+{% block atributos_body %}data-bs-spy="scroll" data-bs-target="#menu-secciones" data-bs-root-margin="-35% 0px -60% 0px" data-bs-threshold="0,0.5"{% endblock %}
+{% block barra %}{% endblock %}
+
+{% block contenido %}
+<div class="sitio">
+  {% include 'inicio/_menu_lateral.html' %}
+
+  <div class="sitio-contenido">
+    {% include 'inicio/_barra_celular.html' %}
+    <main>
+      {% include 'inicio/secciones/_portada.html' %}
+      {% include 'inicio/secciones/_prueba.html' %}
+      {% include 'inicio/secciones/_avisa.html' %}
+      {% include 'inicio/secciones/_como.html' %}
+      {% include 'inicio/secciones/_para_quien.html' %}
+      {% include 'inicio/secciones/_merkatics.html' %}
+      {% include 'inicio/secciones/_preguntas.html' %}
+      {% include 'inicio/secciones/_cierre.html' %}
+    </main>
+    {% include 'inicio/_pie.html' %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}<script src="{% static 'inicio/js/inicio.js' %}"></script>{% endblock %}

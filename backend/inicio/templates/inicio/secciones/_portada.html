@@ -1,0 +1,39 @@
+{# Portada: el mensaje de las 11:42 p. m. contestado sobre el escenario coral #}
+<section class="portada" id="inicio" aria-labelledby="titulo">
+  <div class="portada-texto">
+    <h1 id="titulo">Tu WhatsApp<br> contesta solo</h1>
+    <div class="portada-cuerpo">
+      <p class="portada-frase">Escribe una vez lo que te preguntan tus clientes. El chat les contesta con tus palabras a cualquier hora y te avisa cuando alguien te necesita.</p>
+      <div class="portada-acciones">
+        <a href="{% url 'negocios:crear' %}" class="btn btn-primary boton">Crear mi negocio</a>
+        <a href="#prueba" class="enlace">Pruébalo como cliente</a>
+      </div>
+      <p class="portada-gratis"><span aria-hidden="true">✓</span> 7 días gratis, después 1 dólar al mes. Cancelas cuando quieras.</p>
+      <p class="portada-nota">Por ahora funciona como chat de prueba, con su propio enlace. Conectar tu número de WhatsApp es la siguiente etapa.</p>
+    </div>
+  </div>
+
+  <div class="escenario obturador" id="escenario">
+    <div class="escenario-contenido">
+      <div class="wa" data-ui aria-label="Ejemplo: un cliente le escribe a Salón Bella a las 11:42 de la noche">
+        <div class="wa-encabezado">
+          <span class="wa-avatar" aria-hidden="true">SB</span>
+          <span class="wa-titulo"><strong>Salón Bella</strong><span>Cerrado · abre mañana a las 10:00 a. m.</span></span>
+        </div>
+        <div class="wa-mensajes" id="portada-chat">
+          <p class="wa-burbuja wa-cliente" data-paso="0">hola cuánto cuesta un corte de dama<span>11:42 p. m.</span></p>
+          <p class="wa-burbuja wa-negocio" data-paso="1">Corte de dama $250, corte de caballero $150 y corte de niño $120.<span>11:42 p. m.</span></p>
+          <p class="wa-burbuja wa-cliente" data-paso="2">y me pueden atender el sábado a las 11?<span>11:43 p. m.</span></p>
+          <p class="wa-burbuja wa-negocio" data-paso="3">¡Con gusto! Ya le pasé tu solicitud al equipo para que te confirme el lugar. Ahorita estamos cerrados; te escriben mañana a partir de las 10:00 a. m.<span>11:43 p. m.</span></p>
+          <p class="wa-escribiendo" aria-hidden="true"><i></i><i></i><i></i></p>
+        </div>
+      </div>
+      <div class="aviso-tarjeta" data-ui data-paso="4">
+        <p class="aviso-quien">Panel de Salón Bella</p>
+        <p class="aviso-motivo"><span class="punto" aria-hidden="true"></span>Te necesita · Pide una cita</p>
+        <p class="aviso-texto">«y me pueden atender el sábado a las 11?»</p>
+        <p class="aviso-hora">Mañana lo ves en tu panel</p>
+      </div>
+    </div>
+  </div>
+</section>

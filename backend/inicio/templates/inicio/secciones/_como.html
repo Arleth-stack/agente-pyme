@@ -1,0 +1,42 @@
+{# Cómo empiezas: lo que das y lo que regresa #}
+<section class="seccion como" id="como" aria-labelledby="como-titulo">
+  <h2 id="como-titulo" class="revelar">Así empiezas</h2>
+  <p class="como-intro revelar">Un formulario de 5 pasos: tu negocio, tu horario, tus preguntas, tu cuenta y tus 7 días gratis. Te sugerimos las preguntas más comunes de tu giro.</p>
+
+  <ol class="intercambios">
+    <li class="intercambio revelar">
+      <p class="intercambio-frase">Primero, escribe lo que te preguntan.</p>
+      <div class="llamada" data-ui>
+        <label>¿Cómo lo preguntan tus clientes?<input class="form-control" value="¿Cuánto cuesta un corte?" readonly></label>
+        <label>¿Qué les respondes?<textarea class="form-control" rows="2" readonly>Corte de dama $250, corte de caballero $150 y corte de niño $120.</textarea></label>
+      </div>
+      <div class="respuesta wa-fondo" data-ui>
+        <p class="wa-burbuja wa-cliente">cuanto cobran x el corte<span>4:10 p. m.</span></p>
+        <p class="wa-burbuja wa-negocio">Corte de dama $250, corte de caballero $150 y corte de niño $120.<span>4:10 p. m.</span></p>
+      </div>
+    </li>
+
+    <li class="intercambio revelar">
+      <p class="intercambio-frase">Luego, comparte tu enlace.</p>
+      <div class="llamada llamada-enlace" data-ui>
+        <span id="enlace-ejemplo">{{ enlace_ejemplo_corto }}</span>
+        <button type="button" class="btn btn-dark" id="copiar-enlace" data-enlace="{{ enlace_ejemplo }}" data-copiado="Copiado">Copiar</button>
+      </div>
+      <div class="respuesta wa-fondo" data-ui>
+        <p class="wa-burbuja wa-negocio">¡Hola! Gracias por escribir a Salón Bella. Te ayudo a preparar tu próxima visita. Pregúntame por precios, servicios, citas, horario y cómo llegar.<span>4:12 p. m.</span></p>
+        <div class="wa-opciones"><span>¿Cuánto cuesta un corte?</span><span>¿Necesito cita?</span><span>¿A qué hora abren?</span></div>
+      </div>
+    </li>
+
+    <li class="intercambio intercambio-final revelar">
+      <p class="intercambio-frase">Y si no lo sabe, no lo inventa.</p>
+      <div class="llamada" data-ui>
+        <p class="wa-burbuja wa-cliente">¿hacen permanente?<span>9:15 p. m.</span></p>
+      </div>
+      <div class="respuesta respuesta-ancha wa-fondo" data-ui>
+        <p class="wa-burbuja wa-negocio">Esa no la tengo a la mano, pero ya le pasé tu pregunta al equipo. Ahorita estamos cerrados; te escriben mañana a partir de las 10:00 a. m.<br><br>Mientras, te puedo ayudar con esto:<span>9:15 p. m.</span></p>
+        <div class="wa-opciones"><span>¿Hacen keratina o alaciado?</span><span>¿Cuánto cuesta un tinte?</span><span>¿Cuánto cuestan las mechas o el balayage?</span></div>
+      </div>
+    </li>
+  </ol>
+</section>

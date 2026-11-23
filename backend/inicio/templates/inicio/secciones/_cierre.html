@@ -1,0 +1,20 @@
+{# Cierre: el primer paso ya abierto #}
+<section class="cierre" aria-labelledby="cierre-titulo">
+  <div class="cierre-texto revelar">
+    <h2 id="cierre-titulo">Empieza con<br> tu nombre</h2>
+    <p>Te llevamos al formulario con esto ya escrito. Faltan tu horario, tus preguntas y tu cuenta. Los primeros 7 días son gratis.</p>
+  </div>
+  <form class="dialogo revelar" data-ui action="{% url 'negocios:crear' %}" method="get" id="dialogo-crear">
+    <p class="dialogo-titulo">Tu negocio</p>
+    <label class="form-label" for="cierre-nombre">Nombre del negocio</label>
+    <input class="form-control" id="cierre-nombre" name="nombre" maxlength="60" value="Estética Lupita">
+    <p class="dialogo-etiqueta" id="cierre-giro-etiqueta">Giro</p>
+    <div class="btn-group dialogo-segmentos" role="radiogroup" aria-labelledby="cierre-giro-etiqueta">
+      <input type="radio" class="btn-check" name="giro" id="giro-consultorio" value="consultorio"><label class="btn" for="giro-consultorio">Consultorio</label>
+      <input type="radio" class="btn-check" name="giro" id="giro-salon" value="salon" checked><label class="btn" for="giro-salon">Salón</label>
+      <input type="radio" class="btn-check" name="giro" id="giro-taller" value="taller"><label class="btn" for="giro-taller">Taller</label>
+      <input type="radio" class="btn-check" name="giro" id="giro-otro" value="otro"><label class="btn" for="giro-otro">Otro</label>
+    </div>
+    <button type="submit" class="btn btn-dark dialogo-boton">Crear mi negocio</button>
+  </form>
+</section>

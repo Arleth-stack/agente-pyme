@@ -57,8 +57,9 @@ La Fase 1 dejó funcionando el recorrido completo con Supabase (base de datos y 
 | 18 nov 2026 | F2-07 Stripe en Django (prueba gratis, plan, Administrar mi plan, avisos de Stripe con firma) | 34 pruebas en verde; prueba en vivo del servidor con el chat de Salón Bella mudado |
 
 | 23 nov 2026 | Gemini probado en vivo con la llave de Arleth. Estructura de carpetas como la guía del compañero: config + core + users + inicio + negocios + chat + panel + pagos + canales + crm; django-environ, mysqlclient, google-genai, Bootstrap 5 y Lucide guardados en el proyecto; cuenta propia que entra con WhatsApp | 38 pruebas en verde; `importar_mvp` corrido 2 veces sin duplicar; Salón Bella entra con su WhatsApp y su misma contraseña; P1 107/108 |
+| 23 nov 2026 | F2-06 · Pantalla 1 de 5: **inicio** en Django + Bootstrap 5 (menú lateral con offcanvas y scrollspy de Bootstrap, chat de ejemplo contra Django, QR hecho en el servidor) | 42 pruebas en verde; revisión de diseño en 7 anchos sin errores; 13 interacciones probadas en celular y computadora; capturas iguales a la versión publicada |
 
-Pendiente: F2-06 (pasar cada pantalla a plantillas con Bootstrap, una app a la vez), F2-13 (publicar en PythonAnywhere) y F2-14 (revisión final).
+Pendiente: F2-06 (siguen crear negocio, chat, panel y demo), F2-13 (publicar en PythonAnywhere) y F2-14 (revisión final).
 
 ## Lo que necesita Arleth (cuando llegue su ticket)
 

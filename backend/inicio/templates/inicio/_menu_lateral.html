@@ -1,0 +1,25 @@
+{% load static icono %}
+{# Menú lateral: fijo a la izquierda en computadora; en celular y tableta se abre con «Menú» (offcanvas de Bootstrap) #}
+<aside class="offcanvas-lg offcanvas-start lateral" tabindex="-1" id="lateral" aria-label="Menú">
+  <div class="lateral-cabeza">
+    <a href="{% url 'inicio:inicio' %}" class="barra-marca" aria-label="Merkatics, inicio">
+      <img src="{% static 'core/img/merkatics-claro.png' %}" alt="Merkatics" width="173" height="40">
+    </a>
+    <button type="button" class="lateral-cerrar d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#lateral" aria-label="Cerrar menú">{% icono "x" tam=22 %}</button>
+  </div>
+  <nav class="nav flex-column lateral-enlaces" id="menu-secciones" aria-label="Secciones">
+    <a class="nav-link" href="#inicio"><span>01</span>Inicio</a>
+    <a class="nav-link" href="#prueba"><span>02</span>Pruébalo</a>
+    <a class="nav-link" href="#avisa"><span>03</span>Te avisa</a>
+    <a class="nav-link" href="#como"><span>04</span>Cómo funciona</a>
+    <a class="nav-link" href="#para-quien"><span>05</span>Para quién</a>
+    <a class="nav-link" href="#merkatics"><span>06</span>Merkatics</a>
+    <a class="nav-link" href="#preguntas"><span>07</span>Preguntas</a>
+  </nav>
+  <div class="lateral-pie">
+    <a href="{% url 'negocios:crear' %}" class="btn btn-primary boton">Crear mi negocio</a>
+    <p class="lateral-gratis">7 días gratis</p>
+    <a href="{% url 'users:entrar' %}" class="lateral-entrar">Entrar a mi panel</a>
+    <a href="{% url 'inicio:demo' %}" class="lateral-demo">Demo para presentar</a>
+  </div>
+</aside>

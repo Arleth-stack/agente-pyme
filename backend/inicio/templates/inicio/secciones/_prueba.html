@@ -1,0 +1,63 @@
+{% load icono %}
+{# La cosa viva: el chat real de los negocios de ejemplo #}
+<section class="seccion prueba" id="prueba" aria-labelledby="prueba-titulo"
+         data-sin-conexion="No pudimos cargar el chat. Revisa tu internet."
+         data-no-se-envio="No se envió tu mensaje. Revisa tu internet e inténtalo de nuevo."
+         data-escribiendo="escribiendo…" data-hablar-persona="Hablar con una persona">
+  <div class="prueba-cabeza revelar">
+    <h2 id="prueba-titulo">Pruébalo como cliente</h2>
+    <p>Elige uno de los negocios de ejemplo y la hora a la que escribes. Contesta con las preguntas reales que escribió cada negocio.</p>
+  </div>
+
+  <div class="demo revelar" data-ui>
+    <div class="demo-chat wa">
+      <div class="wa-encabezado">
+        <span class="wa-avatar" id="demo-avatar" aria-hidden="true">SB</span>
+        <span class="wa-titulo"><strong id="demo-nombre">{{ elegido.negocio.nombre|default:"Salón Bella" }}</strong><span id="demo-estado">&nbsp;</span></span>
+      </div>
+      <div class="wa-mensajes" id="demo-mensajes" aria-live="polite"></div>
+      <form class="wa-caja" id="demo-formulario" autocomplete="off">
+        <label class="visually-hidden" for="demo-entrada">Tu mensaje</label>
+        <input id="demo-entrada" maxlength="300" placeholder="Escribe un mensaje">
+        <button type="submit" aria-label="Enviar">{% icono "send-horizontal" tam=20 %}</button>
+      </form>
+    </div>
+
+    <div class="demo-controles">
+      <fieldset>
+        <legend>Negocio</legend>
+        {% for d in demos %}
+        <label class="control"><input type="radio" name="negocio" value="{{ d.negocio.slug }}" data-url="{{ d.url }}"{% if d.negocio.slug == elegido.negocio.slug %} checked{% endif %}> <span>{{ d.negocio.nombre }}</span></label>
+        {% endfor %}
+      </fieldset>
+      <fieldset>
+        <legend>Hora a la que escribes</legend>
+        <div class="btn-group segmentos" role="group" aria-label="Hora a la que escribes">
+          <input type="radio" class="btn-check" name="hora" id="hora-ahora" value="" checked><label class="btn" for="hora-ahora">Ahora</label>
+          <input type="radio" class="btn-check" name="hora" id="hora-1230" value="12:30"><label class="btn" for="hora-1230">12:30<small>p. m.</small></label>
+          <input type="radio" class="btn-check" name="hora" id="hora-2342" value="23:42"><label class="btn" for="hora-2342">11:42<small>p. m.</small></label>
+        </div>
+      </fieldset>
+      <div class="demo-pistas">
+        <p>Prueba también</p>
+        <button type="button" class="pista" data-texto="quiero cita el sábado a las 11">quiero cita el sábado a las 11</button>
+        <button type="button" class="pista" data-texto="¿qué precios tienen?">¿qué precios tienen?</button>
+        <button type="button" class="pista" data-texto="me pueden comunicar con alguien">me pueden comunicar con alguien</button>
+      </div>
+      <a class="demo-abrir" id="demo-abrir" href="{% if elegido %}{% url 'chat:pantalla' elegido.negocio.slug %}{% endif %}" target="_blank" rel="noopener">Abrir el chat completo</a>
+    </div>
+  </div>
+  <p class="prueba-pie revelar">Escribe como le escribirías a tu dentista: sin acentos, con faltas, como sea.</p>
+
+  {# En computadora: el mismo chat de ejemplo, en el celular del interesado #}
+  <div class="demo-celular revelar">
+    {% for d in demos %}
+    <div class="demo-qr" data-qr="{{ d.negocio.slug }}" role="img" aria-label="Código QR que abre el chat de {{ d.negocio.nombre }} en tu celular"{% if d.negocio.slug != elegido.negocio.slug %} hidden{% endif %}>{{ d.qr|safe }}</div>
+    {% endfor %}
+    <div class="demo-celular-texto">
+      <p class="demo-celular-titulo">Pruébalo en tu celular</p>
+      <p>Escanea el código con la cámara y escríbele a <strong id="demo-qr-nombre">{{ elegido.negocio.nombre }}</strong> como si fueras su cliente. Así se va a ver el chat de tu negocio, antes de que lo crees.</p>
+      <p class="demo-celular-nota">El código cambia según el negocio que elijas arriba.</p>
+    </div>
+  </div>
+</section>
